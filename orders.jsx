@@ -187,10 +187,9 @@ function App() {
     document.body.removeChild(textarea);
 
     alert("Order copied!");
-  }
-};
+  } 
   
-  };
+};
 
   const cardStyle = {
     background: "var(--color-background-primary)",
