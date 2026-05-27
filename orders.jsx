@@ -188,9 +188,7 @@ function App() {
 
     alert("Order copied!");
   }
-};
-  
-  };
+ };
 
   const cardStyle = {
     background: "var(--color-background-primary)",
@@ -330,15 +328,15 @@ function App() {
                     </button>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <div style={{   display: "grid",   gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))",   gap: 10,   marginTop: 10 }}>
+                  <div style={{   display: "flex",   flexDirection: "column",   gap: 4 }}>
                     <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Qty</span>
                     <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ ...selStyle, padding: "1px 7px", cursor: "pointer" }}>-</button>
                     <span style={{ fontSize: 13, fontWeight: 500, minWidth: 16, textAlign: "center" }}>{oi.qty}</span>
                     <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ ...selStyle, padding: "1px 7px", cursor: "pointer" }}>+</button>
                   </div>
                   {oi.hasSize && !oi.baseItem.noSmall && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{   display: "flex",   flexDirection: "column",   gap: 4 }}>
                       <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Size</span>
                       <select value={oi.size} onChange={e => updateItem(oi.id, "size", e.target.value)} style={selStyle}>
                         <option value="S">Small</option>
@@ -347,7 +345,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSauce && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{   display: "flex",   flexDirection: "column",   gap: 4 }}>
                       <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Sauce</span>
                       <select value={oi.sauce} onChange={e => updateItem(oi.id, "sauce", e.target.value)} style={selStyle}>
                         <option>Tare</option>
@@ -356,7 +354,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSeasoning && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{   display: "flex",   flexDirection: "column",   gap: 4 }}>
                       <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Seasoning</span>
                       <select value={oi.seasoning} onChange={e => updateItem(oi.id, "seasoning", e.target.value)} style={selStyle}>
                         <option>Cumin</option>
@@ -365,7 +363,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSpice && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{   display: "flex",   flexDirection: "column",   gap: 4 }}>
                       <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Spice</span>
                       <select value={oi.spice} onChange={e => updateItem(oi.id, "spice", e.target.value)} style={selStyle}>
                         <option>Cumin</option>
