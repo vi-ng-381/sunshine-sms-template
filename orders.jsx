@@ -1,4 +1,4 @@
-import { useState } from "react";
+const { useState } = React;
 
 const TODAY = new Date().toLocaleDateString("en-AU");
 
@@ -99,7 +99,7 @@ function getPrice(item, size) {
   return item.prices[size] || 0;
 }
 
-export default function App() {
+function App() {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [orderType, setOrderType] = useState("pickup");
@@ -391,3 +391,8 @@ export default function App() {
     </div>
   );
 }
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
+
+root.render(<App />);
