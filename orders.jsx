@@ -9,87 +9,267 @@ const MENU = {
     askSize: true,
     askSauce: true,
     askSeasoning: true,
+    note: "Served with sushi rice, seasonal salad, furikake, ichimi & pickled radish",
     items: [
-      { id: "beef_bowl", name: "Beef bowl", prices: { S: 14.5, L: 16.5 } },
-      { id: "lamb_bowl", name: "Lamb bowl", prices: { S: 14.5, L: 16.5 } },
-      { id: "chicken_wing_bowl", name: "Chicken wing bowl", prices: { S: 15.9, L: 17.9 } },
-      { id: "squid_bowl", name: "Squid bowl (Fri–Sun only)", prices: { L: 19.5 }, noSmall: true },
+      {
+        id: "beef_bowl",
+        name: "Beef bowl",
+        prices: { S: 14.5, L: 16.5 },
+        description: "Beef with sushi rice, seasonal salad, furikake, ichimi and pickled radish"
+      },
+      {
+        id: "lamb_bowl",
+        name: "Lamb bowl",
+        prices: { S: 14.5, L: 16.5 },
+        description: "Lamb with sushi rice, seasonal salad, furikake, ichimi and pickled radish"
+      },
+      {
+        id: "chicken_wing_bowl",
+        name: "Chicken wing bowl",
+        prices: { S: 15.9, L: 17.9 },
+        description: "Chicken wings with sushi rice, seasonal salad, furikake, ichimi and pickled radish"
+      },
+      {
+        id: "squid_bowl",
+        name: "Squid bowl (Fri–Sun only)",
+        prices: { L: 19.5 },
+        noSmall: true,
+        description: "Fried squid with sushi rice, seasonal salad, furikake, ichimi and pickled radish"
+      },
     ],
   },
+
   sides: {
     label: "On the side",
     icon: "ti-plus",
     items: [
-      { id: "tare_sauce", name: "House-made tare sauce", prices: { one: 2 } },
-      { id: "spicy_mayo", name: "Spicy mayo", prices: { one: 2 } },
-      { id: "pickled_radish", name: "Pickled radish", prices: { one: 2 } },
-      { id: "extra_spices", name: "Extra spices", prices: { one: 2 } },
+      {
+        id: "tare_sauce",
+        name: "House-made tare sauce",
+        prices: { one: 2 },
+        description: "Sweet savoury house sauce"
+      },
+      {
+        id: "spicy_mayo",
+        name: "Spicy mayo",
+        prices: { one: 2 },
+        description: "Creamy spicy mayo sauce"
+      },
+      {
+        id: "pickled_radish",
+        name: "Pickled radish",
+        prices: { one: 2 },
+        description: "Crunchy pickled radish"
+      },
+      {
+        id: "extra_spices",
+        name: "Extra spices",
+        prices: { one: 2 },
+        description: "Extra cumin or Sichuan seasoning"
+      },
     ],
   },
+
   melts: {
     label: "Melts",
     icon: "ti-sandwich",
-    note: "served with potato chips",
+    note: "Served with potato chips",
     items: [
-      { id: "pastrami_melt", name: "Pastrami melt", prices: { one: 14 } },
-      { id: "cheesy_tuna_melt", name: "Cheesy tuna melt", prices: { one: 14 } },
-      { id: "smokey_pesto_melt", name: "Smokey pesto melt", prices: { one: 14 } },
-      { id: "ham_cheese_melt", name: "Ham cheese melt", prices: { one: 8 } },
+      {
+        id: "pastrami_melt",
+        name: "Pastrami melt",
+        prices: { one: 14 },
+        description: "Sauerkraut, sourdough bread, house-made sauce, pickles, cheese & pastrami"
+      },
+      {
+        id: "cheesy_tuna_melt",
+        name: "Cheesy tuna melt",
+        prices: { one: 14 },
+        description: "House-made tuna mix, cheese & sourdough bread"
+      },
+      {
+        id: "smokey_pesto_melt",
+        name: "Smokey pesto melt",
+        prices: { one: 14 },
+        description: "Pesto, salami, spanish onion, rocket, smokey mayo & bocconcini cheese"
+      },
+      {
+        id: "ham_cheese_melt",
+        name: "Ham cheese melt",
+        prices: { one: 8 },
+        description: "Ham, cheese & sourdough bread"
+      },
     ],
   },
+
   bites: {
     label: "Bites & sides",
     icon: "ti-drumstick",
     askSpice: true,
+    note: "Spice options: Sichuan lvl 0/1/2 or Cumin",
     items: [
-      { id: "beef_bites", name: "Beef bites", prices: { one: 8.5 } },
-      { id: "lamb_bites", name: "Lamb bites", prices: { one: 8.5 } },
-      { id: "chicken_wings", name: "Chicken wings (6x)", prices: { one: 9.9 } },
-      { id: "fried_squid", name: "Fried squid (Fri–Sun only)", prices: { one: 12.9 } },
-      { id: "spring_rolls", name: "Spring rolls (6x)", prices: { one: 12 } },
-      { id: "plum_fries", name: "Plum fries", prices: { one: 5 } },
-      { id: "sweet_potato_fries", name: "Sweet potato fries", prices: { one: 7 } },
-      { id: "nem_nuong", name: "Nem nuong", prices: { one: 6 } },
-      { id: "bo_la_lot", name: "Bo la lot", prices: { one: 6 } },
+      {
+        id: "beef_bites",
+        name: "Beef bites",
+        prices: { one: 8.5 },
+        description: "Tender beef coated in your chosen spices"
+      },
+      {
+        id: "lamb_bites",
+        name: "Lamb bites",
+        prices: { one: 8.5 },
+        description: "Juicy lamb coated in your chosen spices"
+      },
+      {
+        id: "chicken_wings",
+        name: "Chicken wings (6x)",
+        prices: { one: 9.9 },
+        description: "6 chicken wings coated in your chosen spices"
+      },
+      {
+        id: "fried_squid",
+        name: "Fried squid (Fri–Sun only)",
+        prices: { one: 12.9 },
+        description: "Served with dressed salad and choice of sauce"
+      },
+      {
+        id: "spring_rolls",
+        name: "Spring rolls (6x)",
+        prices: { one: 12 },
+        description: "6 prawn spring rolls with lettuce and fish sauce"
+      },
+      {
+        id: "plum_fries",
+        name: "Plum fries",
+        prices: { one: 5 },
+        description: "Fries coated with house-made plum seasoning"
+      },
+      {
+        id: "sweet_potato_fries",
+        name: "Sweet potato fries",
+        prices: { one: 7 },
+        description: "Sweet potato fries with plum or maggi seasoning"
+      },
+      {
+        id: "nem_nuong",
+        name: "Nem nuong",
+        prices: { one: 6 },
+        description: "2 Vietnamese pork fried sausages"
+      },
+      {
+        id: "bo_la_lot",
+        name: "Bo la lot",
+        prices: { one: 6 },
+        description: "Marinated beef wrapped in betel leaf"
+      },
     ],
   },
+
   combo: {
     label: "Combo deal",
     icon: "ti-discount",
     items: [
-      { id: "combo", name: "Fries + small refreshment", prices: { one: 8 } },
+      {
+        id: "combo",
+        name: "Fries + small refreshment",
+        prices: { one: 8 },
+        description: "Add fries and any small refreshment"
+      },
     ],
   },
+
   matcha: {
     label: "Kohiki matcha",
     icon: "ti-cup",
     askSize: true,
     items: [
-      { id: "iced_matcha", name: "Iced matcha", prices: { S: 7.5, L: 9.5 } },
-      { id: "iced_strawberry_matcha", name: "Iced strawberry matcha", prices: { S: 8.5, L: 10.5 } },
-      { id: "iced_jasmine_matcha", name: "Iced jasmine matcha", prices: { S: 8.5, L: 10.5 } },
-      { id: "iced_coconut_matcha", name: "Iced coconut matcha", prices: { S: 8.5, L: 10.5 } },
+      {
+        id: "iced_matcha",
+        name: "Iced matcha",
+        prices: { S: 7.5, L: 9.5 },
+        description: "Oat milk & matcha"
+      },
+      {
+        id: "iced_strawberry_matcha",
+        name: "Iced strawberry matcha",
+        prices: { S: 8.5, L: 10.5 },
+        description: "Oat milk, strawberry puree & matcha"
+      },
+      {
+        id: "iced_jasmine_matcha",
+        name: "Iced jasmine matcha",
+        prices: { S: 8.5, L: 10.5 },
+        description: "Oat milk, jasmine tea & matcha"
+      },
+      {
+        id: "iced_coconut_matcha",
+        name: "Iced coconut matcha",
+        prices: { S: 8.5, L: 10.5 },
+        description: "Coconut milk & matcha"
+      },
     ],
   },
+
   refreshments: {
     label: "Refreshments",
     icon: "ti-glass",
     askSize: true,
     items: [
-      { id: "mint_lemonade", name: "Mint lemonade", prices: { S: 4.5, L: 5.7 } },
-      { id: "mint_straw_lemonade", name: "Mint strawberry lemonade", prices: { S: 5.5, L: 6.7 } },
-      { id: "iced_lychee", name: "Iced lychee", prices: { S: 6, L: 7.2 } },
-      { id: "iced_jasmine_tea", name: "Iced jasmine tea", prices: { S: 6, L: 7.2 } },
-      { id: "iced_straw_jasmine", name: "Iced strawberry jasmine tea", prices: { S: 6, L: 7.2 } },
-      { id: "viet_iced_coffee", name: "Vietnamese iced coffee", prices: { S: 8, L: 8 } },
+      {
+        id: "mint_lemonade",
+        name: "Housemade mint lemonade",
+        prices: { S: 4.5, L: 5.7 },
+        description: "Fresh mint lemonade"
+      },
+      {
+        id: "mint_straw_lemonade",
+        name: "Housemade mint strawberry lemonade",
+        prices: { S: 5.5, L: 6.7 },
+        description: "Mint lemonade with strawberry"
+      },
+      {
+        id: "iced_lychee",
+        name: "Iced lychee",
+        prices: { S: 6, L: 7.2 },
+        description: "Refreshing lychee drink"
+      },
+      {
+        id: "iced_jasmine_tea",
+        name: "Iced jasmine tea",
+        prices: { S: 6, L: 7.2 },
+        description: "Cold jasmine tea"
+      },
+      {
+        id: "iced_straw_jasmine",
+        name: "Iced strawberry jasmine tea",
+        prices: { S: 6, L: 7.2 },
+        description: "Jasmine tea with strawberry"
+      },
+      {
+        id: "viet_iced_coffee",
+        name: "Vietnamese iced coffee",
+        prices: { S: 8, L: 8 },
+        description: "Vietnamese coffee with condensed milk"
+      },
     ],
   },
+
   toppings: {
     label: "Toppings",
     icon: "ti-leaf",
     items: [
-      { id: "aloe_vera", name: "Aloe vera", prices: { one: 0.8 } },
-      { id: "herbal_jelly", name: "Herbal jelly", prices: { one: 0.8 } },
+      {
+        id: "aloe_vera",
+        name: "Aloe vera",
+        prices: { one: 0.8 },
+        description: "Extra topping"
+      },
+      {
+        id: "herbal_jelly",
+        name: "Herbal jelly",
+        prices: { one: 0.8 },
+        description: "Extra topping"
+   },
     ],
   },
 };
