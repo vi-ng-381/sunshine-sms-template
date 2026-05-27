@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Sunshine Badminton SMS Templates</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  background:#f5f5f5;
+  color:#222;
+  padding:20px;
+  transition:.2s;
+}
+
+.app{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  min-height:700px;
+  border:1px solid #ddd;
+  border-radius:14px;
+  overflow:hidden;
+  background:white;
+}
+
+.sidebar{
+  border-right:1px solid #ddd;
+  background:#fafafa;
+  padding:12px 8px;
+}
+
+.sidebar-title{
+  font-size:11px;
+  font-weight:700;
+  color:#777;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  padding:4px 8px 10px;
+}
+
+.search-input{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin-bottom:14px;
+  font-size:13px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  color:#555;
+  font-size:13px;
+  transition:.15s;
+}
+
+.nav-item:hover{
+  background:white;
+  color:#111;
+}
+
+.nav-item.active{
+  background:white;
+  color:#111;
+  font-weight:600;
+}
+
+.main{
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  padding:16px 20px;
+  border-bottom:1px solid #ddd;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.topbar-title{
+  font-size:16px;
+  font-weight:700;
+}
+
+.badge{
+  font-size:11px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+}
+
+.theme-btn{
+  border:none;
+  background:#f3f3f3;
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.theme-btn:hover{
+  background:#e9e9e9;
+}
+
+.content{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.field-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field label{
+  font-size:12px;
+  color:#666;
+  font-weight:600;
+}
+
+.field input{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  width:100%;
+  font-size:13px;
+}
+
+.preview-label{
+  font-size:12px;
+  color:#666;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.preview-box{
+  background:#fafafa;
+  border:1px solid #ddd;
+  border-radius:8px;
+  padding:14px;
+  font-size:13px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  min-height:160px;
+}
+
+.char-count{
+  font-size:11px;
+  color:#888;
+  text-align:right;
+  margin-top:5px;
+}
+
+.action-row{
+  display:flex;
+  gap:10px;
+}
+
+button{
+  cursor:pointer;
+}
+
+.btn-copy{
+  padding:10px 18px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:white;
+  font-weight:600;
+}
+
+.btn-copy:hover{
+  opacity:.9;
+}
+
+.btn-reset{
+  padding:10px 14px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  background:white;
+}
+
+body.dark{
+  background:#0f1115;
+  color:#f5f5f5;
+}
+
+body.dark .app{
+  background:#171a21;
+  border-color:#2a2f3a;
+}
+
+body.dark .sidebar{
+  background:#12151b;
+  border-color:#2a2f3a;
+}
+
+body.dark .topbar{
+  border-color:#2a2f3a;
+}
+
+body.dark .nav-item{
+  color:#b8c0cc;
+}
+
+body.dark .nav-item:hover{
+  background:#222733;
+  color:white;
+}
+
+body.dark .nav-item.active{
+  background:#2a3140;
+  color:white;
+}
+
+body.dark .field label{
+  color:#c9d1dc;
+}
+
+body.dark .field input{
+  background:#1d2330;
+  border-color:#30384a;
+  color:white;
+}
+
+body.dark .preview-label{
+  color:#c9d1dc;
+}
+
+body.dark .preview-box{
+  background:#1a1f2a;
+  border-color:#30384a;
+  color:#f5f5f5;
+}
+
+body.dark .btn-reset{
+  background:#1d2330;
+  color:white;
+  border-color:#30384a;
+}
+
+body.dark .search-input{
+  background:#1d2330;
+  border-color:#30384a;
+  color:white;
+}
+
+body.dark .theme-btn{
+  background:#222733;
+  color:white;
+}
+
+body.dark .theme-btn:hover{
+  background:#2d3444;
+}
+
+.restring-card{
+  background:#fafafa;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:20px;
+}
+
+.restring-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:500px;
+}
+
+.restring-table th,
+.restring-table td{
+  padding:12px;
+  text-align:left;
+  border-bottom:1px solid #ddd;
+}
+
+.restring-table th{
+  font-weight:700;
+  background:#f5f5f5;
+}
+
+/* DARK MODE */
+
+body.dark .restring-card{
+  background:#1a1f2a;
+  border-color:#30384a;
+}
+
+body.dark .restring-table{
+  color:#f5f5f5;
+}
+
+body.dark .restring-table th{
+  background:#222733;
+  color:white;
+}
+
+body.dark .restring-table td{
+  color:#f5f5f5;
+}
+
+body.dark .restring-table th,
+body.dark .restring-table td{
+  border-bottom:1px solid #3a4357;
+}
+
+
+@media (max-width:768px){
+
+  .app{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    border-right:none;
+    border-bottom:1px solid #ddd;
+  }
+
+  .field-row{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="sidebar">
+
+    <div class="sidebar-title">
+      Templates
+    </div>
+
+    <input
+      id="search"
+      class="search-input"
+      placeholder="Search templates..."
+      oninput="filterTemplates(this.value)"
+    >
+
+    <div id="nav"></div>
+
+  </div>
+
+  <div class="main">
+
+    <div class="topbar">
+
+      <span class="topbar-title" id="top-title">
+        Select a template
+      </span>
+
+      <div style="display:flex;align-items:center;gap:10px">
+
+        <span class="badge" id="top-badge"></span>
+
+        <button
+          id="themeToggle"
+          onclick="toggleTheme()"
+          class="theme-btn"
+        >
+          🌙
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="content" id="content">
+
+      <p style="color:#777;text-align:center;margin-top:2rem;">
+        Select a template from the sidebar
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const SIGN = `<a href="https://sunshinebadminton.com.au/" target="_blank">Sunshine Badminton</a> x <a href="https://instagram.com/sugarbrush.cafe" target="_blank">Sugar Brush Cafe</a>`;
+
+const templates = [
+
+{
+  id:"confirm",
+  cat:"Booking",
+  icon:"ti-calendar",
+  label:"Confirm booking",
+  badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text",placeholder:"e.g. Andy"},
+    {id:"when",label:"Date / tonight",type:"text",placeholder:"e.g. tonight"},
+    {id:"court",label:"Court number",type:"text",placeholder:"e.g. 2"},
+    {id:"time",label:"Time slot",type:"text",placeholder:"e.g. 4:30–5:30 PM"}
+  ],
+  build:(f)=>`Hi ${f.name||"[Name]"}, your booking for ${f.when||"[date]"} is confirmed.
+
+Court ${f.court||"[#]"}: ${f.time||"[time]"}
+
+Please come upstairs for payment or assistance upon arrival.
+
+Thank you!
+
+${SIGN}`
+},
+
+{
+  id:"reminder",
+  cat:"Booking",
+  icon:"ti-bell",
+  label:"Session reminder",
+  badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text",placeholder:"e.g. David"},
+    {id:"court",label:"Court number",type:"text",placeholder:"e.g. 6"},
+    {id:"time",label:"Session time",type:"text",placeholder:"e.g. 5:00–7:00 PM"}
+  ],
+  build:(f)=>`Hi ${f.name||"[Name]"},
+
+Just a friendly reminder about your badminton session at Sunshine Badminton today.
+
+Court: ${f.court||"[Court]"}
+Time: ${f.time||"[Time]"}
+
+Please respond 'Y' to confirm or 'N' if you are unable to attend your session.
+
+Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.
+
+Thank you,
+${SIGN}`
+},
+
+{
+  id:"adjust",
+  cat:"Booking",
+  icon:"ti-adjustments",
+  label:"Court adjustment",
+  badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text"},
+    {id:"date",label:"Date",type:"text"},
+    {id:"court",label:"New court",type:"text"},
+    {id:"time",label:"New time",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"[Name]"},
+
+We have adjusted your booking for ${f.date||"[date]"} so you can play on Court ${f.court||"[#]"} from ${f.time||"[time]"} for the entire session.
+
+${SIGN}`
+},
+
+{
+  id:"cancel",
+  cat:"Cancellation",
+  icon:"ti-x",
+  label:"Cancel + refund",
+  badge:{text:"Cancel",bg:"#FCEBEB",color:"#A32D2D"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text"},
+    {id:"court",label:"Court number",type:"text"},
+    {id:"date",label:"Date",type:"text"},
+    {id:"time",label:"Booking time",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"[Name]"},
+
+Your booking on Court ${f.court||"[#]"} (${f.date||"[date]"}, ${f.time||"[time]"}) has been cancelled.
+
+The refund will be returned to your account within 5–7 business days.
+
+Best regards,
+${SIGN}`
+},
+
+{
+  id:"website",
+  cat:"Info",
+  icon:"ti-world",
+  label:"Website & hours",
+  badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
+  fields:[
+  {id:"name",label:"Customer name",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"there"},
+
+You can book online anytime at:
+https://sunshinebadminton.com.au
+
+Opening hours:
+6:00 AM - 11:00 PM
+
+Staffed hours:
+Mon-Fri 12:00-11:00 PM
+Sat-Sun 9:00 AM-11:00 PM
+
+${SIGN}`
+},
+
+{
+  id:"membership",
+  cat:"Info",
+  icon:"ti-id-badge",
+  label:"Membership benefits",
+  badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"there"},
+
+Here's a quick overview of our membership:
+
+- $50/year
+- Book up to 4 weeks in advance
+- Free shuttle machine access
+- Free professional racket for each member
+- Discounted court rates
+
+${SIGN}`
+},
+
+{
+  id:"restring-options",
+  cat:"Info",
+  icon:"ti-list",
+  label:"Restringing options",
+  badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
+  fields:[],
+  imageOnly:true,
+  build:()=>`
+
+<div class="restring-card">
+
+<h2 style="margin-bottom:18px;">
+🏸 Restringing Options & Colours
+</h2>
+
+<div style="overflow-x:auto;">
+  <table class="restring-table">
+
+<tr>
+  <th>Brand</th>
+  <th>String</th>
+  <th>Colours</th>
+</tr>
+
+<tr><td>Yonex</td><td>BG 65</td><td>White</td></tr>
+<tr><td>Yonex</td><td>BG 65TI</td><td>White</td></tr>
+<tr><td>Yonex</td><td>BG 80</td><td>Blue, Yellow</td></tr>
+<tr><td>Yonex</td><td>BG 80 Power</td><td>White</td></tr>
+<tr><td>Yonex</td><td>BG 66 Ultimax</td><td>Navy, Red</td></tr>
+<tr><td>Yonex</td><td>Nano 95</td><td>Yellow, White</td></tr>
+<tr><td>Yonex</td><td>Nano 98</td><td>Yellow</td></tr>
+<tr><td>Yonex</td><td>Exbolt 63</td><td>Blue, Pink</td></tr>
+<tr><td>Yonex</td><td>Exbolt 65</td><td>Yellow, Purple</td></tr>
+<tr><td>Yonex</td><td>Exbolt 68</td><td>Yellow, Green</td></tr>
+<tr><td>Yonex</td><td>Aerobite</td><td>Red</td></tr>
+<tr><td>Li-Ning</td><td>No1</td><td>Yellow</td></tr>
+
+</table>
+
+</div>
+
+`
+},
+
+{
+  id:"restring",
+  cat:"Info",
+  icon:"ti-settings",
+  label:"Restringing price",
+  badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"there"},
+
+Here are our restringing prices:
+
+Standard strings: $30
+Premium strings: $35
+Your own strings: $25
+
+Turnaround: up to 3 days.
+
+${SIGN}`
+},
+
+{
+  id:"shuttlecock",
+  cat:"Info",
+  icon:"ti-shopping-bag",
+  label:"Shuttlecock prices",
+  badge:{text:"Shop",bg:"#E8F5E9",color:"#1B5E20"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text",placeholder:"e.g. there"}
+  ],
+  build:(f)=>`Hi ${f.name||"there"},
+
+Yes, we do sell shuttlecocks 🏸
+
+Available options:
+
+• Chaopai Silver
+  - $3.50 each
+  - $38 per tube
+
+• Chaopai Pink
+  - $48 per tube
+
+• Aeroplane Black
+  - $70 per tube
+
+${SIGN}`
+},
+
+{
+  id:"coaching",
+  cat:"Coaching",
+  icon:"ti-user",
+  label:"Coach contacts",
+  badge:{text:"Coaching",bg:"#EEEDFE",color:"#3C3489"},
+  fields:[],
+  build:()=>`Hi there,
+
+Here are our coaches' contact details:
+
+Coach Tonny: 0424 310 794
+Coach Owin: 0481 810 370
+Coach Zen: 0431 817 369
+Coach Zhipeng: 0406 380 738
+Coach Lucas: 0433 512 868 
+Coach Danny: 0448 251 934 
+
+${SIGN}`
+},
+
+{
+  id:"social",
+  cat:"Social",
+  icon:"ti-users",
+  label:"Social weekly schedule",
+  badge:{text:"Social",bg:"#FFF4E5",color:"#9A5B00"},
+  fields:[
+    {id:"name",label:"Customer name",type:"text"}
+  ],
+  build:(f)=>`Hi ${f.name||"there"}!
+
+We have social groups running throughout the week. You can check out the schedule below:
+
+🏸 Sunshine Badminton – Social Weekly Schedule
+
+Monday
+• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235
+
+Tuesday
+• 7:30 PM – 10:30 PM: Luong Ly Social (Mixed Levels) – 0433964199
+
+Wednesday
+• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158
+• 7:30 PM – 10:00 PM: NP Social (Mixed Levels) – 0426 789 222
+
+Thursday
+• 7:30 PM – 10:00 PM: Luong Ly Social (Mixed Levels) – 0433964199
+
+Friday
+• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235
+• 7:30 PM – 10:30 PM: Anh Pham (Intermediate Levels) – 0420 485 712
+
+Saturday
+• 2:00 PM – 4:00 PM: Rowel Mira (Mixed Levels) – 0481 874 500
+• 4:00 PM – 7:00 PM: Patrick & Ngoc (Mixed Levels) – 0418 377 311
+
+Sunday
+• 11:00 AM – 1:00 PM: NP Social (Mixed Levels) – 0481 810 370
+• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158
+
+${SIGN}`
+}
+
+];
+
+let current = null;
+
+const fieldVals = {};
+
+function buildNav(){
+
+  const cats = [...new Set(templates.map(t=>t.cat))];
+
+  const nav = document.getElementById("nav");
+
+  nav.innerHTML = "";
+
+  cats.forEach(cat=>{
+
+    const section = document.createElement("div");
+
+    section.innerHTML = `
+      <div style="
+        font-size:11px;
+        color:#777;
+        padding:10px 8px 4px;
+        font-weight:700;
+        text-transform:uppercase;
+      ">
+        ${cat}
+      </div>
+    `;
+
+    templates
+      .filter(t=>t.cat===cat)
+      .forEach(t=>{
+
+        const el = document.createElement("div");
+
+        el.className = "nav-item";
+
+        el.id = "nav-"+t.id;
+
+        el.innerHTML = `
+          <i class="ti ${t.icon}"></i>
+          ${t.label}
+        `;
+
+        el.onclick = ()=>selectTemplate(t.id);
+
+        section.appendChild(el);
+
+      });
+
+    nav.appendChild(section);
+
+  });
+}
+
+function selectTemplate(id){
+
+  current = templates.find(t=>t.id===id);
+
+  localStorage.setItem("lastTemplate",id);
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(el=>el.classList.remove("active"));
+
+  document
+    .getElementById("nav-"+id)
+    .classList.add("active");
+
+  document.getElementById("top-title").textContent =
+    current.label;
+
+  const badge =
+    document.getElementById("top-badge");
+
+  badge.textContent =
+    current.badge.text;
+
+  badge.style.background =
+    current.badge.bg;
+
+  badge.style.color =
+    current.badge.color;
+
+  renderContent();
+}
+
+function renderContent(){
+
+  if(!current) return;
+
+  const c =
+    document.getElementById("content");
+
+  const vals =
+    fieldVals[current.id] || {};
+
+  let html = "";
+
+  if(current.fields.length){
+
+    html += `<div class="field-row">`;
+
+    current.fields.forEach(f=>{
+
+      html += `
+        <div class="field">
+
+          <label>${f.label}</label>
+
+          <input
+            type="${f.type}"
+            value="${vals[f.id]||""}"
+            placeholder="${f.placeholder||""}"
+            oninput="onField('${f.id}', this.value)"
+          >
+
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+  }
+
+  const msg = current.build(vals);
+
+  html += `
+
+  <div>
+
+    <div class="preview-label">
+      Message preview
+    </div>
+
+    <div class="preview-box" id="preview">${msg}</div>
+
+    <div class="char-count">
+      ${msg.length} characters
+    </div>
+
+  </div>
+
+  <div class="action-row">
+
+    <button
+      class="btn-copy"
+      onclick="copyMsg()"
+    >
+      Copy message
+    </button>
+
+    <button
+      class="btn-reset"
+      onclick="resetFields()"
+    >
+      Reset
+    </button>
+
+  </div>
+
+  `;
+
+  c.innerHTML = html;
+}
+
+function onField(id,val){
+
+  if(!fieldVals[current.id]){
+    fieldVals[current.id] = {};
+  }
+
+  fieldVals[current.id][id] = val;
+
+  const msg =
+    current.build(fieldVals[current.id]);
+
+  document.getElementById("preview").innerHTML =
+    msg;
+
+  document.querySelector(".char-count").textContent =
+    `${msg.length} characters`;
+}
+
+function resetFields(){
+
+  fieldVals[current.id] = {};
+
+  renderContent();
+}
+
+async function copyMsg(){
+
+  const msg =
+    current.build(fieldVals[current.id] || {});
+
+  await navigator.clipboard.writeText(msg);
+
+  alert("Copied!");
+}
+
+function filterTemplates(q){
+
+  q = q.toLowerCase();
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(item=>{
+
+      const text =
+        item.textContent.toLowerCase();
+
+      item.style.display =
+        text.includes(q)
+        ? "flex"
+        : "none";
+    });
+}
+
+function toggleTheme(){
+
+  document.body.classList.toggle("dark");
+
+  const isDark =
+    document.body.classList.contains("dark");
+
+  localStorage.setItem(
+    "theme",
+    isDark ? "dark" : "light"
+  );
+
+  document.getElementById("themeToggle").textContent =
+    isDark ? "☀️" : "🌙";
+}
+
+document.addEventListener("keydown",(e)=>{
+
+  if((e.ctrlKey || e.metaKey) && e.key==="Enter"){
+
+    copyMsg();
+  }
+
+});
+
+buildNav();
+
+const savedTheme =
+  localStorage.getItem("theme");
+
+if(savedTheme === "dark"){
+
+  document.body.classList.add("dark");
+
+  document.getElementById("themeToggle").textContent =
+    "☀️";
+}
+
+const savedTemplate =
+  localStorage.getItem("lastTemplate");
+
+if(savedTemplate){
+
+  selectTemplate(savedTemplate);
+}
+
+</script>
+
+</body>
+</html>
