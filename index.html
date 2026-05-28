@@ -307,6 +307,164 @@ body.dark .theme-btn:hover{
   background:#f5f5f5;
 }
 
+/* Court price table */
+.court-wrap{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.court-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.court-table thead tr{
+  background:#f3f4f6;
+}
+
+.court-table th{
+  padding:10px 14px;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:#6b7280;
+  text-align:left;
+  border-bottom:2px solid #e5e7eb;
+}
+
+.court-table td{
+  padding:11px 14px;
+  font-size:13px;
+  border-bottom:1px solid #f0f0f0;
+  vertical-align:middle;
+}
+
+.court-table tbody tr:last-child td{
+  border-bottom:none;
+}
+
+/* Time slot divider row */
+.court-table tr.time-slot td{
+  background:#f8f9fb;
+  font-weight:700;
+  font-size:13px;
+  color:#111;
+  padding:9px 14px;
+  border-top:2px solid #e5e7eb;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.court-table tr.time-slot:first-of-type td{
+  border-top:none;
+}
+
+/* Type chip */
+.type-chip{
+  display:inline-block;
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.chip-casual { background:#FEF3C7; color:#92400E; }
+.chip-member { background:#D1FAE5; color:#065F46; }
+.chip-perm   { background:#DBEAFE; color:#1E40AF; }
+
+/* Price cell */
+.price-cell{
+  font-weight:700;
+  font-size:14px;
+  color:#111;
+}
+
+/* Note badge */
+.note-badge{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:5px;
+  font-size:11px;
+  font-weight:600;
+}
+
+.note-peak   { background:#FEE2E2; color:#991B1B; }
+.note-same   { background:#EDE9FE; color:#5B21B6; }
+.note-cash   { background:#D1FAE5; color:#065F46; }
+
+.price-notes{
+  margin:14px 0 18px;
+  padding:12px 16px;
+  background:#fffbeb;
+  border:1px solid #fde68a;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.9;
+}
+
+.price-notes ul{
+  padding-left:18px;
+}
+
+/* Section title */
+.section-title{
+  font-size:13px;
+  font-weight:700;
+  color:#374151;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* DARK overrides for court table */
+body.dark .court-wrap{
+  border-color:#2d3649;
+}
+
+body.dark .court-table thead tr{
+  background:#1e2535;
+}
+
+body.dark .court-table th{
+  color:#8b9ab0;
+  border-bottom-color:#2d3649;
+}
+
+body.dark .court-table td{
+  color:#e2e8f0;
+  border-bottom-color:#232c3d;
+}
+
+body.dark .court-table tr.time-slot td{
+  background:#1a2030;
+  color:white;
+  border-top-color:#2d3649;
+  border-bottom-color:#2d3649;
+}
+
+body.dark .price-cell{
+  color:white;
+}
+
+body.dark .chip-casual { background:#78350f; color:#fde68a; }
+body.dark .chip-member { background:#064e3b; color:#6ee7b7; }
+body.dark .chip-perm   { background:#1e3a8a; color:#bfdbfe; }
+
+body.dark .note-peak   { background:#7f1d1d; color:#fca5a5; }
+body.dark .note-same   { background:#4c1d95; color:#c4b5fd; }
+body.dark .note-cash   { background:#064e3b; color:#6ee7b7; }
+
+body.dark .section-title{ color:#c9d1dc; }
+
+body.dark .price-notes{
+  background:#2a2510;
+  border-color:#6b5a1e;
+  color:#f5e7b2;
+}
+
 /* DARK MODE */
 
 body.dark .restring-card{
@@ -331,6 +489,7 @@ body.dark .restring-table th,
 body.dark .restring-table td{
   border-bottom:1px solid #3a4357;
 }
+
 
 
 @media (max-width:768px){
@@ -579,6 +738,168 @@ Here's a quick overview of our membership:
 - Discounted court rates
 
 ${SIGN}`
+},
+
+{
+  id:"court-prices",
+  cat:"Info",
+  icon:"ti-coin",
+  label:"Court prices",
+  badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
+  fields:[],
+  imageOnly:true,
+  build:()=>`<div class="restring-card">
+
+<h2 style="margin-bottom:14px;font-size:17px;">🏸 Court Prices</h2>
+
+<div class="price-notes">
+  <strong>✅ Notes:</strong>
+  <ul>
+    <li><strong>Permanent</strong> is cheaper if paying by cash.</li>
+    <li>4–6 PM and 10–11 PM have the same (cheaper) rate.</li>
+    <li>6–10 PM is <strong>peak hour</strong> (higher rate).</li>
+  </ul>
+</div>
+
+<div class="section-title">📅 Weekday Pricing</div>
+<div class="court-wrap" style="margin-bottom:20px;">
+  <table class="court-table">
+    <thead>
+      <tr>
+        <th style="width:38%">Time Slot</th>
+        <th>Type</th>
+        <th>Cash</th>
+        <th>Card</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="time-slot">
+        <td colspan="5">⏰ 6:00 AM – 4:00 PM</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-casual">Casual</span></td>
+        <td class="price-cell">$15</td>
+        <td class="price-cell">$15</td>
+        <td></td>
+      </tr>
+
+      <tr class="time-slot">
+        <td colspan="5">⏰ 4:00 PM – 6:00 PM</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-casual">Casual</span></td>
+        <td class="price-cell">$18</td>
+        <td class="price-cell">$18</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-member">Member</span></td>
+        <td class="price-cell">$15</td>
+        <td class="price-cell">$15</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-perm">Permanent</span></td>
+        <td class="price-cell">$15</td>
+        <td class="price-cell">$15</td>
+        <td><span class="note-badge note-same">Same as Member</span></td>
+      </tr>
+
+      <tr class="time-slot">
+        <td colspan="5">🔴 6:00 PM – 10:00 PM &nbsp;<span class="note-badge note-peak">Peak</span></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-casual">Casual</span></td>
+        <td class="price-cell">$29</td>
+        <td class="price-cell">$29</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-member">Member</span></td>
+        <td class="price-cell">$27</td>
+        <td class="price-cell">$27</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-perm">Permanent</span></td>
+        <td class="price-cell">$25</td>
+        <td class="price-cell">$27</td>
+        <td><span class="note-badge note-cash">Cash cheaper</span></td>
+      </tr>
+
+      <tr class="time-slot">
+        <td colspan="5">⏰ 10:00 PM – 11:00 PM</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-casual">Casual</span></td>
+        <td class="price-cell">$18</td>
+        <td class="price-cell">$18</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-member">Member</span></td>
+        <td class="price-cell">$15</td>
+        <td class="price-cell">$15</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><span class="type-chip chip-perm">Permanent</span></td>
+        <td class="price-cell">$15</td>
+        <td class="price-cell">$15</td>
+        <td><span class="note-badge note-same">Same as Member</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="section-title">📅 Weekend Pricing <span style="font-weight:400;color:#6b7280;font-size:12px;">(Flat Rate)</span></div>
+<div class="court-wrap">
+  <table class="court-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Cash</th>
+        <th>Card</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="type-chip chip-casual">Casual</span></td>
+        <td class="price-cell">$26</td>
+        <td class="price-cell">$26</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="type-chip chip-member">Member</span></td>
+        <td class="price-cell">$25</td>
+        <td class="price-cell">$25</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="type-chip chip-perm">Permanent</span></td>
+        <td class="price-cell">$24</td>
+        <td class="price-cell">$25</td>
+        <td><span class="note-badge note-cash">Cash cheaper</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>`
 },
 
 {
@@ -840,7 +1161,7 @@ function renderContent(){
 
   let html = "";
 
-  if(current.fields.length){
+  if(current.fields && current.fields.length){
 
     html += `<div class="field-row">`;
 
@@ -867,41 +1188,53 @@ function renderContent(){
 
   const msg = current.build(vals);
 
-  html += `
+  if(current.imageOnly){
 
-  <div>
+    html += `
+    <div>
+      <div class="preview-label">Price reference</div>
+      <div class="preview-box" id="preview" style="white-space:normal;">${msg}</div>
+    </div>
+    `;
 
-    <div class="preview-label">
-      Message preview
+  } else {
+
+    html += `
+
+    <div>
+
+      <div class="preview-label">
+        Message preview
+      </div>
+
+      <div class="preview-box" id="preview">${msg}</div>
+
+      <div class="char-count">
+        ${msg.length} characters
+      </div>
+
     </div>
 
-    <div class="preview-box" id="preview">${msg}</div>
+    <div class="action-row">
 
-    <div class="char-count">
-      ${msg.length} characters
+      <button
+        class="btn-copy"
+        onclick="copyMsg()"
+      >
+        Copy message
+      </button>
+
+      <button
+        class="btn-reset"
+        onclick="resetFields()"
+      >
+        Reset
+      </button>
+
     </div>
 
-  </div>
-
-  <div class="action-row">
-
-    <button
-      class="btn-copy"
-      onclick="copyMsg()"
-    >
-      Copy message
-    </button>
-
-    <button
-      class="btn-reset"
-      onclick="resetFields()"
-    >
-      Reset
-    </button>
-
-  </div>
-
-  `;
+    `;
+  }
 
   c.innerHTML = html;
 }
@@ -920,8 +1253,10 @@ function onField(id,val){
   document.getElementById("preview").innerHTML =
     msg;
 
-  document.querySelector(".char-count").textContent =
-    `${msg.length} characters`;
+  if(!current.imageOnly){
+    document.querySelector(".char-count").textContent =
+      `${msg.length} characters`;
+  }
 }
 
 function resetFields(){
@@ -979,7 +1314,7 @@ document.addEventListener("keydown",(e)=>{
 
   if((e.ctrlKey || e.metaKey) && e.key==="Enter"){
 
-    copyMsg();
+    if(!current.imageOnly) copyMsg();
   }
 
 });
