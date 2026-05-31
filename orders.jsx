@@ -4,11 +4,7 @@ const TODAY = new Date().toLocaleDateString("en-AU");
 
 const MENU = {
   riceBowls: {
-    label: "Rice bowls",
-    icon: "ti-bowl-rice",
-    askSize: true,
-    askSauce: true,
-    askSeasoning: true,
+    label: "Rice bowls", icon: "ti-bowl-rice", askSize: true, askSauce: true, askSeasoning: true,
     items: [
       { id: "beef_bowl", name: "Beef bowl", prices: { S: 14.5, L: 16.5 } },
       { id: "lamb_bowl", name: "Lamb bowl", prices: { S: 14.5, L: 16.5 } },
@@ -17,8 +13,7 @@ const MENU = {
     ],
   },
   sides: {
-    label: "On the side",
-    icon: "ti-plus",
+    label: "On the side", icon: "ti-plus",
     items: [
       { id: "tare_sauce", name: "House-made tare sauce", prices: { one: 2 } },
       { id: "spicy_mayo", name: "Spicy mayo", prices: { one: 2 } },
@@ -27,9 +22,7 @@ const MENU = {
     ],
   },
   melts: {
-    label: "Melts",
-    icon: "ti-sandwich",
-    note: "served with potato chips",
+    label: "Melts", icon: "ti-sandwich", note: "served with potato chips",
     items: [
       { id: "pastrami_melt", name: "Pastrami melt", prices: { one: 14 } },
       { id: "cheesy_tuna_melt", name: "Cheesy tuna melt", prices: { one: 14 } },
@@ -38,9 +31,7 @@ const MENU = {
     ],
   },
   bites: {
-    label: "Bites & sides",
-    icon: "ti-drumstick",
-    askSpice: true,
+    label: "Bites & sides", icon: "ti-drumstick", askSpice: true,
     items: [
       { id: "beef_bites", name: "Beef bites", prices: { one: 8.5 } },
       { id: "lamb_bites", name: "Lamb bites", prices: { one: 8.5 } },
@@ -54,16 +45,11 @@ const MENU = {
     ],
   },
   combo: {
-    label: "Combo deal",
-    icon: "ti-discount",
-    items: [
-      { id: "combo", name: "Fries + Any small refreshment", prices: { one: 8 } },
-    ],
+    label: "Combo deal", icon: "ti-discount",
+    items: [{ id: "combo", name: "Fries + Any small refreshment", prices: { one: 8 } }],
   },
   matcha: {
-    label: "Kohiki matcha",
-    icon: "ti-cup",
-    askSize: true,
+    label: "Kohiki matcha", icon: "ti-cup", askSize: true,
     items: [
       { id: "iced_matcha", name: "Iced matcha", prices: { S: 7.5, L: 9.5 } },
       { id: "iced_strawberry_matcha", name: "Iced strawberry matcha", prices: { S: 8.5, L: 10.5 } },
@@ -72,9 +58,7 @@ const MENU = {
     ],
   },
   refreshments: {
-    label: "Refreshments",
-    icon: "ti-glass",
-    askSize: true,
+    label: "Refreshments", icon: "ti-glass", askSize: true,
     items: [
       { id: "mint_lemonade", name: "Mint lemonade", prices: { S: 4.5, L: 5.7 } },
       { id: "mint_straw_lemonade", name: "Mint strawberry lemonade", prices: { S: 5.5, L: 6.7 } },
@@ -85,8 +69,7 @@ const MENU = {
     ],
   },
   toppings: {
-    label: "Toppings",
-    icon: "ti-leaf",
+    label: "Toppings", icon: "ti-leaf",
     items: [
       { id: "aloe_vera", name: "Aloe vera", prices: { one: 0.8 } },
       { id: "lychee_popping_pearls", name: "Lychee popping pearls", prices: { one: 0.8 } },
@@ -143,25 +126,18 @@ function App() {
     const defaultSize = item.noSmall ? "L" : (hasSize ? "S" : null);
     setOrderItems(prev => [...prev, {
       id: Date.now() + Math.random(),
-      itemId: item.id,
-      name: item.name,
-      category: cat.label,
+      itemId: item.id, name: item.name, category: cat.label,
       size: defaultSize,
       sauce: hasSauce ? "Tare" : null,
       seasoning: hasSeasoning ? "Cumin" : null,
       spice: hasSpice ? "Cumin" : null,
-      qty: 1,
-      baseItem: item,
+      qty: 1, baseItem: item,
       hasSize, hasSauce, hasSeasoning, hasSpice,
     }]);
   };
 
   const removeItem = (id) => setOrderItems(prev => prev.filter(i => i.id !== id));
-
-  const updateItem = (id, field, value) => {
-    setOrderItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
-  };
-
+  const updateItem = (id, field, value) => setOrderItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
   const total = orderItems.reduce((sum, i) => sum + getPrice(i.baseItem, i.size) * i.qty, 0);
 
   const buildSummary = () => {
@@ -192,9 +168,8 @@ function App() {
       await navigator.clipboard.writeText(buildSummary());
       alert("Order copied!");
     } catch (err) {
-      const text = buildSummary();
       const textarea = document.createElement("textarea");
-      textarea.value = text;
+      textarea.value = buildSummary();
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand("copy");
@@ -203,145 +178,142 @@ function App() {
     }
   };
 
-  const cardStyle = {
+  // Compact style tokens
+  const card = {
     background: "var(--color-background-primary)",
     border: "0.5px solid var(--color-border-tertiary)",
-    borderRadius: "var(--border-radius-lg)",
-    padding: "12px 14px",
-    marginBottom: 8,
+    borderRadius: 8,
+    padding: "7px 10px",
+    marginBottom: 5,
   };
 
   const secTitle = {
-    fontSize: 14,
-    fontWeight: 500,
-    color: "var(--color-text-primary)",
-    margin: "0 0 8px",
+    fontSize: 12,
+    fontWeight: 600,
+    color: "var(--color-text-secondary)",
+    margin: "0 0 4px",
     display: "flex",
     alignItems: "center",
-    gap: 6,
-    paddingBottom: 6,
+    gap: 5,
+    paddingBottom: 4,
     borderBottom: "0.5px solid var(--color-border-tertiary)",
+    textTransform: "uppercase",
+    letterSpacing: "0.04em",
   };
 
   const btnAdd = {
-    fontSize: 12,
-    padding: "3px 10px",
+    fontSize: 11,
+    padding: "2px 7px",
     cursor: "pointer",
     background: "#EAF3DE",
     color: "#27500A",
     border: "0.5px solid #97C459",
-    borderRadius: "var(--border-radius-md)",
+    borderRadius: 5,
+    lineHeight: 1.4,
   };
 
-  const selStyle = {
-    fontSize: 12,
-    padding: "2px 4px",
-    borderRadius: "var(--border-radius-md)",
+  const sel = {
+    fontSize: 11,
+    padding: "1px 3px",
+    borderRadius: 5,
     border: "0.5px solid var(--color-border-secondary)",
     background: "var(--color-background-secondary)",
     color: "var(--color-text-primary)",
   };
 
+  const smLabel = { fontSize: 10, color: "var(--color-text-tertiary)" };
+
   return (
-    <div style={{ padding: "1rem 0", fontFamily: "var(--font-sans)" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: 8 }}>
-        <h2 style={{ fontSize: 18, fontWeight: 500, margin: 0, color: "var(--color-text-primary)" }}>
-          <i className="ti ti-phone-incoming" aria-hidden="true" style={{ fontSize: 18, marginRight: 8 }}></i>
-          Phone order — Sugar Brush Cafe
-        </h2>
-        <div style={{ display: "flex", gap: 8 }}>
+    <div style={{ padding: "8px 0", fontFamily: "var(--font-sans)" }}>
+
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
+        <span style={{ fontSize: 14, fontWeight: 600, color: "var(--color-text-primary)" }}>
+          <i className="ti ti-phone-incoming" style={{ marginRight: 6, fontSize: 13 }}></i>
+          Phone order — Sugar Brush
+        </span>
+        <div style={{ display: "flex", gap: 5 }}>
           <button onClick={() => setDark(d => !d)} style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            fontSize: 13, padding: "6px 12px",
-            background: dark ? "#f0f0f0" : "#222",
-            color: dark ? "#222" : "#fff",
-            border: "none", borderRadius: "var(--border-radius-md)",
-            fontWeight: 500, cursor: "pointer",
+            display: "inline-flex", alignItems: "center", gap: 4,
+            fontSize: 11, padding: "4px 8px",
+            background: dark ? "#f0f0f0" : "#222", color: dark ? "#222" : "#fff",
+            border: "none", borderRadius: 6, fontWeight: 500, cursor: "pointer",
           }}>
-            <i className={`ti ${dark ? "ti-sun" : "ti-moon"}`} aria-hidden="true"></i>
+            <i className={`ti ${dark ? "ti-sun" : "ti-moon"}`}></i>
             {dark ? "Light" : "Dark"}
           </button>
-          <a
-            href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
+          <a href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing"
+            target="_blank" rel="noopener noreferrer"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 13,
-              padding: "6px 12px",
-              background: "#1E3A1E",
-              color: "#fff",
-              border: "none",
-              borderRadius: "var(--border-radius-md)",
-              textDecoration: "none",
-              fontWeight: 500,
-              cursor: "pointer",
-            }}
-          >
-            <i className="ti ti-menu-2" aria-hidden="true"></i>
-            View menu
+              display: "inline-flex", alignItems: "center", gap: 4,
+              fontSize: 11, padding: "4px 8px",
+              background: "#1E3A1E", color: "#fff",
+              border: "none", borderRadius: 6, textDecoration: "none", fontWeight: 500,
+            }}>
+            <i className="ti ti-menu-2"></i> Menu
           </a>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 16 }}>
+      {/* Customer info */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 6 }}>
         <div>
-          <label style={{ fontSize: 12, color: "var(--color-text-secondary)", display: "block", marginBottom: 4 }}>Customer name</label>
-          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. John" style={{ width: "100%", boxSizing: "border-box" }} />
+          <label style={{ ...smLabel, display: "block", marginBottom: 2 }}>Name</label>
+          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. John"
+            style={{ width: "100%", boxSizing: "border-box", fontSize: 12, padding: "5px 7px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 6, background: "var(--color-background-primary)", color: "var(--color-text-primary)" }} />
         </div>
         <div>
-          <label style={{ fontSize: 12, color: "var(--color-text-secondary)", display: "block", marginBottom: 4 }}>Phone number</label>
-          <input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="e.g. 0412 345 678" style={{ width: "100%", boxSizing: "border-box" }} />
+          <label style={{ ...smLabel, display: "block", marginBottom: 2 }}>Phone</label>
+          <input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="0412 345 678"
+            style={{ width: "100%", boxSizing: "border-box", fontSize: 12, padding: "5px 7px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 6, background: "var(--color-background-primary)", color: "var(--color-text-primary)" }} />
         </div>
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        {["pickup","dinein"].map(type => (
+      {/* Order type */}
+      <div style={{ display: "flex", gap: 5, marginBottom: 8 }}>
+        {["pickup", "dinein"].map(type => (
           <button key={type} onClick={() => setOrderType(type)} style={{
-            flex: 1, padding: "8px", fontSize: 13, cursor: "pointer", borderRadius: "var(--border-radius-md)",
-            fontWeight: orderType === type ? 500 : 400,
+            flex: 1, padding: "5px", fontSize: 12, cursor: "pointer", borderRadius: 6,
+            fontWeight: orderType === type ? 600 : 400,
             background: orderType === type ? (type === "pickup" ? "#EAF3DE" : "#E6F1FB") : "var(--color-background-secondary)",
             color: orderType === type ? (type === "pickup" ? "#27500A" : "#0C447C") : "var(--color-text-secondary)",
             border: orderType === type ? `0.5px solid ${type === "pickup" ? "#97C459" : "#85B7EB"}` : "0.5px solid var(--color-border-tertiary)",
           }}>
-            <i className={`ti ${type === "pickup" ? "ti-shopping-bag" : "ti-armchair"}`} aria-hidden="true" style={{ marginRight: 6 }}></i>
+            <i className={`ti ${type === "pickup" ? "ti-shopping-bag" : "ti-armchair"}`} style={{ marginRight: 4, fontSize: 11 }}></i>
             {type === "pickup" ? "Pick up" : "Dine in"}
           </button>
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
+      {/* Two-column layout */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 12 }}>
+
+        {/* Menu */}
         <div>
-          <p style={{ fontSize: 13, fontWeight: 500, color: "var(--color-text-secondary)", margin: "0 0 10px" }}>Menu — tap to add</p>
+          <p style={{ fontSize: 11, fontWeight: 600, color: "var(--color-text-tertiary)", margin: "0 0 5px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Menu</p>
           {Object.entries(MENU).map(([key, cat]) => (
-            <div key={key} style={{ ...cardStyle, marginBottom: 10 }}>
+            <div key={key} style={{ ...card, marginBottom: 5 }}>
               <p style={secTitle}>
-                <i className={`ti ${cat.icon}`} aria-hidden="true" style={{ fontSize: 16 }}></i>
+                <i className={`ti ${cat.icon}`} style={{ fontSize: 12 }}></i>
                 {cat.label}
-                {cat.note && <span style={{ fontSize: 11, color: "var(--color-text-tertiary)", fontWeight: 400 }}> — {cat.note}</span>}
+                {cat.note && <span style={{ fontSize: 10, fontWeight: 400, color: "var(--color-text-tertiary)" }}> — {cat.note}</span>}
               </p>
               {cat.askSpice && (
-                <p style={{ fontSize: 11, color: "var(--color-text-tertiary)", margin: "0 0 6px" }}>
-                  Ask: Spice — Sichuan lvl 0/1/2 or Cumin
+                <p style={{ fontSize: 10, color: "var(--color-text-tertiary)", margin: "0 0 3px" }}>
+                  Spice: Sichuan 0/1/2 or Cumin
                 </p>
               )}
               {cat.items.map(item => {
-                const hasSize = cat.askSize;
                 const priceStr = item.prices.one !== undefined
                   ? `$${item.prices.one}`
-                  : item.noSmall
-                    ? `L $${item.prices.L}`
-                    : `S $${item.prices.S} / L $${item.prices.L}`;
+                  : item.noSmall ? `L $${item.prices.L}`
+                  : `S $${item.prices.S} / L $${item.prices.L}`;
                 return (
-                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
-                    <span style={{ fontSize: 13, color: "var(--color-text-primary)" }}>{item.name}</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                      <span style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>{priceStr}</span>
-                      <button style={btnAdd} onClick={() => addItem(item, cat)}>
-                        <i className="ti ti-plus" style={{ fontSize: 12 }} aria-hidden="true"></i> Add
-                      </button>
+                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "3px 0", borderBottom: "0.5px solid var(--color-border-tertiary)" }}>
+                    <span style={{ fontSize: 12, color: "var(--color-text-primary)" }}>{item.name}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
+                      <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>{priceStr}</span>
+                      <button style={btnAdd} onClick={() => addItem(item, cat)}>+ Add</button>
                     </div>
                   </div>
                 );
@@ -350,76 +322,78 @@ function App() {
           ))}
         </div>
 
+        {/* Order */}
         <div>
-          <p style={{ fontSize: 13, fontWeight: 500, color: "var(--color-text-secondary)", margin: "0 0 10px" }}>
-            Current order {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#27500A", fontSize: 11, padding: "1px 7px", borderRadius: 20, marginLeft: 4 }}>{orderItems.length} items</span>}
+          <p style={{ fontSize: 11, fontWeight: 600, color: "var(--color-text-tertiary)", margin: "0 0 5px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            Order
+            {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#27500A", fontSize: 10, padding: "1px 6px", borderRadius: 20, marginLeft: 5 }}>{orderItems.length}</span>}
           </p>
 
           {orderItems.length === 0 && (
-            <div style={{ ...cardStyle, textAlign: "center", padding: "2rem", color: "var(--color-text-tertiary)", fontSize: 13 }}>
-              <i className="ti ti-shopping-cart" style={{ fontSize: 24, display: "block", marginBottom: 8 }} aria-hidden="true"></i>
-              No items yet — add from the menu
+            <div style={{ ...card, textAlign: "center", padding: "1.2rem", color: "var(--color-text-tertiary)", fontSize: 12 }}>
+              <i className="ti ti-shopping-cart" style={{ fontSize: 20, display: "block", marginBottom: 4 }}></i>
+              No items yet
             </div>
           )}
 
-          {orderItems.map((oi, idx) => {
+          {orderItems.map((oi) => {
             const price = getPrice(oi.baseItem, oi.size);
             return (
-              <div key={oi.id} style={{ ...cardStyle }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+              <div key={oi.id} style={{ ...card }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
                   <div>
-                    <p style={{ margin: 0, fontSize: 13, fontWeight: 500, color: "var(--color-text-primary)" }}>{oi.name}</p>
-                    <p style={{ margin: "2px 0 0", fontSize: 11, color: "var(--color-text-tertiary)" }}>{oi.category}</p>
+                    <p style={{ margin: 0, fontSize: 12, fontWeight: 500, color: "var(--color-text-primary)" }}>{oi.name}</p>
+                    <p style={{ margin: 0, fontSize: 10, color: "var(--color-text-tertiary)" }}>{oi.category}</p>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: 13, fontWeight: 500, color: "var(--color-text-primary)" }}>${(price * oi.qty).toFixed(2)}</span>
-                    <button onClick={() => removeItem(oi.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-text-danger)", padding: 0, fontSize: 16 }} aria-label="Remove item">
-                      <i className="ti ti-trash" aria-hidden="true"></i>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "var(--color-text-primary)" }}>${(price * oi.qty).toFixed(2)}</span>
+                    <button onClick={() => removeItem(oi.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-text-danger)", padding: 0, fontSize: 13, lineHeight: 1 }}>
+                      <i className="ti ti-trash"></i>
                     </button>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Qty</span>
-                    <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ ...selStyle, padding: "1px 7px", cursor: "pointer" }}>-</button>
-                    <span style={{ fontSize: 13, fontWeight: 500, minWidth: 16, textAlign: "center" }}>{oi.qty}</span>
-                    <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ ...selStyle, padding: "1px 7px", cursor: "pointer" }}>+</button>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5, alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                    <span style={smLabel}>Qty</span>
+                    <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ ...sel, padding: "1px 6px", cursor: "pointer" }}>-</button>
+                    <span style={{ fontSize: 12, fontWeight: 600, minWidth: 14, textAlign: "center" }}>{oi.qty}</span>
+                    <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ ...sel, padding: "1px 6px", cursor: "pointer" }}>+</button>
                   </div>
                   {oi.hasSize && !oi.baseItem.noSmall && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Size</span>
-                      <select value={oi.size} onChange={e => updateItem(oi.id, "size", e.target.value)} style={selStyle}>
-                        <option value="S">Small</option>
-                        <option value="L">Large</option>
+                    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                      <span style={smLabel}>Size</span>
+                      <select value={oi.size} onChange={e => updateItem(oi.id, "size", e.target.value)} style={sel}>
+                        <option value="S">S</option>
+                        <option value="L">L</option>
                       </select>
                     </div>
                   )}
                   {oi.hasSauce && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Sauce</span>
-                      <select value={oi.sauce} onChange={e => updateItem(oi.id, "sauce", e.target.value)} style={selStyle}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                      <span style={smLabel}>Sauce</span>
+                      <select value={oi.sauce} onChange={e => updateItem(oi.id, "sauce", e.target.value)} style={sel}>
                         <option>Tare</option>
                         <option>Soy & Mirin</option>
                       </select>
                     </div>
                   )}
                   {oi.hasSeasoning && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Seasoning</span>
-                      <select value={oi.seasoning} onChange={e => updateItem(oi.id, "seasoning", e.target.value)} style={selStyle}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                      <span style={smLabel}>Season</span>
+                      <select value={oi.seasoning} onChange={e => updateItem(oi.id, "seasoning", e.target.value)} style={sel}>
                         <option>Cumin</option>
                         <option>Sichuan</option>
                       </select>
                     </div>
                   )}
                   {oi.hasSpice && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                      <span style={{ fontSize: 11, color: "var(--color-text-secondary)" }}>Spice</span>
-                      <select value={oi.spice} onChange={e => updateItem(oi.id, "spice", e.target.value)} style={selStyle}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                      <span style={smLabel}>Spice</span>
+                      <select value={oi.spice} onChange={e => updateItem(oi.id, "spice", e.target.value)} style={sel}>
                         <option>Cumin</option>
-                        <option>Sichuan lvl 0</option>
-                        <option>Sichuan lvl 1</option>
-                        <option>Sichuan lvl 2</option>
+                        <option>Sichuan 0</option>
+                        <option>Sichuan 1</option>
+                        <option>Sichuan 2</option>
                       </select>
                     </div>
                   )}
@@ -430,33 +404,33 @@ function App() {
 
           {orderItems.length > 0 && (
             <>
-              <div style={{ ...cardStyle, background: "var(--color-background-secondary)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 14, fontWeight: 500, color: "var(--color-text-primary)" }}>Total</span>
-                <span style={{ fontSize: 20, fontWeight: 500, color: "var(--color-text-primary)" }}>${total.toFixed(2)}</span>
+              <div style={{ ...card, background: "var(--color-background-secondary)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 10px" }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--color-text-primary)" }}>Total</span>
+                <span style={{ fontSize: 16, fontWeight: 700, color: "var(--color-text-primary)" }}>${total.toFixed(2)}</span>
               </div>
 
-              <div style={{ marginBottom: 10 }}>
-                <label style={{ fontSize: 12, color: "var(--color-text-secondary)", display: "block", marginBottom: 4 }}>Notes</label>
-                <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any special requests..." rows={2} style={{ width: "100%", boxSizing: "border-box", fontSize: 13 }} />
+              <div style={{ marginBottom: 6 }}>
+                <label style={{ ...smLabel, display: "block", marginBottom: 2 }}>Notes</label>
+                <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Special requests..." rows={2}
+                  style={{ width: "100%", boxSizing: "border-box", fontSize: 12, padding: "5px 7px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 6, background: "var(--color-background-primary)", color: "var(--color-text-primary)", resize: "none" }} />
               </div>
 
-              <div style={{ display: "flex", gap: 8 }}>
-                <button onClick={() => setShowSummary(!showSummary)} style={{ flex: 1, padding: "8px", fontSize: 13, cursor: "pointer", background: "#EAF3DE", color: "#27500A", border: "0.5px solid #97C459", borderRadius: "var(--border-radius-md)" }}>
-                  <i className="ti ti-eye" aria-hidden="true" style={{ marginRight: 6 }}></i>
-                  {showSummary ? "Hide" : "View"} summary
+              <div style={{ display: "flex", gap: 5 }}>
+                <button onClick={() => setShowSummary(!showSummary)} style={{ flex: 1, padding: "6px", fontSize: 12, cursor: "pointer", background: "#EAF3DE", color: "#27500A", border: "0.5px solid #97C459", borderRadius: 6 }}>
+                  <i className="ti ti-eye" style={{ marginRight: 4 }}></i>{showSummary ? "Hide" : "View"}
                 </button>
-                <button onClick={copySummary} style={{ flex: 1, padding: "8px", fontSize: 13, cursor: "pointer", background: "#E6F1FB", color: "#0C447C", border: "0.5px solid #85B7EB", borderRadius: "var(--border-radius-md)" }}>
-                  <i className="ti ti-copy" aria-hidden="true" style={{ marginRight: 6 }}></i>
-                  Copy order
+                <button onClick={copySummary} style={{ flex: 1, padding: "6px", fontSize: 12, cursor: "pointer", background: "#E6F1FB", color: "#0C447C", border: "0.5px solid #85B7EB", borderRadius: 6 }}>
+                  <i className="ti ti-copy" style={{ marginRight: 4 }}></i>Copy
                 </button>
-                <button onClick={() => { setOrderItems([]); setCustomerName(""); setCustomerPhone(""); setNotes(""); setShowSummary(false); }} style={{ padding: "8px 12px", fontSize: 13, cursor: "pointer", background: "#FCEBEB", color: "#791F1F", border: "0.5px solid #F09595", borderRadius: "var(--border-radius-md)" }}>
-                  <i className="ti ti-refresh" aria-hidden="true"></i>
+                <button onClick={() => { setOrderItems([]); setCustomerName(""); setCustomerPhone(""); setNotes(""); setShowSummary(false); }}
+                  style={{ padding: "6px 10px", fontSize: 12, cursor: "pointer", background: "#FCEBEB", color: "#791F1F", border: "0.5px solid #F09595", borderRadius: 6 }}>
+                  <i className="ti ti-refresh"></i>
                 </button>
               </div>
 
               {showSummary && (
-                <div style={{ marginTop: 12, background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: "var(--border-radius-md)", padding: "12px 14px" }}>
-                  <pre style={{ fontSize: 12, margin: 0, whiteSpace: "pre-wrap", color: "var(--color-text-primary)", fontFamily: "var(--font-mono)", lineHeight: 1.6 }}>
+                <div style={{ marginTop: 6, background: "var(--color-background-secondary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 6, padding: "8px 10px" }}>
+                  <pre style={{ fontSize: 11, margin: 0, whiteSpace: "pre-wrap", color: "var(--color-text-primary)", fontFamily: "var(--font-mono)", lineHeight: 1.5 }}>
                     {buildSummary()}
                   </pre>
                 </div>
@@ -469,8 +443,5 @@ function App() {
   );
 }
 
-const root = window.ReactDOM.createRoot(
-  document.getElementById("root")
-);
-
+const root = window.ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
