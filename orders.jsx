@@ -57,7 +57,7 @@ const MENU = {
     label: "Combo deal",
     icon: "ti-discount",
     items: [
-      { id: "combo", name: "Fries + small refreshment", prices: { one: 8 } },
+      { id: "combo", name: "Fries + Any small refreshment", prices: { one: 8 } },
     ],
   },
   matcha: {
@@ -81,7 +81,7 @@ const MENU = {
       { id: "iced_lychee", name: "Iced lychee", prices: { S: 6, L: 7.2 } },
       { id: "iced_jasmine_tea", name: "Iced jasmine tea", prices: { S: 6, L: 7.2 } },
       { id: "iced_straw_jasmine", name: "Iced strawberry jasmine tea", prices: { S: 6, L: 7.2 } },
-      { id: "viet_iced_coffee", name: "Vietnamese iced coffee", prices: { S: 8, L: 8 } },
+      { id: "viet_iced_coffee", name: "Vietnamese iced coffee", prices: { S: 6, L: 8 } },
     ],
   },
   toppings: {
@@ -89,6 +89,8 @@ const MENU = {
     icon: "ti-leaf",
     items: [
       { id: "aloe_vera", name: "Aloe vera", prices: { one: 0.8 } },
+      { id: "lychee_popping_pearls", name: "Lychee popping pearls", prices: { one: 0.8 } },
+      { id: "rainbow_jelly", name: "Rainbow jelly", prices: { one: 0.8 } },
       { id: "herbal_jelly", name: "Herbal jelly", prices: { one: 0.8 } },
     ],
   },
@@ -160,36 +162,20 @@ function App() {
   };
 
   const copySummary = async () => {
-
-  try {
-
-    await navigator.clipboard.writeText(
-      buildSummary()
-    );
-
-    alert("Order copied!");
-
-  } catch (err) {
-
-    const text = buildSummary();
-
-    const textarea =
-      document.createElement("textarea");
-
-    textarea.value = text;
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
-
-    document.execCommand("copy");
-
-    document.body.removeChild(textarea);
-
-    alert("Order copied!");
-  } 
-  
-};
+    try {
+      await navigator.clipboard.writeText(buildSummary());
+      alert("Order copied!");
+    } catch (err) {
+      const text = buildSummary();
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("Order copied!");
+    }
+  };
 
   const cardStyle = {
     background: "var(--color-background-primary)",
@@ -232,10 +218,34 @@ function App() {
 
   return (
     <div style={{ padding: "1rem 0", fontFamily: "var(--font-sans)" }}>
-      <h2 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 1rem", color: "var(--color-text-primary)" }}>
-        <i className="ti ti-phone-incoming" aria-hidden="true" style={{ fontSize: 18, marginRight: 8 }}></i>
-        Phone order — Sugar Brush Cafe
-      </h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: 8 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 500, margin: 0, color: "var(--color-text-primary)" }}>
+          <i className="ti ti-phone-incoming" aria-hidden="true" style={{ fontSize: 18, marginRight: 8 }}></i>
+          Phone order — Sugar Brush Cafe
+        </h2>
+        <a
+          href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 13,
+            padding: "6px 12px",
+            background: "#1E3A1E",
+            color: "#fff",
+            border: "none",
+            borderRadius: "var(--border-radius-md)",
+            textDecoration: "none",
+            fontWeight: 500,
+            cursor: "pointer",
+          }}
+        >
+          <i className="ti ti-menu-2" aria-hidden="true"></i>
+          View menu
+        </a>
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 16 }}>
         <div>
@@ -419,7 +429,8 @@ function App() {
     </div>
   );
 }
-const root = ReactDOM.createRoot(
+
+const root = window.ReactDOM.createRoot(
   document.getElementById("root")
 );
 
