@@ -123,9 +123,13 @@ function App() {
   const [showSummary, setShowSummary] = useState(false);
   const [dark, setDark] = useState(false);
   const [comboPickDrink, setComboPickDrink] = useState(REFRESHMENT_OPTIONS[0].id);
+  const [comboPickFries, setComboPickFries] = useState("plum_fries");
+  const [comboExpanded, setComboExpanded] = useState(false);
 
-  const hasFries = orderItems.some(i => FRIES_IDS.has(i.itemId));
-  const hasCombo = orderItems.some(i => i.itemId === "combo");
+  const FRIES_OPTIONS = [
+    { id: "plum_fries", name: "Plum fries" },
+    { id: "sweet_potato_fries", name: "Sweet potato fries" },
+  ];
 
   React.useEffect(() => {
     document.body.className = dark ? "dark" : "";
@@ -193,7 +197,7 @@ function App() {
 
   const resetOrder = () => {
     setOrderItems([]); setCustomerName(""); setCustomerPhone("");
-    setNotes(""); setShowSummary(false); setComboPickDrink(REFRESHMENT_OPTIONS[0].id);
+    setNotes(""); setShowSummary(false); setComboPickDrink(REFRESHMENT_OPTIONS[0].id); setComboPickFries("plum_fries"); setComboExpanded(false);
   };
 
   // Sizes scaled up across the board
@@ -313,11 +317,53 @@ function App() {
               </p>
               {cat.askSpice && <p style={{ fontSize: 13, color: C.textTer, margin: "0 0 5px" }}>Spice: Sichuan 0 / 1 / 2 or Cumin</p>}
               {cat.items.map(item => {
+                const isCombo = item.id === "combo";
                 const priceStr = item.prices.one !== undefined
                   ? `$${item.prices.one}`
                   : item.noSmall
                     ? `L $${item.prices.L}`
                     : `S $${item.prices.S} / L $${item.prices.L}`;
+
+                if (isCombo) return (
+                  <div key={item.id} style={{ padding: "6px 0" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: 15, color: C.text, fontWeight: 500 }}>{item.name}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                        <span style={{ fontSize: 14, color: C.textSec, fontWeight: 600, minWidth: 80, textAlign: "right" }}>$8</span>
+                        <button style={btnAdd} onClick={() => setComboExpanded(e => !e)}>
+                          {comboExpanded ? "▲ Close" : "+ Add"}
+                        </button>
+                      </div>
+                    </div>
+                    {comboExpanded && (
+                      <div style={{ marginTop: 8, background: dark ? "#2a2a2a" : "#f9f9f9", border: `1px solid ${C.borderTer}`, borderRadius: 8, padding: "10px 10px 8px" }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 8 }}>
+                          <div style={{ flex: 1, minWidth: 130 }}>
+                            <p style={{ ...smLabel, marginBottom: 4 }}>Fries</p>
+                            <select value={comboPickFries} onChange={e => setComboPickFries(e.target.value)} style={{ ...sel, width: "100%" }}>
+                              {FRIES_OPTIONS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                            </select>
+                          </div>
+                          <div style={{ flex: 1, minWidth: 160 }}>
+                            <p style={{ ...smLabel, marginBottom: 4 }}>Refreshment (S)</p>
+                            <select value={comboPickDrink} onChange={e => setComboPickDrink(e.target.value)} style={{ ...sel, width: "100%" }}>
+                              {REFRESHMENT_OPTIONS.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+                            </select>
+                          </div>
+                        </div>
+                        <button onClick={() => {
+                          const friesName = FRIES_OPTIONS.find(f => f.id === comboPickFries)?.name;
+                          const drinkName = REFRESHMENT_OPTIONS.find(r => r.id === comboPickDrink)?.name;
+                          addItem({ ...item, name: `Combo: ${friesName} + ${drinkName} (S)` }, cat);
+                          setComboExpanded(false);
+                        }} style={{ width: "100%", padding: "6px", fontSize: 14, cursor: "pointer", background: "#EF9F27", color: "#fff", border: "none", borderRadius: 7, fontWeight: 700 }}>
+                          ✓ Add combo — $8
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+
                 return (
                   <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderBottom: `1px solid ${C.borderTer}` }}>
                     <span style={{ fontSize: 15, color: C.text, fontWeight: 500, paddingRight: 8 }}>{item.name}</span>
@@ -339,25 +385,6 @@ function App() {
             {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#1d4407", fontSize: 12, padding: "1px 8px", borderRadius: 20, marginLeft: 6, fontWeight: 700 }}>{orderItems.length}</span>}
           </p>
 
-          {/* Combo banner */}
-          {hasFries && !hasCombo && (
-            <div style={{ ...card, background: "#FAEEDA", border: "1px solid #EF9F27", marginBottom: 8 }}>
-              <span style={{ fontSize: 15, fontWeight: 700, color: "#633806" }}>🏷️ Combo deal — $8</span>
-              <p style={{ margin: "4px 0 8px", fontSize: 14, color: "#854F0B" }}>Pick a small refreshment to bundle:</p>
-              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                <select value={comboPickDrink} onChange={e => setComboPickDrink(e.target.value)}
-                  style={{ ...sel, flex: 1, background: "#fff", border: "1px solid #EF9F27", color: "#633806" }}>
-                  {REFRESHMENT_OPTIONS.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-                </select>
-                <button onClick={() => {
-                  const drinkName = REFRESHMENT_OPTIONS.find(r => r.id === comboPickDrink)?.name;
-                  addItem({ ...MENU.combo.items[0], name: `Combo: fries + ${drinkName} (S)` }, MENU.combo);
-                }} style={{ fontSize: 14, padding: "5px 14px", cursor: "pointer", background: "#EF9F27", color: "#fff", border: "none", borderRadius: 7, fontWeight: 700, whiteSpace: "nowrap" }}>
-                  Apply $8
-                </button>
-              </div>
-            </div>
-          )}
 
           {orderItems.length === 0 && (
             <div style={{ ...card, textAlign: "center", padding: "1.8rem", color: C.textTer, fontSize: 15 }}>
