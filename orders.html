@@ -9,9 +9,9 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f5; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f0f0f0; font-size: 15px; }
   body.dark { background: #111; }
-  input, select, textarea, button { font-family: inherit; }
+  input, select, textarea, button { font-family: inherit; font-size: 15px; }
   select { cursor: pointer; }
 </style>
 </head>
@@ -132,11 +132,11 @@ function App() {
   }, [dark]);
 
   const C = dark ? {
-    bg: "#1e1e1e", bgSec: "#2a2a2a", text: "#f0f0f0", textSec: "#aaaaaa",
-    textTer: "#666", danger: "#ff6b6b", border: "#444", borderTer: "#333",
+    bg: "#1e1e1e", bgSec: "#2a2a2a", text: "#f0f0f0", textSec: "#bbbbbb",
+    textTer: "#777", danger: "#ff6b6b", border: "#555", borderTer: "#3a3a3a",
   } : {
-    bg: "#fff", bgSec: "#f7f7f7", text: "#222", textSec: "#666",
-    textTer: "#999", danger: "#c62828", border: "#ccc", borderTer: "#e5e5e5",
+    bg: "#fff", bgSec: "#f7f7f7", text: "#111", textSec: "#555",
+    textTer: "#888", danger: "#c62828", border: "#bbb", borderTer: "#e0e0e0",
   };
 
   const addItem = (item, cat) => {
@@ -196,49 +196,103 @@ function App() {
     setNotes(""); setShowSummary(false); setComboPickDrink(REFRESHMENT_OPTIONS[0].id);
   };
 
-  const card = { background: C.bg, border: `0.5px solid ${C.borderTer}`, borderRadius: 8, padding: "6px 10px", marginBottom: 5 };
-  const secTitle = { fontSize: 12, fontWeight: 600, color: C.textSec, margin: "0 0 3px", display: "flex", alignItems: "center", gap: 5, paddingBottom: 3, borderBottom: `0.5px solid ${C.borderTer}`, textTransform: "uppercase", letterSpacing: "0.04em" };
-  const btnAdd = { fontSize: 13, padding: "2px 8px", cursor: "pointer", background: "#EAF3DE", color: "#27500A", border: "0.5px solid #97C459", borderRadius: 5, lineHeight: 1.4 };
-  const sel = { fontSize: 13, padding: "2px 4px", borderRadius: 5, border: `0.5px solid ${C.border}`, background: C.bgSec, color: C.text };
-  const smLabel = { fontSize: 12, color: C.textTer };
-  const inputSt = { width: "100%", fontSize: 14, padding: "5px 8px", border: `0.5px solid ${C.border}`, borderRadius: 6, background: C.bg, color: C.text };
+  // Sizes scaled up across the board
+  const card = {
+    background: C.bg,
+    border: `1px solid ${C.borderTer}`,
+    borderRadius: 10,
+    padding: "8px 12px",
+    marginBottom: 7,
+  };
+
+  const secTitle = {
+    fontSize: 13,
+    fontWeight: 700,
+    color: C.textSec,
+    margin: "0 0 5px",
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    paddingBottom: 4,
+    borderBottom: `1px solid ${C.borderTer}`,
+    textTransform: "uppercase",
+    letterSpacing: "0.06em",
+  };
+
+  const btnAdd = {
+    fontSize: 14,
+    padding: "4px 11px",
+    cursor: "pointer",
+    background: "#EAF3DE",
+    color: "#1d4407",
+    border: "1px solid #7fb23f",
+    borderRadius: 6,
+    fontWeight: 600,
+    lineHeight: 1.4,
+    whiteSpace: "nowrap",
+  };
+
+  const sel = {
+    fontSize: 14,
+    padding: "3px 6px",
+    borderRadius: 6,
+    border: `1px solid ${C.border}`,
+    background: C.bgSec,
+    color: C.text,
+  };
+
+  const smLabel = {
+    fontSize: 13,
+    color: C.textTer,
+    fontWeight: 500,
+  };
+
+  const inputSt = {
+    width: "100%",
+    fontSize: 15,
+    padding: "7px 10px",
+    border: `1px solid ${C.border}`,
+    borderRadius: 7,
+    background: C.bg,
+    color: C.text,
+  };
 
   return (
-    <div style={{ padding: "10px 12px", minHeight: "100vh" }}>
+    <div style={{ padding: "12px 14px", minHeight: "100vh" }}>
 
       {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
-        <span style={{ fontSize: 15, fontWeight: 600, color: C.text }}>📞 Phone order — Sugar Brush</span>
-        <div style={{ display: "flex", gap: 5 }}>
-          <button onClick={() => setDark(d => !d)} style={{ fontSize: 13, padding: "4px 9px", background: dark ? "#f0f0f0" : "#222", color: dark ? "#222" : "#fff", border: "none", borderRadius: 6, fontWeight: 500, cursor: "pointer" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 6 }}>
+        <span style={{ fontSize: 17, fontWeight: 700, color: C.text }}>📞 Phone order — Sugar Brush</span>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => setDark(d => !d)} style={{ fontSize: 14, padding: "5px 11px", background: dark ? "#f0f0f0" : "#222", color: dark ? "#222" : "#fff", border: "none", borderRadius: 7, fontWeight: 600, cursor: "pointer" }}>
             {dark ? "☀️ Light" : "🌙 Dark"}
           </button>
           <a href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing" target="_blank" rel="noopener noreferrer"
-            style={{ fontSize: 13, padding: "4px 9px", background: "#1E3A1E", color: "#fff", borderRadius: 6, textDecoration: "none", fontWeight: 500 }}>
+            style={{ fontSize: 14, padding: "5px 11px", background: "#1E3A1E", color: "#fff", borderRadius: 7, textDecoration: "none", fontWeight: 600 }}>
             📋 Menu
           </a>
         </div>
       </div>
 
       {/* Customer info */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 6 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
         {[["Name","text",customerName,setCustomerName,"e.g. John"],["Phone","tel",customerPhone,setCustomerPhone,"0412 345 678"]].map(([lbl,type,val,set,ph]) => (
           <div key={lbl}>
-            <label style={{ ...smLabel, display: "block", marginBottom: 2 }}>{lbl}</label>
+            <label style={{ ...smLabel, display: "block", marginBottom: 3 }}>{lbl}</label>
             <input type={type} value={val} onChange={e => set(e.target.value)} placeholder={ph} style={inputSt} />
           </div>
         ))}
       </div>
 
       {/* Order type */}
-      <div style={{ display: "flex", gap: 5, marginBottom: 8 }}>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
         {["pickup","dinein"].map(type => (
           <button key={type} onClick={() => setOrderType(type)} style={{
-            flex: 1, padding: "5px", fontSize: 13, cursor: "pointer", borderRadius: 6,
-            fontWeight: orderType === type ? 600 : 400,
+            flex: 1, padding: "7px", fontSize: 15, cursor: "pointer", borderRadius: 7,
+            fontWeight: orderType === type ? 700 : 500,
             background: orderType === type ? (type === "pickup" ? "#EAF3DE" : "#E6F1FB") : C.bgSec,
-            color: orderType === type ? (type === "pickup" ? "#27500A" : "#0C447C") : C.textSec,
-            border: orderType === type ? `0.5px solid ${type === "pickup" ? "#97C459" : "#85B7EB"}` : `0.5px solid ${C.borderTer}`,
+            color: orderType === type ? (type === "pickup" ? "#1d4407" : "#0C447C") : C.textSec,
+            border: orderType === type ? `1.5px solid ${type === "pickup" ? "#7fb23f" : "#85B7EB"}` : `1px solid ${C.borderTer}`,
           }}>
             {type === "pickup" ? "🛍 Pick up" : "🪑 Dine in"}
           </button>
@@ -246,25 +300,29 @@ function App() {
       </div>
 
       {/* Two-column layout */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 12 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 14 }}>
 
         {/* Menu */}
         <div>
-          <p style={{ fontSize: 12, fontWeight: 600, color: C.textTer, margin: "0 0 5px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Menu</p>
+          <p style={{ fontSize: 13, fontWeight: 700, color: C.textTer, margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Menu</p>
           {Object.entries(MENU).map(([key, cat]) => (
             <div key={key} style={card}>
               <p style={secTitle}>
                 <span>{cat.icon}</span> {cat.label}
-                {cat.note && <span style={{ fontSize: 11, fontWeight: 400, color: C.textTer }}> — {cat.note}</span>}
+                {cat.note && <span style={{ fontSize: 12, fontWeight: 400, color: C.textTer }}> — {cat.note}</span>}
               </p>
-              {cat.askSpice && <p style={{ fontSize: 11, color: C.textTer, margin: "0 0 3px" }}>Spice: Sichuan 0/1/2 or Cumin</p>}
+              {cat.askSpice && <p style={{ fontSize: 13, color: C.textTer, margin: "0 0 5px" }}>Spice: Sichuan 0 / 1 / 2 or Cumin</p>}
               {cat.items.map(item => {
-                const priceStr = item.prices.one !== undefined ? `$${item.prices.one}` : item.noSmall ? `L $${item.prices.L}` : `S $${item.prices.S} / L $${item.prices.L}`;
+                const priceStr = item.prices.one !== undefined
+                  ? `$${item.prices.one}`
+                  : item.noSmall
+                    ? `L $${item.prices.L}`
+                    : `S $${item.prices.S} / L $${item.prices.L}`;
                 return (
-                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "3px 0", borderBottom: `0.5px solid ${C.borderTer}` }}>
-                    <span style={{ fontSize: 13, color: C.text }}>{item.name}</span>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5, flexShrink: 0 }}>
-                      <span style={{ fontSize: 12, color: C.textSec }}>{priceStr}</span>
+                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderBottom: `1px solid ${C.borderTer}` }}>
+                    <span style={{ fontSize: 15, color: C.text, fontWeight: 500, paddingRight: 8 }}>{item.name}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                      <span style={{ fontSize: 14, color: C.textSec, fontWeight: 600, minWidth: 80, textAlign: "right" }}>{priceStr}</span>
                       <button style={btnAdd} onClick={() => addItem(item, cat)}>+ Add</button>
                     </div>
                   </div>
@@ -276,25 +334,25 @@ function App() {
 
         {/* Order */}
         <div>
-          <p style={{ fontSize: 12, fontWeight: 600, color: C.textTer, margin: "0 0 5px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <p style={{ fontSize: 13, fontWeight: 700, color: C.textTer, margin: "0 0 6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
             Order
-            {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#27500A", fontSize: 11, padding: "1px 7px", borderRadius: 20, marginLeft: 5 }}>{orderItems.length}</span>}
+            {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#1d4407", fontSize: 12, padding: "1px 8px", borderRadius: 20, marginLeft: 6, fontWeight: 700 }}>{orderItems.length}</span>}
           </p>
 
           {/* Combo banner */}
           {hasFries && !hasCombo && (
-            <div style={{ ...card, background: "#FAEEDA", border: "0.5px solid #EF9F27", marginBottom: 6 }}>
-              <span style={{ fontSize: 13, fontWeight: 600, color: "#633806" }}>🏷️ Combo deal — $8</span>
-              <p style={{ margin: "3px 0 6px", fontSize: 12, color: "#854F0B" }}>Pick a small refreshment to bundle:</p>
-              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <div style={{ ...card, background: "#FAEEDA", border: "1px solid #EF9F27", marginBottom: 8 }}>
+              <span style={{ fontSize: 15, fontWeight: 700, color: "#633806" }}>🏷️ Combo deal — $8</span>
+              <p style={{ margin: "4px 0 8px", fontSize: 14, color: "#854F0B" }}>Pick a small refreshment to bundle:</p>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <select value={comboPickDrink} onChange={e => setComboPickDrink(e.target.value)}
-                  style={{ ...sel, flex: 1, background: "#fff", border: "0.5px solid #EF9F27", color: "#633806" }}>
+                  style={{ ...sel, flex: 1, background: "#fff", border: "1px solid #EF9F27", color: "#633806" }}>
                   {REFRESHMENT_OPTIONS.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
                 </select>
                 <button onClick={() => {
                   const drinkName = REFRESHMENT_OPTIONS.find(r => r.id === comboPickDrink)?.name;
                   addItem({ ...MENU.combo.items[0], name: `Combo: fries + ${drinkName} (S)` }, MENU.combo);
-                }} style={{ fontSize: 13, padding: "4px 12px", cursor: "pointer", background: "#EF9F27", color: "#fff", border: "none", borderRadius: 6, fontWeight: 600, whiteSpace: "nowrap" }}>
+                }} style={{ fontSize: 14, padding: "5px 14px", cursor: "pointer", background: "#EF9F27", color: "#fff", border: "none", borderRadius: 7, fontWeight: 700, whiteSpace: "nowrap" }}>
                   Apply $8
                 </button>
               </div>
@@ -302,7 +360,7 @@ function App() {
           )}
 
           {orderItems.length === 0 && (
-            <div style={{ ...card, textAlign: "center", padding: "1.2rem", color: C.textTer, fontSize: 13 }}>
+            <div style={{ ...card, textAlign: "center", padding: "1.8rem", color: C.textTer, fontSize: 15 }}>
               🛒 No items yet
             </div>
           )}
@@ -311,25 +369,25 @@ function App() {
             const price = getPrice(oi.baseItem, oi.size);
             return (
               <div key={oi.id} style={card}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
                   <div>
-                    <p style={{ margin: 0, fontSize: 13, fontWeight: 500, color: C.text }}>{oi.name}</p>
-                    <p style={{ margin: 0, fontSize: 11, color: C.textTer }}>{oi.category}</p>
+                    <p style={{ margin: 0, fontSize: 15, fontWeight: 600, color: C.text }}>{oi.name}</p>
+                    <p style={{ margin: "1px 0 0", fontSize: 13, color: C.textTer }}>{oi.category}</p>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>${(price * oi.qty).toFixed(2)}</span>
-                    <button onClick={() => removeItem(oi.id)} style={{ background: "none", border: "none", cursor: "pointer", color: C.danger, padding: 0, fontSize: 15 }}>🗑</button>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: C.text }}>${(price * oi.qty).toFixed(2)}</span>
+                    <button onClick={() => removeItem(oi.id)} style={{ background: "none", border: "none", cursor: "pointer", color: C.danger, padding: 0, fontSize: 18, lineHeight: 1 }}>🗑</button>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                     <span style={smLabel}>Qty</span>
-                    <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ ...sel, padding: "1px 7px", cursor: "pointer" }}>-</button>
-                    <span style={{ fontSize: 13, fontWeight: 600, minWidth: 16, textAlign: "center" }}>{oi.qty}</span>
-                    <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ ...sel, padding: "1px 7px", cursor: "pointer" }}>+</button>
+                    <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ ...sel, padding: "2px 9px", cursor: "pointer", fontWeight: 700 }}>−</button>
+                    <span style={{ fontSize: 15, fontWeight: 700, minWidth: 20, textAlign: "center", color: C.text }}>{oi.qty}</span>
+                    <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ ...sel, padding: "2px 9px", cursor: "pointer", fontWeight: 700 }}>+</button>
                   </div>
                   {oi.hasSize && !oi.baseItem.noSmall && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <span style={smLabel}>Size</span>
                       <select value={oi.size} onChange={e => updateItem(oi.id, "size", e.target.value)} style={sel}>
                         <option value="S">S</option><option value="L">L</option>
@@ -337,7 +395,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSauce && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <span style={smLabel}>Sauce</span>
                       <select value={oi.sauce} onChange={e => updateItem(oi.id, "sauce", e.target.value)} style={sel}>
                         <option>Tare</option><option>Soy & Mirin</option>
@@ -345,7 +403,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSeasoning && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <span style={smLabel}>Season</span>
                       <select value={oi.seasoning} onChange={e => updateItem(oi.id, "seasoning", e.target.value)} style={sel}>
                         <option>Cumin</option><option>Sichuan</option>
@@ -353,7 +411,7 @@ function App() {
                     </div>
                   )}
                   {oi.hasSpice && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <span style={smLabel}>Spice</span>
                       <select value={oi.spice} onChange={e => updateItem(oi.id, "spice", e.target.value)} style={sel}>
                         <option>Cumin</option><option>Sichuan 0</option><option>Sichuan 1</option><option>Sichuan 2</option>
@@ -367,29 +425,29 @@ function App() {
 
           {orderItems.length > 0 && (
             <>
-              <div style={{ ...card, background: C.bgSec, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "7px 10px" }}>
-                <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>Total</span>
-                <span style={{ fontSize: 18, fontWeight: 700, color: C.text }}>${total.toFixed(2)}</span>
+              <div style={{ ...card, background: C.bgSec, display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 12px" }}>
+                <span style={{ fontSize: 16, fontWeight: 700, color: C.text }}>Total</span>
+                <span style={{ fontSize: 22, fontWeight: 800, color: C.text }}>${total.toFixed(2)}</span>
               </div>
-              <div style={{ marginBottom: 6 }}>
-                <label style={{ ...smLabel, display: "block", marginBottom: 2 }}>Notes</label>
+              <div style={{ marginBottom: 8 }}>
+                <label style={{ ...smLabel, display: "block", marginBottom: 3 }}>Notes</label>
                 <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Special requests..." rows={2}
                   style={{ ...inputSt, resize: "none" }} />
               </div>
-              <div style={{ display: "flex", gap: 5 }}>
-                <button onClick={() => setShowSummary(s => !s)} style={{ flex: 1, padding: "6px", fontSize: 13, cursor: "pointer", background: "#EAF3DE", color: "#27500A", border: "0.5px solid #97C459", borderRadius: 6 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                <button onClick={() => setShowSummary(s => !s)} style={{ flex: 1, padding: "8px", fontSize: 14, cursor: "pointer", background: "#EAF3DE", color: "#1d4407", border: "1px solid #7fb23f", borderRadius: 7, fontWeight: 600 }}>
                   👁 {showSummary ? "Hide" : "View"}
                 </button>
-                <button onClick={copySummary} style={{ flex: 1, padding: "6px", fontSize: 13, cursor: "pointer", background: "#E6F1FB", color: "#0C447C", border: "0.5px solid #85B7EB", borderRadius: 6 }}>
+                <button onClick={copySummary} style={{ flex: 1, padding: "8px", fontSize: 14, cursor: "pointer", background: "#E6F1FB", color: "#0C447C", border: "1px solid #85B7EB", borderRadius: 7, fontWeight: 600 }}>
                   📋 Copy
                 </button>
-                <button onClick={resetOrder} style={{ padding: "6px 10px", fontSize: 13, cursor: "pointer", background: "#FCEBEB", color: "#791F1F", border: "0.5px solid #F09595", borderRadius: 6 }}>
+                <button onClick={resetOrder} style={{ padding: "8px 12px", fontSize: 14, cursor: "pointer", background: "#FCEBEB", color: "#791F1F", border: "1px solid #F09595", borderRadius: 7, fontWeight: 600 }}>
                   🔄
                 </button>
               </div>
               {showSummary && (
-                <div style={{ marginTop: 6, background: C.bgSec, border: `0.5px solid ${C.borderTer}`, borderRadius: 6, padding: "8px 10px" }}>
-                  <pre style={{ fontSize: 12, margin: 0, whiteSpace: "pre-wrap", color: C.text, fontFamily: "monospace", lineHeight: 1.5 }}>{buildSummary()}</pre>
+                <div style={{ marginTop: 8, background: C.bgSec, border: `1px solid ${C.borderTer}`, borderRadius: 7, padding: "10px 12px" }}>
+                  <pre style={{ fontSize: 13, margin: 0, whiteSpace: "pre-wrap", color: C.text, fontFamily: "monospace", lineHeight: 1.6 }}>{buildSummary()}</pre>
                 </div>
               )}
             </>
