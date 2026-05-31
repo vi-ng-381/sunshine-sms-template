@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const TODAY = new Date().toLocaleDateString("en-AU");
 
@@ -108,6 +108,32 @@ function App() {
   const [orderItems, setOrderItems] = useState([]);
   const [notes, setNotes] = useState("");
   const [showSummary, setShowSummary] = useState(false);
+  const [dark, setDark] = useState(() => localStorage.getItem("darkMode") === "true");
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", dark);
+    if (dark) {
+      document.body.style.background = "#111";
+      document.documentElement.style.setProperty("--color-background-primary", "#1e1e1e");
+      document.documentElement.style.setProperty("--color-background-secondary", "#2a2a2a");
+      document.documentElement.style.setProperty("--color-text-primary", "#f0f0f0");
+      document.documentElement.style.setProperty("--color-text-secondary", "#aaaaaa");
+      document.documentElement.style.setProperty("--color-text-tertiary", "#666666");
+      document.documentElement.style.setProperty("--color-text-danger", "#ff6b6b");
+      document.documentElement.style.setProperty("--color-border-secondary", "#444444");
+      document.documentElement.style.setProperty("--color-border-tertiary", "#333333");
+    } else {
+      document.body.style.background = "#f5f5f5";
+      document.documentElement.style.setProperty("--color-background-primary", "#ffffff");
+      document.documentElement.style.setProperty("--color-background-secondary", "#f7f7f7");
+      document.documentElement.style.setProperty("--color-text-primary", "#222222");
+      document.documentElement.style.setProperty("--color-text-secondary", "#666666");
+      document.documentElement.style.setProperty("--color-text-tertiary", "#999999");
+      document.documentElement.style.setProperty("--color-text-danger", "#c62828");
+      document.documentElement.style.setProperty("--color-border-secondary", "#cccccc");
+      document.documentElement.style.setProperty("--color-border-tertiary", "#e5e5e5");
+    }
+  }, [dark]);
 
   const addItem = (item, cat) => {
     const hasSize = cat.askSize;
@@ -223,28 +249,41 @@ function App() {
           <i className="ti ti-phone-incoming" aria-hidden="true" style={{ fontSize: 18, marginRight: 8 }}></i>
           Phone order — Sugar Brush Cafe
         </h2>
-        <a
-          href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            fontSize: 13,
-            padding: "6px 12px",
-            background: "#1E3A1E",
-            color: "#fff",
-            border: "none",
-            borderRadius: "var(--border-radius-md)",
-            textDecoration: "none",
-            fontWeight: 500,
-            cursor: "pointer",
-          }}
-        >
-          <i className="ti ti-menu-2" aria-hidden="true"></i>
-          View menu
-        </a>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setDark(d => !d)} style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            fontSize: 13, padding: "6px 12px",
+            background: dark ? "#f0f0f0" : "#222",
+            color: dark ? "#222" : "#fff",
+            border: "none", borderRadius: "var(--border-radius-md)",
+            fontWeight: 500, cursor: "pointer",
+          }}>
+            <i className={`ti ${dark ? "ti-sun" : "ti-moon"}`} aria-hidden="true"></i>
+            {dark ? "Light" : "Dark"}
+          </button>
+          <a
+            href="https://drive.google.com/file/d/1_eELe6FgHsTosJo9vwHHyhqw3AJq8jPk/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              padding: "6px 12px",
+              background: "#1E3A1E",
+              color: "#fff",
+              border: "none",
+              borderRadius: "var(--border-radius-md)",
+              textDecoration: "none",
+              fontWeight: 500,
+              cursor: "pointer",
+            }}
+          >
+            <i className="ti ti-menu-2" aria-hidden="true"></i>
+            View menu
+          </a>
+        </div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 16 }}>
