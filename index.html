@@ -3,608 +3,170 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 <title>Sunshine Badminton SMS Templates</title>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-
 <style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  font-size:14px;
-  background:#f5f5f5;
-  color:#222;
-  padding:20px;
-  transition:.2s;
-}
-
-.app{
-  display:grid;
-  grid-template-columns:240px 1fr;
-  min-height:700px;
-  border:1px solid #ddd;
-  border-radius:14px;
-  overflow:hidden;
-  background:white;
-}
-
-.sidebar{
-  border-right:1px solid #ddd;
-  background:#fafafa;
-  padding:12px 8px;
-}
-
-.sidebar-title{
-  font-size:11px;
-  font-weight:700;
-  color:#777;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  padding:4px 8px 10px;
-}
-
-.search-input{
-  width:100%;
-  padding:10px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  margin-bottom:14px;
-  font-size:13px;
-}
-
-.nav-item{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  color:#555;
-  font-size:13px;
-  transition:.15s;
-}
-
-.nav-item:hover{
-  background:white;
-  color:#111;
-}
-
-.nav-item.active{
-  background:white;
-  color:#111;
-  font-weight:600;
-}
-
-.main{
-  display:flex;
-  flex-direction:column;
-}
-
-.topbar{
-  padding:16px 20px;
-  border-bottom:1px solid #ddd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.topbar-title{
-  font-size:16px;
-  font-weight:700;
-}
-
-.badge{
-  font-size:11px;
-  padding:4px 10px;
-  border-radius:999px;
-  font-weight:700;
-}
-
-.theme-btn{
-  border:none;
-  background:#f3f3f3;
-  width:36px;
-  height:36px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.theme-btn:hover{
-  background:#e9e9e9;
-}
-
-.content{
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-
-.field-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.field label{
-  font-size:12px;
-  color:#666;
-  font-weight:600;
-}
-
-.field input{
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:8px;
-  width:100%;
-  font-size:13px;
-}
-
-.preview-label{
-  font-size:12px;
-  color:#666;
-  font-weight:600;
-  margin-bottom:6px;
-}
-
-.preview-box{
-  background:#fafafa;
-  border:1px solid #ddd;
-  border-radius:8px;
-  padding:14px;
-  font-size:13px;
-  line-height:1.7;
-  white-space:pre-wrap;
-  min-height:160px;
-}
-
-.char-count{
-  font-size:11px;
-  color:#888;
-  text-align:right;
-  margin-top:5px;
-}
-
-.action-row{
-  display:flex;
-  gap:10px;
-}
-
-button{
-  cursor:pointer;
-}
-
-.btn-copy{
-  padding:10px 18px;
-  border:none;
-  border-radius:8px;
-  background:#111;
-  color:white;
-  font-weight:600;
-}
-
-.btn-copy:hover{
-  opacity:.9;
-}
-
-.btn-reset{
-  padding:10px 14px;
-  border:1px solid #ccc;
-  border-radius:8px;
-  background:white;
-}
-
-body.dark{
-  background:#0f1115;
-  color:#f5f5f5;
-}
-
-body.dark .app{
-  background:#171a21;
-  border-color:#2a2f3a;
-}
-
-body.dark .sidebar{
-  background:#12151b;
-  border-color:#2a2f3a;
-}
-
-body.dark .topbar{
-  border-color:#2a2f3a;
-}
-
-body.dark .nav-item{
-  color:#b8c0cc;
-}
-
-body.dark .nav-item:hover{
-  background:#222733;
-  color:white;
-}
-
-body.dark .nav-item.active{
-  background:#2a3140;
-  color:white;
-}
-
-body.dark .field label{
-  color:#c9d1dc;
-}
-
-body.dark .field input{
-  background:#1d2330;
-  border-color:#30384a;
-  color:white;
-}
-
-body.dark .preview-label{
-  color:#c9d1dc;
-}
-
-body.dark .preview-box{
-  background:#1a1f2a;
-  border-color:#30384a;
-  color:#f5f5f5;
-}
-
-body.dark .btn-reset{
-  background:#1d2330;
-  color:white;
-  border-color:#30384a;
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;font-size:14px;background:#f5f5f5;color:#222;padding:20px;transition:.2s;}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:700px;border:1px solid #ddd;border-radius:14px;overflow:hidden;background:white;}
+.sidebar{border-right:1px solid #ddd;background:#fafafa;padding:12px 8px;}
+.sidebar-title{font-size:11px;font-weight:700;color:#777;letter-spacing:.05em;text-transform:uppercase;padding:4px 8px 10px;}
+.search-input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:14px;font-size:13px;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:10px;border-radius:8px;cursor:pointer;color:#555;font-size:13px;transition:.15s;}
+.nav-item:hover{background:white;color:#111;}
+.nav-item.active{background:white;color:#111;font-weight:600;}
+.main{display:flex;flex-direction:column;}
+.topbar{padding:16px 20px;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;}
+.topbar-title{font-size:16px;font-weight:700;}
+.badge{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;}
+.theme-btn{border:none;background:#f3f3f3;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:16px;}
+.theme-btn:hover{background:#e9e9e9;}
+.content{padding:20px;display:flex;flex-direction:column;gap:16px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:12px;color:#666;font-weight:600;}
+.field input{padding:10px;border:1px solid #ccc;border-radius:8px;width:100%;font-size:13px;}
+.preview-label{font-size:12px;color:#666;font-weight:600;margin-bottom:6px;}
+.preview-box{background:#fafafa;border:1px solid #ddd;border-radius:8px;padding:14px;font-size:13px;line-height:1.7;white-space:pre-wrap;min-height:160px;}
+.char-count{font-size:11px;color:#888;text-align:right;margin-top:5px;}
+.action-row{display:flex;gap:10px;}
+button{cursor:pointer;}
+.btn-copy{padding:10px 18px;border:none;border-radius:8px;background:#111;color:white;font-weight:600;}
+.btn-copy:hover{opacity:.9;}
+.btn-reset{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:white;}
+
+/* Smart paste styles */
+.paste-area{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #ccc;background:white;color:#222;font-size:13px;resize:none;line-height:1.5;min-height:44px;font-family:monospace;}
+.paste-area:focus{outline:2px solid #3b82f6;border-color:#3b82f6;}
+.auto-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:999px;background:#D1FAE5;color:#065F46;margin-left:4px;vertical-align:middle;font-weight:700;}
+.field input.autofilled{background:#f0fdf4;border-color:#86efac;}
+.reply-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.reply-card{border-radius:8px;border:1px solid #ddd;padding:12px;}
+.reply-card.y-card{background:#f0fdf4;border-color:#86efac;}
+.reply-card.n-card{background:#fef2f2;border-color:#fca5a5;}
+.reply-label{font-size:11px;font-weight:700;margin-bottom:6px;}
+.reply-label.y{color:#065F46;}
+.reply-label.n{color:#991B1B;}
+.reply-box{font-size:13px;line-height:1.7;white-space:pre-wrap;color:#222;}
+.reply-btn{margin-top:8px;padding:7px 14px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;}
+.reply-btn.y{background:#065F46;color:white;}
+.reply-btn.n{background:#991B1B;color:white;}
+.reply-btn:hover{opacity:.85;}
+.step-label{font-size:11px;color:#888;margin-bottom:4px;}
+.avatar-circle{width:38px;height:38px;border-radius:50%;background:#DBEAFE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1E40AF;flex-shrink:0;}
+
+/* Dark mode */
+body.dark{background:#0f1115;color:#f5f5f5;}
+body.dark .app{background:#171a21;border-color:#2a2f3a;}
+body.dark .sidebar{background:#12151b;border-color:#2a2f3a;}
+body.dark .topbar{border-color:#2a2f3a;}
+body.dark .nav-item{color:#b8c0cc;}
+body.dark .nav-item:hover{background:#222733;color:white;}
+body.dark .nav-item.active{background:#2a3140;color:white;}
+body.dark .field label{color:#c9d1dc;}
+body.dark .field input{background:#1d2330;border-color:#30384a;color:white;}
+body.dark .field input.autofilled{background:#064e3b;border-color:#059669;}
+body.dark .preview-label{color:#c9d1dc;}
+body.dark .preview-box{background:#1a1f2a;border-color:#30384a;color:#f5f5f5;}
+body.dark .btn-reset{background:#1d2330;color:white;border-color:#30384a;}
+body.dark .search-input{background:#1d2330;border-color:#30384a;color:white;}
+body.dark .theme-btn{background:#222733;color:white;}
+body.dark .theme-btn:hover{background:#2d3444;}
+body.dark .paste-area{background:#1d2330;border-color:#30384a;color:white;}
+body.dark .paste-area:focus{border-color:#3b82f6;}
+body.dark .reply-card{border-color:#30384a;}
+body.dark .reply-card.y-card{background:#064e3b;border-color:#059669;}
+body.dark .reply-card.n-card{background:#7f1d1d;border-color:#dc2626;}
+body.dark .reply-box{color:#f5f5f5;}
+body.dark .reply-label.y{color:#6ee7b7;}
+body.dark .reply-label.n{color:#fca5a5;}
+body.dark .step-label{color:#6b7280;}
+
+.restring-card{background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:20px;}
+.restring-table{width:100%;border-collapse:collapse;min-width:500px;}
+.restring-table th,.restring-table td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}
+.restring-table th{font-weight:700;background:#f5f5f5;}
+.court-wrap{border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-bottom:14px;}
+.court-table{width:100%;border-collapse:collapse;}
+.court-table thead tr{background:#f3f4f6;}
+.court-table th{padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6b7280;text-align:left;border-bottom:1px solid #e5e7eb;}
+.court-table td{padding:6px 10px;font-size:12px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+.court-table tbody tr:last-child td{border-bottom:none;}
+.court-table tr.time-slot td{background:#f8f9fb;font-weight:700;font-size:12px;color:#111;padding:6px 10px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;}
+.court-table tr.time-slot:first-of-type td{border-top:none;}
+.type-chip{display:inline-block;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;}
+.chip-casual{background:#FEF3C7;color:#92400E;}
+.chip-member{background:#D1FAE5;color:#065F46;}
+.chip-perm{background:#DBEAFE;color:#1E40AF;}
+.price-cell{font-weight:700;font-size:12px;color:#111;}
+.note-badge{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;}
+.note-peak{background:#FEE2E2;color:#991B1B;}
+.note-same{background:#EDE9FE;color:#5B21B6;}
+.note-cash{background:#D1FAE5;color:#065F46;}
+.price-notes{margin:10px 0 14px;padding:8px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;font-size:12px;line-height:1.8;}
+.price-notes ul{padding-left:16px;}
+.section-title{font-size:12px;font-weight:700;color:#374151;margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+body.dark .court-wrap{border-color:#2d3649;}
+body.dark .court-table thead tr{background:#1e2535;}
+body.dark .court-table th{color:#8b9ab0;border-bottom-color:#2d3649;}
+body.dark .court-table td{color:#e2e8f0;border-bottom-color:#232c3d;}
+body.dark .court-table tr.time-slot td{background:#1a2030;color:white;border-top-color:#2d3649;border-bottom-color:#2d3649;}
+body.dark .price-cell{color:white;}
+body.dark .chip-casual{background:#78350f;color:#fde68a;}
+body.dark .chip-member{background:#064e3b;color:#6ee7b7;}
+body.dark .chip-perm{background:#1e3a8a;color:#bfdbfe;}
+body.dark .note-peak{background:#7f1d1d;color:#fca5a5;}
+body.dark .note-same{background:#4c1d95;color:#c4b5fd;}
+body.dark .note-cash{background:#064e3b;color:#6ee7b7;}
+body.dark .section-title{color:#c9d1dc;}
+body.dark .price-notes{background:#2a2510;border-color:#6b5a1e;color:#f5e7b2;}
+body.dark .restring-card{background:#1a1f2a;border-color:#30384a;}
+body.dark .restring-table{color:#f5f5f5;}
+body.dark .restring-table th{background:#222733;color:white;}
+body.dark .restring-table td{color:#f5f5f5;}
+body.dark .restring-table th,body.dark .restring-table td{border-bottom:1px solid #3a4357;}
+body.dark .avatar-circle{background:#1e3a8a;color:#bfdbfe;}
+
+@media(max-width:768px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{border-right:none;border-bottom:1px solid #ddd;}
+  .field-row{grid-template-columns:1fr;}
+  .reply-grid{grid-template-columns:1fr;}
 }
-
-body.dark .search-input{
-  background:#1d2330;
-  border-color:#30384a;
-  color:white;
-}
-
-body.dark .theme-btn{
-  background:#222733;
-  color:white;
-}
-
-body.dark .theme-btn:hover{
-  background:#2d3444;
-}
-
-.restring-card{
-  background:#fafafa;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:20px;
-}
-
-.restring-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:500px;
-}
-
-.restring-table th,
-.restring-table td{
-  padding:12px;
-  text-align:left;
-  border-bottom:1px solid #ddd;
-}
-
-.restring-table th{
-  font-weight:700;
-  background:#f5f5f5;
-}
-
-/* Court price table */
-.court-wrap{
-  border:1px solid #e5e7eb;
-  border-radius:8px;
-  overflow:hidden;
-  margin-bottom:14px;
-}
-
-.court-table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-.court-table thead tr{
-  background:#f3f4f6;
-}
-
-.court-table th{
-  padding:6px 10px;
-  font-size:10px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.06em;
-  color:#6b7280;
-  text-align:left;
-  border-bottom:1px solid #e5e7eb;
-}
-
-.court-table td{
-  padding:6px 10px;
-  font-size:12px;
-  border-bottom:1px solid #f0f0f0;
-  vertical-align:middle;
-}
-
-.court-table tbody tr:last-child td{
-  border-bottom:none;
-}
-
-/* Time slot divider row */
-.court-table tr.time-slot td{
-  background:#f8f9fb;
-  font-weight:700;
-  font-size:12px;
-  color:#111;
-  padding:6px 10px;
-  border-top:1px solid #e5e7eb;
-  border-bottom:1px solid #e5e7eb;
-}
-
-.court-table tr.time-slot:first-of-type td{
-  border-top:none;
-}
-
-/* Type chip */
-.type-chip{
-  display:inline-block;
-  padding:2px 7px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:700;
-}
-
-.chip-casual { background:#FEF3C7; color:#92400E; }
-.chip-member { background:#D1FAE5; color:#065F46; }
-.chip-perm   { background:#DBEAFE; color:#1E40AF; }
-
-/* Price cell */
-.price-cell{
-  font-weight:700;
-  font-size:12px;
-  color:#111;
-}
-
-/* Note badge */
-.note-badge{
-  display:inline-block;
-  padding:1px 6px;
-  border-radius:4px;
-  font-size:10px;
-  font-weight:600;
-}
-
-.note-peak   { background:#FEE2E2; color:#991B1B; }
-.note-same   { background:#EDE9FE; color:#5B21B6; }
-.note-cash   { background:#D1FAE5; color:#065F46; }
-
-.price-notes{
-  margin:10px 0 14px;
-  padding:8px 12px;
-  background:#fffbeb;
-  border:1px solid #fde68a;
-  border-radius:7px;
-  font-size:12px;
-  line-height:1.8;
-}
-
-.price-notes ul{
-  padding-left:16px;
-}
-
-/* Section title */
-.section-title{
-  font-size:12px;
-  font-weight:700;
-  color:#374151;
-  margin-bottom:6px;
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-/* DARK overrides for court table */
-body.dark .court-wrap{
-  border-color:#2d3649;
-}
-
-body.dark .court-table thead tr{
-  background:#1e2535;
-}
-
-body.dark .court-table th{
-  color:#8b9ab0;
-  border-bottom-color:#2d3649;
-}
-
-body.dark .court-table td{
-  color:#e2e8f0;
-  border-bottom-color:#232c3d;
-}
-
-body.dark .court-table tr.time-slot td{
-  background:#1a2030;
-  color:white;
-  border-top-color:#2d3649;
-  border-bottom-color:#2d3649;
-}
-
-body.dark .price-cell{
-  color:white;
-}
-
-body.dark .chip-casual { background:#78350f; color:#fde68a; }
-body.dark .chip-member { background:#064e3b; color:#6ee7b7; }
-body.dark .chip-perm   { background:#1e3a8a; color:#bfdbfe; }
-
-body.dark .note-peak   { background:#7f1d1d; color:#fca5a5; }
-body.dark .note-same   { background:#4c1d95; color:#c4b5fd; }
-body.dark .note-cash   { background:#064e3b; color:#6ee7b7; }
-
-body.dark .section-title{ color:#c9d1dc; }
-
-body.dark .price-notes{
-  background:#2a2510;
-  border-color:#6b5a1e;
-  color:#f5e7b2;
-}
-
-/* DARK MODE */
-
-body.dark .restring-card{
-  background:#1a1f2a;
-  border-color:#30384a;
-}
-
-body.dark .restring-table{
-  color:#f5f5f5;
-}
-
-body.dark .restring-table th{
-  background:#222733;
-  color:white;
-}
-
-body.dark .restring-table td{
-  color:#f5f5f5;
-}
-
-body.dark .restring-table th,
-body.dark .restring-table td{
-  border-bottom:1px solid #3a4357;
-}
-
-
-
-@media (max-width:768px){
-
-  .app{
-    grid-template-columns:1fr;
-  }
-
-  .sidebar{
-    border-right:none;
-    border-bottom:1px solid #ddd;
-  }
-
-  .field-row{
-    grid-template-columns:1fr;
-  }
-}
-
 </style>
 </head>
-
 <body>
-  
-<div style="
-display:flex;
-gap:10px;
-margin-bottom:15px;
-">
 
-<a href="index.html" style="
-padding:10px 14px;
-background:#111;
-color:white;
-text-decoration:none;
-border-radius:8px;
-font-size:13px;
-font-weight:600;
-">
-SMS Templates
-</a>
-
-<a href="orders.html" style="
-padding:10px 14px;
-background:#111;
-color:white;
-text-decoration:none;
-border-radius:8px;
-font-size:13px;
-font-weight:600;
-">
-Orders
-</a>
-
+<div style="display:flex;gap:10px;margin-bottom:15px;">
+  <a href="index.html" style="padding:10px 14px;background:#111;color:white;text-decoration:none;border-radius:8px;font-size:13px;font-weight:600;">SMS Templates</a>
+  <a href="orders.html" style="padding:10px 14px;background:#111;color:white;text-decoration:none;border-radius:8px;font-size:13px;font-weight:600;">Orders</a>
 </div>
+
 <div class="app">
-
   <div class="sidebar">
-
-    <div class="sidebar-title">
-      Templates
-    </div>
-
-    <input
-      id="search"
-      class="search-input"
-      placeholder="Search templates..."
-      oninput="filterTemplates(this.value)"
-    >
-
+    <div class="sidebar-title">Templates</div>
+    <input id="search" class="search-input" placeholder="Search templates..." oninput="filterTemplates(this.value)">
     <div id="nav"></div>
-
   </div>
-
   <div class="main">
-
     <div class="topbar">
-
-      <span class="topbar-title" id="top-title">
-        Select a template
-      </span>
-
-      <div style="display:flex;align-items:center;gap:10px">
-
+      <span class="topbar-title" id="top-title">Select a template</span>
+      <div style="display:flex;align-items:center;gap:10px;">
         <span class="badge" id="top-badge"></span>
-
-        <button
-          id="themeToggle"
-          onclick="toggleTheme()"
-          class="theme-btn"
-        >
-          🌙
-        </button>
-
+        <button id="themeToggle" onclick="toggleTheme()" class="theme-btn">🌙</button>
       </div>
-
     </div>
-
     <div class="content" id="content">
-
-      <p style="color:#777;text-align:center;margin-top:2rem;">
-        Select a template from the sidebar
-      </p>
-
+      <p style="color:#777;text-align:center;margin-top:2rem;">Select a template from the sidebar</p>
     </div>
-
   </div>
-
 </div>
 
 <script>
-
 const SIGN = `Sunshine Badminton - https://sunshinebadminton.com.au
 Sugar Brush Cafe - https://instagram.com/sugarbrush.cafe`;
-const templates = [
 
+const templates = [
 {
   id:"confirm",
   cat:"Booking",
@@ -617,42 +179,16 @@ const templates = [
     {id:"court",label:"Court number",type:"text",placeholder:"e.g. 2"},
     {id:"time",label:"Time slot",type:"text",placeholder:"e.g. 4:30–5:30 PM"}
   ],
-  build:(f)=>`Hi ${f.name||"[Name]"}, your booking for ${f.when||"[date]"} is confirmed.
-
-Court ${f.court||"[#]"}: ${f.time||"[time]"}
-
-Please come upstairs for payment or assistance upon arrival.
-
-Thank you!
-${SIGN}`
+  build:(f)=>`Hi ${f.name||"[Name]"}, your booking for ${f.when||"[date]"} is confirmed.\n\nCourt ${f.court||"[#]"}: ${f.time||"[time]"}\n\nPlease come upstairs for payment or assistance upon arrival.\n\nThank you!\n${SIGN}`
 },
-
 {
   id:"reminder",
   cat:"Booking",
   icon:"ti-bell",
   label:"Session reminder",
   badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
-  fields:[
-    {id:"name",label:"Customer name",type:"text",placeholder:"e.g. David"},
-    {id:"court",label:"Court number",type:"text",placeholder:"e.g. 6"},
-    {id:"time",label:"Session time",type:"text",placeholder:"e.g. 5:00–7:00 PM"}
-  ],
-  build:(f)=>`Hi ${f.name||"[Name]"},
-
-Just a friendly reminder about your badminton session at Sunshine Badminton today.
-
-Court: ${f.court||"[Court]"}
-Time: ${f.time||"[Time]"}
-
-Please respond 'Y' to confirm or 'N' if you are unable to attend your session.
-
-Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.
-
-Thank you,
-${SIGN}`
+  smartPaste: true
 },
-
 {
   id:"adjust",
   cat:"Booking",
@@ -665,13 +201,8 @@ ${SIGN}`
     {id:"court",label:"New court",type:"text"},
     {id:"time",label:"New time",type:"text"}
   ],
-  build:(f)=>`Hi ${f.name||"[Name]"},
-
-We have adjusted your booking for ${f.date||"[date]"} so you can play on Court ${f.court||"[#]"} from ${f.time||"[time]"} for the entire session.
-
-${SIGN}`
+  build:(f)=>`Hi ${f.name||"[Name]"},\n\nWe have adjusted your booking for ${f.date||"[date]"} so you can play on Court ${f.court||"[#]"} from ${f.time||"[time]"} for the entire session.\n\n${SIGN}`
 },
-
 {
   id:"cancel",
   cat:"Cancellation",
@@ -684,61 +215,26 @@ ${SIGN}`
     {id:"date",label:"Date",type:"text"},
     {id:"time",label:"Booking time",type:"text"}
   ],
-  build:(f)=>`Hi ${f.name||"[Name]"},
-
-Your booking on Court ${f.court||"[#]"} (${f.date||"[date]"}, ${f.time||"[time]"}) has been cancelled. The refund will be returned to your account within 5–7 business days (please allow for possible delays).
-
-Kindly ignore any updates that may still appear in the booking system, as the booking has already been cancelled.
-
-${SIGN}`
+  build:(f)=>`Hi ${f.name||"[Name]"},\n\nYour booking on Court ${f.court||"[#]"} (${f.date||"[date]"}, ${f.time||"[time]"}) has been cancelled. The refund will be returned to your account within 5–7 business days (please allow for possible delays).\n\nKindly ignore any updates that may still appear in the booking system, as the booking has already been cancelled.\n\n${SIGN}`
 },
-
 {
   id:"website",
   cat:"Info",
   icon:"ti-world",
   label:"Website & hours",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
-  fields:[
-  {id:"name",label:"Customer name",type:"text"}
-  ],
-  build:(f)=>`Hi ${f.name||"there"},
-
-You can book online anytime at:
-https://sunshinebadminton.com.au
-
-Opening hours:
-6:00 AM - 11:00 PM
-
-Staffed hours:
-Mon-Fri 12:00-11:00 PM
-Sat-Sun 9:00 AM-11:00 PM
-
-${SIGN}`
+  fields:[{id:"name",label:"Customer name",type:"text"}],
+  build:(f)=>`Hi ${f.name||"there"},\n\nYou can book online anytime at:\nhttps://sunshinebadminton.com.au\n\nOpening hours:\n6:00 AM - 11:00 PM\n\nStaffed hours:\nMon-Fri 12:00-11:00 PM\nSat-Sun 9:00 AM-11:00 PM\n\n${SIGN}`
 },
-
 {
   id:"membership",
   cat:"Info",
   icon:"ti-id-badge",
   label:"Membership benefits",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
-  fields:[
-    {id:"name",label:"Customer name",type:"text"}
-  ],
-  build:(f)=>`Hi ${f.name||"there"},
-
-Here's a quick overview of our membership:
-
-- $50/year
-- Book up to 4 weeks in advance
-- Free shuttle machine access
-- Free professional racket for each member
-- Discounted court rates
-
-${SIGN}`
+  fields:[{id:"name",label:"Customer name",type:"text"}],
+  build:(f)=>`Hi ${f.name||"there"},\n\nHere's a quick overview of our membership:\n\n- $50/year\n- Book up to 4 weeks in advance\n- Free shuttle machine access\n- Free professional racket for each member\n- Discounted court rates\n\n${SIGN}`
 },
-
 {
   id:"court-prices",
   cat:"Info",
@@ -747,160 +243,8 @@ ${SIGN}`
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
   fields:[],
   imageOnly:true,
-  build:()=>`<div class="restring-card">
-
-<h2 style="margin-bottom:10px;font-size:15px;">🏸 Court Prices</h2>
-
-<div class="price-notes">
-  <strong>✅ Notes:</strong>
-  <ul>
-    <li><strong>Permanent</strong> is cheaper if paying by cash.</li>
-    <li>4–6 PM and 10–11 PM have the same (cheaper) rate.</li>
-    <li>6–10 PM is <strong>peak hour</strong> (higher rate).</li>
-  </ul>
-</div>
-
-<div class="section-title">📅 Weekday Pricing</div>
-<div class="court-wrap" style="margin-bottom:20px;">
-  <table class="court-table">
-    <thead>
-      <tr>
-        <th style="width:38%">Time Slot</th>
-        <th>Type</th>
-        <th>Cash</th>
-        <th>Card</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <tr class="time-slot">
-        <td colspan="5">⏰ 6:00 AM – 4:00 PM</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-casual">Casual</span></td>
-        <td class="price-cell">$15</td>
-        <td class="price-cell">$15</td>
-        <td></td>
-      </tr>
-
-      <tr class="time-slot">
-        <td colspan="5">⏰ 4:00 PM – 6:00 PM</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-casual">Casual</span></td>
-        <td class="price-cell">$18</td>
-        <td class="price-cell">$18</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-member">Member</span></td>
-        <td class="price-cell">$15</td>
-        <td class="price-cell">$15</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-perm">Permanent</span></td>
-        <td class="price-cell">$15</td>
-        <td class="price-cell">$15</td>
-        <td><span class="note-badge note-same">Same as Member</span></td>
-      </tr>
-
-      <tr class="time-slot">
-        <td colspan="5">🔴 6:00 PM – 10:00 PM &nbsp;<span class="note-badge note-peak">Peak</span></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-casual">Casual</span></td>
-        <td class="price-cell">$29</td>
-        <td class="price-cell">$29</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-member">Member</span></td>
-        <td class="price-cell">$27</td>
-        <td class="price-cell">$27</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-perm">Permanent</span></td>
-        <td class="price-cell">$25</td>
-        <td class="price-cell">$27</td>
-        <td><span class="note-badge note-cash">Cash cheaper</span></td>
-      </tr>
-
-      <tr class="time-slot">
-        <td colspan="5">⏰ 10:00 PM – 11:00 PM</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-casual">Casual</span></td>
-        <td class="price-cell">$18</td>
-        <td class="price-cell">$18</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-member">Member</span></td>
-        <td class="price-cell">$15</td>
-        <td class="price-cell">$15</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><span class="type-chip chip-perm">Permanent</span></td>
-        <td class="price-cell">$15</td>
-        <td class="price-cell">$15</td>
-        <td><span class="note-badge note-same">Same as Member</span></td>
-      </tr>
-
-    </tbody>
-  </table>
-</div>
-
-<div class="section-title">📅 Weekend Pricing <span style="font-weight:400;color:#6b7280;font-size:12px;">(Flat Rate)</span></div>
-<div class="court-wrap">
-  <table class="court-table">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Cash</th>
-        <th>Card</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="type-chip chip-casual">Casual</span></td>
-        <td class="price-cell">$26</td>
-        <td class="price-cell">$26</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="type-chip chip-member">Member</span></td>
-        <td class="price-cell">$25</td>
-        <td class="price-cell">$25</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="type-chip chip-perm">Permanent</span></td>
-        <td class="price-cell">$24</td>
-        <td class="price-cell">$25</td>
-        <td><span class="note-badge note-cash">Cash cheaper</span></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-</div>`
+  build:()=>`<div class="restring-card"><h2 style="margin-bottom:10px;font-size:15px;">🏸 Court Prices</h2><div class="price-notes"><strong>✅ Notes:</strong><ul><li><strong>Permanent</strong> is cheaper if paying by cash.</li><li>4–6 PM and 10–11 PM have the same (cheaper) rate.</li><li>6–10 PM is <strong>peak hour</strong> (higher rate).</li></ul></div><div class="section-title">📅 Weekday Pricing</div><div class="court-wrap" style="margin-bottom:20px;"><table class="court-table"><thead><tr><th style="width:38%">Time Slot</th><th>Type</th><th>Cash</th><th>Card</th><th>Notes</th></tr></thead><tbody><tr class="time-slot"><td colspan="5">⏰ 6:00 AM – 4:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr class="time-slot"><td colspan="5">⏰ 4:00 PM – 6:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$18</td><td class="price-cell">$18</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td><span class="note-badge note-same">Same as Member</span></td></tr><tr class="time-slot"><td colspan="5">🔴 6:00 PM – 10:00 PM &nbsp;<span class="note-badge note-peak">Peak</span></td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$29</td><td class="price-cell">$29</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$27</td><td class="price-cell">$27</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$25</td><td class="price-cell">$27</td><td><span class="note-badge note-cash">Cash cheaper</span></td></tr><tr class="time-slot"><td colspan="5">⏰ 10:00 PM – 11:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$18</td><td class="price-cell">$18</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td><span class="note-badge note-same">Same as Member</span></td></tr></tbody></table></div><div class="section-title">📅 Weekend Pricing <span style="font-weight:400;color:#6b7280;font-size:12px;">(Flat Rate)</span></div><div class="court-wrap"><table class="court-table"><thead><tr><th>Type</th><th>Cash</th><th>Card</th><th>Notes</th></tr></thead><tbody><tr><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$26</td><td class="price-cell">$26</td><td></td></tr><tr><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$25</td><td class="price-cell">$25</td><td></td></tr><tr><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$24</td><td class="price-cell">$25</td><td><span class="note-badge note-cash">Cash cheaper</span></td></tr></tbody></table></div></div>`
 },
-
 {
   id:"restring-options",
   cat:"Info",
@@ -909,93 +253,26 @@ ${SIGN}`
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
   fields:[],
   imageOnly:true,
-  build:()=>`
-
-<div class="restring-card">
-
-<h2 style="margin-bottom:18px;">
-🏸 Restringing Options & Colours
-</h2>
-
-<div style="overflow-x:auto;">
-  <table class="restring-table">
-
-<tr>
-  <th>Brand</th>
-  <th>String</th>
-  <th>Colours</th>
-</tr>
-
-<tr><td>Yonex</td><td>BG 65</td><td>White</td></tr>
-<tr><td>Yonex</td><td>BG 65TI</td><td>White</td></tr>
-<tr><td>Yonex</td><td>BG 80</td><td>Blue, Yellow</td></tr>
-<tr><td>Yonex</td><td>BG 80 Power</td><td>White</td></tr>
-<tr><td>Yonex</td><td>BG 66 Ultimax</td><td>Navy, Red</td></tr>
-<tr><td>Yonex</td><td>Nano 95</td><td>Yellow, White</td></tr>
-<tr><td>Yonex</td><td>Nano 98</td><td>Yellow</td></tr>
-<tr><td>Yonex</td><td>Exbolt 63</td><td>Blue, Pink</td></tr>
-<tr><td>Yonex</td><td>Exbolt 65</td><td>Yellow, Purple</td></tr>
-<tr><td>Yonex</td><td>Exbolt 68</td><td>Yellow, Green</td></tr>
-<tr><td>Yonex</td><td>Aerobite</td><td>Red</td></tr>
-<tr><td>Li-Ning</td><td>No1</td><td>Yellow</td></tr>
-
-</table>
-
-</div>
-
-`
+  build:()=>`<div class="restring-card"><h2 style="margin-bottom:18px;">🏸 Restringing Options & Colours</h2><div style="overflow-x:auto;"><table class="restring-table"><tr><th>Brand</th><th>String</th><th>Colours</th></tr><tr><td>Yonex</td><td>BG 65</td><td>White</td></tr><tr><td>Yonex</td><td>BG 65TI</td><td>White</td></tr><tr><td>Yonex</td><td>BG 80</td><td>Blue, Yellow</td></tr><tr><td>Yonex</td><td>BG 80 Power</td><td>White</td></tr><tr><td>Yonex</td><td>BG 66 Ultimax</td><td>Navy, Red</td></tr><tr><td>Yonex</td><td>Nano 95</td><td>Yellow, White</td></tr><tr><td>Yonex</td><td>Nano 98</td><td>Yellow</td></tr><tr><td>Yonex</td><td>Exbolt 63</td><td>Blue, Pink</td></tr><tr><td>Yonex</td><td>Exbolt 65</td><td>Yellow, Purple</td></tr><tr><td>Yonex</td><td>Exbolt 68</td><td>Yellow, Green</td></tr><tr><td>Yonex</td><td>Aerobite</td><td>Red</td></tr><tr><td>Li-Ning</td><td>No1</td><td>Yellow</td></tr></table></div>`
 },
-
 {
   id:"restring",
   cat:"Info",
   icon:"ti-settings",
   label:"Restringing price",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
-  fields:[
-    {id:"name",label:"Customer name",type:"text"}
-  ],
-  build:(f)=>`Hi ${f.name||"there"},
-
-Here are our restringing prices:
-
-Standard strings: $30
-Premium strings: $35
-Your own strings: $25
-
-Turnaround: up to 3 days.
-
-${SIGN}`
+  fields:[{id:"name",label:"Customer name",type:"text"}],
+  build:(f)=>`Hi ${f.name||"there"},\n\nHere are our restringing prices:\n\nStandard strings: $30\nPremium strings: $35\nYour own strings: $25\n\nTurnaround: up to 3 days.\n\n${SIGN}`
 },
-
 {
   id:"shuttlecock",
   cat:"Info",
   icon:"ti-shopping-bag",
   label:"Shuttlecock prices",
   badge:{text:"Shop",bg:"#E8F5E9",color:"#1B5E20"},
-  fields:[
-    {id:"name",label:"Customer name",type:"text",placeholder:"e.g. there"}
-  ],
-  build:(f)=>`Hi ${f.name||"there"},
-
-Yes, we do sell shuttlecocks 🏸
-
-Available options:
-
-• Chaopai Silver
-  - $3.50 each
-  - $38 per tube
-
-• Chaopai Pink
-  - $48 per tube
-
-• Aeroplane Black
-  - $70 per tube
-
-${SIGN}`
+  fields:[{id:"name",label:"Customer name",type:"text",placeholder:"e.g. there"}],
+  build:(f)=>`Hi ${f.name||"there"},\n\nYes, we do sell shuttlecocks 🏸\n\nAvailable options:\n\n• Chaopai Silver\n  - $3.50 each\n  - $38 per tube\n\n• Chaopai Pink\n  - $48 per tube\n\n• Aeroplane Black\n  - $70 per tube\n\n${SIGN}`
 },
-
 {
   id:"coaching",
   cat:"Coaching",
@@ -1003,343 +280,314 @@ ${SIGN}`
   label:"Coach contacts",
   badge:{text:"Coaching",bg:"#EEEDFE",color:"#3C3489"},
   fields:[],
-  build:()=>`Hi there,
-
-Here are our coaches' contact details:
-
-Coach Tonny: 0424 310 794
-Coach Owin: 0481 810 370
-Coach Zen: 0431 817 369
-Coach Zhipeng: 0406 380 738
-Coach Lucas: 0433 512 868 
-Coach Danny: 0448 251 934 
-
-${SIGN}`
+  build:()=>`Hi there,\n\nHere are our coaches' contact details:\n\nCoach Tonny: 0424 310 794\nCoach Owin: 0481 810 370\nCoach Zen: 0431 817 369\nCoach Zhipeng: 0406 380 738\nCoach Lucas: 0433 512 868\nCoach Danny: 0448 251 934\n\n${SIGN}`
 },
-
 {
   id:"social",
   cat:"Social",
   icon:"ti-users",
   label:"Social weekly schedule",
   badge:{text:"Social",bg:"#FFF4E5",color:"#9A5B00"},
-  fields:[
-    {id:"name",label:"Customer name",type:"text"}
-  ],
-  build:(f)=>`Hi ${f.name||"there"}!
-
-We have social groups running throughout the week. You can check out the schedule below:
-
-🏸 Sunshine Badminton – Social Weekly Schedule
-
-Monday
-• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235
-
-Tuesday
-• 7:30 PM – 10:30 PM: Luong Ly Social (Mixed Levels) – 0433964199
-
-Wednesday
-• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158
-• 7:30 PM – 10:00 PM: NP Social (Mixed Levels) – 0426 789 222
-
-Thursday
-• 7:30 PM – 10:00 PM: Luong Ly Social (Mixed Levels) – 0433964199
-
-Friday
-• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235
-• 7:30 PM – 10:30 PM: Anh Pham (Intermediate Levels) – 0420 485 712
-
-Saturday
-• 2:00 PM – 4:00 PM: Rowel Mira (Mixed Levels) – 0481 874 500
-• 4:00 PM – 7:00 PM: Patrick & Ngoc (Mixed Levels) – 0418 377 311
-
-Sunday
-• 11:00 AM – 1:00 PM: NP Social (Mixed Levels) – 0481 810 370
-• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158
-
-${SIGN}`
+  fields:[{id:"name",label:"Customer name",type:"text"}],
+  build:(f)=>`Hi ${f.name||"there"}!\n\nWe have social groups running throughout the week. You can check out the schedule below:\n\n🏸 Sunshine Badminton – Social Weekly Schedule\n\nMonday\n• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235\n\nTuesday\n• 7:30 PM – 10:30 PM: Luong Ly Social (Mixed Levels) – 0433964199\n\nWednesday\n• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158\n• 7:30 PM – 10:00 PM: NP Social (Mixed Levels) – 0426 789 222\n\nThursday\n• 7:30 PM – 10:00 PM: Luong Ly Social (Mixed Levels) – 0433964199\n\nFriday\n• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235\n• 7:30 PM – 10:30 PM: Anh Pham (Intermediate Levels) – 0420 485 712\n\nSaturday\n• 2:00 PM – 4:00 PM: Rowel Mira (Mixed Levels) – 0481 874 500\n• 4:00 PM – 7:00 PM: Patrick & Ngoc (Mixed Levels) – 0418 377 311\n\nSunday\n• 11:00 AM – 1:00 PM: NP Social (Mixed Levels) – 0481 810 370\n• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158\n\n${SIGN}`
 }
-
 ];
 
 let current = null;
-
 const fieldVals = {};
 
-function buildNav(){
+/* ── Smart paste helpers ── */
+function spInitials(n){
+  const p=n.trim().split(/\s+/);
+  return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():n.slice(0,2).toUpperCase();
+}
 
-  const cats = [...new Set(templates.map(t=>t.cat))];
+function spFormatTime(raw){
+  const sep=raw.match(/[–\-]/);
+  if(!sep) return raw;
+  const parts=raw.split(/[–\-]/);
+  if(parts.length!==2) return raw;
+  function half(s){
+    s=s.trim();
+    const ap=s.match(/(am|pm)$/i);
+    const suffix=ap?ap[1].toUpperCase():'';
+    s=s.replace(/(am|pm)$/i,'').trim();
+    const m=s.match(/^(\d{1,2})(?::(\d{2}))?$/);
+    if(!m) return s+suffix;
+    return m[1]+'.'+(m[2]||'00')+suffix;
+  }
+  return half(parts[0])+'-'+half(parts[1]);
+}
 
-  const nav = document.getElementById("nav");
+function spParse(){
+  const raw=document.getElementById('sp-raw').value.trim();
+  if(!raw){
+    document.getElementById('sp-parsed').style.display='none';
+    return;
+  }
+  const courtMatch=raw.match(/Court\s*(\w+)/i);
+  const timeMatch=raw.match(/(\d{1,2}:\d{2}\s*[ap]m\s*[–\-]\s*\d{1,2}:\d{2}\s*[ap]m)/i);
+  const phoneMatch=raw.match(/(\d[\d\s]{7,14}\d)/);
+  const afterTime=raw.replace(/Court\s*\w+/i,'').replace(timeMatch?timeMatch[0]:'','');
+  const nameMatch=afterTime.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+  const nameVal=nameMatch?nameMatch[1].trim():'';
 
-  nav.innerHTML = "";
+  const courtVal=courtMatch?courtMatch[1]:'';
+  const timeVal=timeMatch?spFormatTime(timeMatch[1]):'';
+  const phoneVal=phoneMatch?phoneMatch[1].replace(/\s/g,''):'';
+  const firstName=nameVal.split(' ')[0]||'';
 
-  cats.forEach(cat=>{
+  function setF(id,val,tagId){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.value=val;
+    el.className=val?'autofilled':'';
+    const t=document.getElementById(tagId);
+    if(t) t.style.display=val?'inline-block':'none';
+  }
+  setF('sp-court',courtVal,'sp-tc');
+  setF('sp-time',timeVal,'sp-tt');
+  setF('sp-name',firstName,'sp-tn');
+  setF('sp-phone',phoneVal,'sp-tp');
 
-    const section = document.createElement("div");
+  const av=document.getElementById('sp-avatar');
+  if(av) av.textContent=nameVal?spInitials(nameVal):'?';
+  const dn=document.getElementById('sp-dispname');
+  if(dn) dn.textContent=nameVal||'—';
+  const dp=document.getElementById('sp-dispphone');
+  if(dp) dp.textContent=phoneVal||'—';
 
-    section.innerHTML = `
-      <div style="
-        font-size:11px;
-        color:#777;
-        padding:10px 8px 4px;
-        font-weight:700;
-        text-transform:uppercase;
-      ">
-        ${cat}
+  document.getElementById('sp-parsed').style.display='block';
+  spGen();
+}
+
+function spGen(){
+  const fn=(document.getElementById('sp-name')||{}).value||'there';
+  const court=(document.getElementById('sp-court')||{}).value||'[court]';
+  const time=(document.getElementById('sp-time')||{}).value||'[time]';
+  const msg=`Hi ${fn},\nJust a friendly reminder about your badminton session at Sunshine Badminton today.\nCourt: ${court}\nTime: ${time}\nPlease respond 'Y' to confirm or 'N' if you are unable to attend your sessions. Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.\nThank you,\nSunshine Badminton x Sugar Brush`;
+  const el=document.getElementById('sp-preview');
+  if(el) el.textContent=msg;
+  const yn=document.getElementById('sp-msg-y');
+  if(yn) yn.textContent='Thanks for your confirmation, see you soon.';
+  const nn=document.getElementById('sp-msg-n');
+  if(nn) nn.textContent=`No worries ${fn}, we have removed your booking. Hope to see you next time!\nSunshine Badminton x Sugar Brush`;
+}
+
+function spCopyPhone(){
+  const p=(document.getElementById('sp-phone')||{}).value||'';
+  if(!p) return;
+  navigator.clipboard.writeText(p).then(()=>{
+    const b=document.getElementById('sp-pbtn');
+    if(b){b.innerHTML='✓ Copied';setTimeout(()=>b.innerHTML='<i class="ti ti-copy"></i> Copy phone',1500);}
+  });
+}
+
+function spCopy(boxId, btnId){
+  const t=(document.getElementById(boxId)||{}).textContent||'';
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById(btnId);
+    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
+  });
+}
+
+function spClear(){
+  const raw=document.getElementById('sp-raw');
+  if(raw) raw.value='';
+  document.getElementById('sp-parsed').style.display='none';
+  ['sp-court','sp-time','sp-name','sp-phone'].forEach(id=>{
+    const e=document.getElementById(id);if(e){e.value='';e.className='';}
+  });
+  ['sp-tc','sp-tt','sp-tn','sp-tp'].forEach(id=>{
+    const e=document.getElementById(id);if(e) e.style.display='none';
+  });
+}
+
+function renderSmartPaste(){
+  return `
+  <div>
+    <div class="step-label">Step 1 — copy the line from YepBooking and paste below</div>
+    <textarea id="sp-raw" class="paste-area" rows="2"
+      placeholder="Court 2&#9;5:00pm–7:00pm  Danny Trang, 0448251934"
+      oninput="spParse()"></textarea>
+  </div>
+
+  <div id="sp-parsed" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0 14px;">
+      <div class="avatar-circle" id="sp-avatar">?</div>
+      <div>
+        <div style="font-weight:700;font-size:14px;" id="sp-dispname">—</div>
+        <div style="font-size:12px;color:#888;" id="sp-dispphone">—</div>
       </div>
-    `;
+    </div>
 
-    templates
-      .filter(t=>t.cat===cat)
-      .forEach(t=>{
+    <div class="field-row" style="grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div class="field">
+        <label>Court <span class="auto-tag" id="sp-tc" style="display:none;">auto</span></label>
+        <input id="sp-court" type="text" oninput="spGen()" />
+      </div>
+      <div class="field">
+        <label>Time <span class="auto-tag" id="sp-tt" style="display:none;">auto</span></label>
+        <input id="sp-time" type="text" oninput="spGen()" />
+      </div>
+      <div class="field">
+        <label>First name <span class="auto-tag" id="sp-tn" style="display:none;">auto</span></label>
+        <input id="sp-name" type="text" oninput="spGen()" />
+      </div>
+    </div>
 
-        const el = document.createElement("div");
+    <div class="field-row" style="margin-top:10px;">
+      <div class="field">
+        <label>Phone <span class="auto-tag" id="sp-tp" style="display:none;">auto</span></label>
+        <div style="display:flex;gap:6px;">
+          <input id="sp-phone" type="text" style="flex:1;" />
+          <button id="sp-pbtn" onclick="spCopyPhone()" class="btn-reset" style="display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:12px;">
+            <i class="ti ti-copy"></i> Copy phone
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Date (optional)</label>
+        <input id="sp-date" type="text" placeholder="leave blank for today" />
+      </div>
+    </div>
 
-        el.className = "nav-item";
+    <div style="margin-top:16px;">
+      <div class="step-label">Step 2 — copy reminder and send in Zoom</div>
+      <div class="preview-label" style="margin-top:6px;">Message preview</div>
+      <div class="preview-box" id="sp-preview"></div>
+      <div class="action-row" style="margin-top:10px;">
+        <button id="sp-copy-btn" class="btn-copy" onclick="spCopy('sp-preview','sp-copy-btn')">Copy reminder</button>
+        <button class="btn-reset" onclick="spClear()">Clear</button>
+      </div>
+    </div>
 
-        el.id = "nav-"+t.id;
+    <div style="margin-top:20px;border-top:1px solid #eee;padding-top:16px;">
+      <div class="step-label">Step 3 — when they reply, copy the right response</div>
+      <div class="reply-grid" style="margin-top:8px;">
+        <div class="reply-card y-card">
+          <div class="reply-label y">They replied Y ✅</div>
+          <div class="reply-box" id="sp-msg-y"></div>
+          <button id="sp-y-btn" class="reply-btn y" onclick="spCopy('sp-msg-y','sp-y-btn')">Copy reply</button>
+        </div>
+        <div class="reply-card n-card">
+          <div class="reply-label n">They replied N ❌</div>
+          <div class="reply-box" id="sp-msg-n"></div>
+          <button id="sp-n-btn" class="reply-btn n" onclick="spCopy('sp-msg-n','sp-n-btn')">Copy reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+}
 
-        el.innerHTML = `
-          <i class="ti ${t.icon}"></i>
-          ${t.label}
-        `;
-
-        el.onclick = ()=>selectTemplate(t.id);
-
-        section.appendChild(el);
-
-      });
-
+/* ── Nav ── */
+function buildNav(){
+  const cats=[...new Set(templates.map(t=>t.cat))];
+  const nav=document.getElementById("nav");
+  nav.innerHTML="";
+  cats.forEach(cat=>{
+    const section=document.createElement("div");
+    section.innerHTML=`<div style="font-size:11px;color:#777;padding:10px 8px 4px;font-weight:700;text-transform:uppercase;">${cat}</div>`;
+    templates.filter(t=>t.cat===cat).forEach(t=>{
+      const el=document.createElement("div");
+      el.className="nav-item";
+      el.id="nav-"+t.id;
+      el.innerHTML=`<i class="ti ${t.icon}"></i>${t.label}`;
+      el.onclick=()=>selectTemplate(t.id);
+      section.appendChild(el);
+    });
     nav.appendChild(section);
-
   });
 }
 
 function selectTemplate(id){
-
-  current = templates.find(t=>t.id===id);
-
+  current=templates.find(t=>t.id===id);
   localStorage.setItem("lastTemplate",id);
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(el=>el.classList.remove("active"));
-
-  document
-    .getElementById("nav-"+id)
-    .classList.add("active");
-
-  document.getElementById("top-title").textContent =
-    current.label;
-
-  const badge =
-    document.getElementById("top-badge");
-
-  badge.textContent =
-    current.badge.text;
-
-  badge.style.background =
-    current.badge.bg;
-
-  badge.style.color =
-    current.badge.color;
-
+  document.querySelectorAll(".nav-item").forEach(el=>el.classList.remove("active"));
+  document.getElementById("nav-"+id).classList.add("active");
+  document.getElementById("top-title").textContent=current.label;
+  const badge=document.getElementById("top-badge");
+  badge.textContent=current.badge.text;
+  badge.style.background=current.badge.bg;
+  badge.style.color=current.badge.color;
   renderContent();
 }
 
 function renderContent(){
-
   if(!current) return;
+  const c=document.getElementById("content");
 
-  const c =
-    document.getElementById("content");
+  if(current.smartPaste){
+    c.innerHTML=renderSmartPaste();
+    return;
+  }
 
-  const vals =
-    fieldVals[current.id] || {};
-
-  let html = "";
-
-  if(current.fields && current.fields.length){
-
-    html += `<div class="field-row">`;
-
+  const vals=fieldVals[current.id]||{};
+  let html="";
+  if(current.fields&&current.fields.length){
+    html+=`<div class="field-row">`;
     current.fields.forEach(f=>{
-
-      html += `
-        <div class="field">
-
-          <label>${f.label}</label>
-
-          <input
-            type="${f.type}"
-            value="${vals[f.id]||""}"
-            placeholder="${f.placeholder||""}"
-            oninput="onField('${f.id}', this.value)"
-          >
-
-        </div>
-      `;
+      html+=`<div class="field"><label>${f.label}</label><input type="${f.type}" value="${vals[f.id]||""}" placeholder="${f.placeholder||""}" oninput="onField('${f.id}',this.value)"></div>`;
     });
-
-    html += `</div>`;
+    html+=`</div>`;
   }
-
-  const msg = current.build(vals);
-
+  const msg=current.build(vals);
   if(current.imageOnly){
-
-    html += `
-    <div>
-      <div class="preview-label">Price reference</div>
-      <div class="preview-box" id="preview" style="white-space:normal;">${msg}</div>
-    </div>
-    `;
-
+    html+=`<div><div class="preview-label">Price reference</div><div class="preview-box" id="preview" style="white-space:normal;">${msg}</div></div>`;
   } else {
-
-    html += `
-
-    <div>
-
-      <div class="preview-label">
-        Message preview
-      </div>
-
-      <div class="preview-box" id="preview">${msg}</div>
-
-      <div class="char-count">
-        ${msg.length} characters
-      </div>
-
-    </div>
-
-    <div class="action-row">
-
-      <button
-        class="btn-copy"
-        onclick="copyMsg()"
-      >
-        Copy message
-      </button>
-
-      <button
-        class="btn-reset"
-        onclick="resetFields()"
-      >
-        Reset
-      </button>
-
-    </div>
-
-    `;
+    html+=`<div><div class="preview-label">Message preview</div><div class="preview-box" id="preview">${msg}</div><div class="char-count">${msg.length} characters</div></div><div class="action-row"><button class="btn-copy" onclick="copyMsg()">Copy message</button><button class="btn-reset" onclick="resetFields()">Reset</button></div>`;
   }
-
-  c.innerHTML = html;
+  c.innerHTML=html;
 }
 
 function onField(id,val){
-
-  if(!fieldVals[current.id]){
-    fieldVals[current.id] = {};
-  }
-
-  fieldVals[current.id][id] = val;
-
-  const msg =
-    current.build(fieldVals[current.id]);
-
-  document.getElementById("preview").innerHTML =
-    msg;
-
-  if(!current.imageOnly){
-    document.querySelector(".char-count").textContent =
-      `${msg.length} characters`;
-  }
+  if(!fieldVals[current.id]) fieldVals[current.id]={};
+  fieldVals[current.id][id]=val;
+  const msg=current.build(fieldVals[current.id]);
+  document.getElementById("preview").innerHTML=msg;
+  if(!current.imageOnly) document.querySelector(".char-count").textContent=`${msg.length} characters`;
 }
 
 function resetFields(){
-
-  fieldVals[current.id] = {};
-
+  fieldVals[current.id]={};
   renderContent();
 }
 
 async function copyMsg(){
-
-  const msg =
-    current.build(fieldVals[current.id] || {});
-
+  const msg=current.build(fieldVals[current.id]||{});
   await navigator.clipboard.writeText(msg);
-
   alert("Copied!");
 }
 
 function filterTemplates(q){
-
-  q = q.toLowerCase();
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item=>{
-
-      const text =
-        item.textContent.toLowerCase();
-
-      item.style.display =
-        text.includes(q)
-        ? "flex"
-        : "none";
-    });
+  q=q.toLowerCase();
+  document.querySelectorAll(".nav-item").forEach(item=>{
+    item.style.display=item.textContent.toLowerCase().includes(q)?"flex":"none";
+  });
 }
 
 function toggleTheme(){
-
   document.body.classList.toggle("dark");
-
-  const isDark =
-    document.body.classList.contains("dark");
-
-  localStorage.setItem(
-    "theme",
-    isDark ? "dark" : "light"
-  );
-
-  document.getElementById("themeToggle").textContent =
-    isDark ? "☀️" : "🌙";
+  const isDark=document.body.classList.contains("dark");
+  localStorage.setItem("theme",isDark?"dark":"light");
+  document.getElementById("themeToggle").textContent=isDark?"☀️":"🌙";
 }
 
 document.addEventListener("keydown",(e)=>{
-
-  if((e.ctrlKey || e.metaKey) && e.key==="Enter"){
-
-    if(!current.imageOnly) copyMsg();
+  if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){
+    if(current&&!current.imageOnly&&!current.smartPaste) copyMsg();
   }
-
 });
 
 buildNav();
-
-const savedTheme =
-  localStorage.getItem("theme");
-
-if(savedTheme === "dark"){
-
+const savedTheme=localStorage.getItem("theme");
+if(savedTheme==="dark"){
   document.body.classList.add("dark");
-
-  document.getElementById("themeToggle").textContent =
-    "☀️";
+  document.getElementById("themeToggle").textContent="☀️";
 }
-
-const savedTemplate =
-  localStorage.getItem("lastTemplate");
-
-if(savedTemplate){
-
-  selectTemplate(savedTemplate);
-}
-
+const savedTemplate=localStorage.getItem("lastTemplate");
+if(savedTemplate) selectTemplate(savedTemplate);
 </script>
-
 </body>
 </html>
