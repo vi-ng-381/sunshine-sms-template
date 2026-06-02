@@ -121,7 +121,7 @@ function App() {
   const [orderItems, setOrderItems] = useState([]);
   const [notes, setNotes] = useState("");
   const [showSummary, setShowSummary] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const [comboPickDrink, setComboPickDrink] = useState(REFRESHMENT_OPTIONS[0].id);
   const [comboPickFries, setComboPickFries] = useState("plum_fries");
   const [comboExpanded, setComboExpanded] = useState(false);
@@ -200,7 +200,6 @@ function App() {
     setNotes(""); setShowSummary(false); setComboPickDrink(REFRESHMENT_OPTIONS[0].id); setComboPickFries("plum_fries"); setComboExpanded(false);
   };
 
-  // Sizes scaled up across the board
   const card = {
     background: C.bg,
     border: `1px solid ${C.borderTer}`,
@@ -384,7 +383,6 @@ function App() {
             Order
             {orderItems.length > 0 && <span style={{ background: "#EAF3DE", color: "#1d4407", fontSize: 12, padding: "1px 8px", borderRadius: 20, marginLeft: 6, fontWeight: 700 }}>{orderItems.length}</span>}
           </p>
-
 
           {orderItems.length === 0 && (
             <div style={{ ...card, textAlign: "center", padding: "1.8rem", color: C.textTer, fontSize: 15 }}>
