@@ -34,8 +34,6 @@ button{cursor:pointer;}
 .btn-copy{padding:10px 18px;border:none;border-radius:8px;background:#111;color:white;font-weight:600;}
 .btn-copy:hover{opacity:.9;}
 .btn-reset{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:white;}
-
-/* Smart paste styles */
 .paste-area{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #ccc;background:white;color:#222;font-size:13px;resize:none;line-height:1.5;min-height:44px;font-family:monospace;}
 .paste-area:focus{outline:2px solid #3b82f6;border-color:#3b82f6;}
 .auto-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:999px;background:#D1FAE5;color:#065F46;margin-left:4px;vertical-align:middle;font-weight:700;}
@@ -54,6 +52,28 @@ button{cursor:pointer;}
 .reply-btn:hover{opacity:.85;}
 .step-label{font-size:11px;color:#888;margin-bottom:4px;}
 .avatar-circle{width:38px;height:38px;border-radius:50%;background:#DBEAFE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1E40AF;flex-shrink:0;}
+
+/* History */
+.history-section{border-top:1px solid #e5e7eb;padding-top:16px;margin-top:4px;}
+.history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.history-title{font-size:12px;font-weight:700;color:#374151;display:flex;align-items:center;gap:6px;}
+.history-count{font-size:10px;background:#e5e7eb;color:#6b7280;padding:2px 7px;border-radius:999px;font-weight:700;}
+.history-clear{font-size:11px;color:#ef4444;background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:5px;}
+.history-clear:hover{background:#fef2f2;}
+.history-empty{font-size:12px;color:#9ca3af;text-align:center;padding:16px 0;font-style:italic;}
+.history-list{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;}
+.history-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;font-size:12px;}
+.history-avatar{width:30px;height:30px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1e40af;flex-shrink:0;}
+.history-info{flex:1;min-width:0;}
+.history-name{font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.history-meta{color:#6b7280;font-size:11px;margin-top:1px;}
+.history-time-col{font-size:10px;color:#9ca3af;flex-shrink:0;text-align:right;}
+.history-status{display:flex;align-items:center;gap:4px;margin-top:3px;}
+.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.status-y{background:#10b981;}
+.status-n{background:#ef4444;}
+.status-pending{background:#d1d5db;}
+.status-label{font-size:10px;color:#6b7280;}
 
 /* Dark mode */
 body.dark{background:#0f1115;color:#f5f5f5;}
@@ -81,6 +101,17 @@ body.dark .reply-box{color:#f5f5f5;}
 body.dark .reply-label.y{color:#6ee7b7;}
 body.dark .reply-label.n{color:#fca5a5;}
 body.dark .step-label{color:#6b7280;}
+body.dark .history-section{border-top-color:#2a2f3a;}
+body.dark .history-title{color:#c9d1dc;}
+body.dark .history-count{background:#2a2f3a;color:#8b9ab0;}
+body.dark .history-clear:hover{background:#7f1d1d;}
+body.dark .history-empty{color:#4b5563;}
+body.dark .history-item{background:#1a1f2a;border-color:#2a2f3a;}
+body.dark .history-avatar{background:#1e3a8a;color:#bfdbfe;}
+body.dark .history-name{color:#f5f5f5;}
+body.dark .history-meta{color:#8b9ab0;}
+body.dark .history-time-col{color:#6b7280;}
+body.dark .status-label{color:#6b7280;}
 
 .restring-card{background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:20px;}
 .restring-table{width:100%;border-collapse:collapse;min-width:500px;}
@@ -166,12 +197,90 @@ body.dark .avatar-circle{background:#1e3a8a;color:#bfdbfe;}
 const SIGN = `Sunshine Badminton - https://sunshinebadminton.com.au
 Sugar Brush Cafe - https://instagram.com/sugarbrush.cafe`;
 
+/* ── Session History ── */
+const HISTORY_KEY = 'sp_reminder_history';
+
+function historyLoad() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+
+function historySave(entry) {
+  const list = historyLoad();
+  list.unshift(entry);
+  if (list.length > 100) list.splice(100);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(list));
+}
+
+function historyUpdateStatus(id, status) {
+  const list = historyLoad();
+  const item = list.find(i => i.id === id);
+  if (item) {
+    item.status = status;
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(list));
+    renderHistory();
+  }
+}
+
+function historyClear() {
+  if (confirm('Clear all reminder history?')) {
+    localStorage.removeItem(HISTORY_KEY);
+    renderHistory();
+  }
+}
+
+function historyInitials(name) {
+  const p = name.trim().split(/\s+/);
+  return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : name.slice(0,2).toUpperCase();
+}
+
+function historyFmtTime(ts) {
+  const d = new Date(ts);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 60000) return 'just now';
+  if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+  const days = Math.floor(diff/86400000);
+  if (days === 1) return 'yesterday';
+  if (days < 7) return days + 'd ago';
+  return d.toLocaleDateString('en-AU', {day:'numeric',month:'short'});
+}
+
+function renderHistory() {
+  const el = document.getElementById('sp-history-list');
+  const countEl = document.getElementById('sp-history-count');
+  if (!el) return;
+  const list = historyLoad();
+  if (countEl) countEl.textContent = list.length;
+  if (!list.length) {
+    el.innerHTML = '<div class="history-empty">No reminders sent yet</div>';
+    return;
+  }
+  el.innerHTML = list.map(item => {
+    const initials = item.fullName ? historyInitials(item.fullName) : (item.name ? item.name.slice(0,2).toUpperCase() : '?');
+    let dotClass = 'status-pending';
+    let statusText = 'Pending reply';
+    if (item.status === 'Y') { dotClass = 'status-y'; statusText = 'Confirmed'; }
+    if (item.status === 'N') { dotClass = 'status-n'; statusText = 'Cancelled'; }
+    return `<div class="history-item">
+      <div class="history-avatar">${initials}</div>
+      <div class="history-info">
+        <div class="history-name">${item.fullName || item.name || '—'}</div>
+        <div class="history-meta">Court ${item.court || '?'} &middot; ${item.time || '?'}${item.phone ? ' &middot; ' + item.phone : ''}</div>
+        <div class="history-status">
+          <span class="status-dot ${dotClass}"></span>
+          <span class="status-label">${statusText}</span>
+        </div>
+      </div>
+      <div class="history-time-col">${historyFmtTime(item.ts)}</div>
+    </div>`;
+  }).join('');
+}
+
 const templates = [
 {
-  id:"confirm",
-  cat:"Booking",
-  icon:"ti-calendar",
-  label:"Confirm booking",
+  id:"confirm",cat:"Booking",icon:"ti-calendar",label:"Confirm booking",
   badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
   fields:[
     {id:"name",label:"Customer name",type:"text",placeholder:"e.g. Andy"},
@@ -181,19 +290,9 @@ const templates = [
   ],
   build:(f)=>`Hi ${f.name||"[Name]"}, your booking for ${f.when||"[date]"} is confirmed.\n\nCourt ${f.court||"[#]"}: ${f.time||"[time]"}\n\nPlease come upstairs for payment or assistance upon arrival.\n\nThank you!\n${SIGN}`
 },
+{id:"reminder",cat:"Booking",icon:"ti-bell",label:"Session reminder",badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},smartPaste:true},
 {
-  id:"reminder",
-  cat:"Booking",
-  icon:"ti-bell",
-  label:"Session reminder",
-  badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
-  smartPaste: true
-},
-{
-  id:"adjust",
-  cat:"Booking",
-  icon:"ti-adjustments",
-  label:"Court adjustment",
+  id:"adjust",cat:"Booking",icon:"ti-adjustments",label:"Court adjustment",
   badge:{text:"Booking",bg:"#E6F1FB",color:"#0C447C"},
   fields:[
     {id:"name",label:"Customer name",type:"text"},
@@ -204,10 +303,7 @@ const templates = [
   build:(f)=>`Hi ${f.name||"[Name]"},\n\nWe have adjusted your booking for ${f.date||"[date]"} so you can play on Court ${f.court||"[#]"} from ${f.time||"[time]"} for the entire session.\n\n${SIGN}`
 },
 {
-  id:"cancel",
-  cat:"Cancellation",
-  icon:"ti-x",
-  label:"Cancel + refund",
+  id:"cancel",cat:"Cancellation",icon:"ti-x",label:"Cancel + refund",
   badge:{text:"Cancel",bg:"#FCEBEB",color:"#A32D2D"},
   fields:[
     {id:"name",label:"Customer name",type:"text"},
@@ -218,75 +314,49 @@ const templates = [
   build:(f)=>`Hi ${f.name||"[Name]"},\n\nYour booking on Court ${f.court||"[#]"} (${f.date||"[date]"}, ${f.time||"[time]"}) has been cancelled. The refund will be returned to your account within 5–7 business days (please allow for possible delays).\n\nKindly ignore any updates that may still appear in the booking system, as the booking has already been cancelled.\n\n${SIGN}`
 },
 {
-  id:"website",
-  cat:"Info",
-  icon:"ti-world",
-  label:"Website & hours",
+  id:"website",cat:"Info",icon:"ti-world",label:"Website & hours",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
   fields:[{id:"name",label:"Customer name",type:"text"}],
   build:(f)=>`Hi ${f.name||"there"},\n\nYou can book online anytime at:\nhttps://sunshinebadminton.com.au\n\nOpening hours:\n6:00 AM - 11:00 PM\n\nStaffed hours:\nMon-Fri 12:00-11:00 PM\nSat-Sun 9:00 AM-11:00 PM\n\n${SIGN}`
 },
 {
-  id:"membership",
-  cat:"Info",
-  icon:"ti-id-badge",
-  label:"Membership benefits",
+  id:"membership",cat:"Info",icon:"ti-id-badge",label:"Membership benefits",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
   fields:[{id:"name",label:"Customer name",type:"text"}],
   build:(f)=>`Hi ${f.name||"there"},\n\nHere's a quick overview of our membership:\n\n- $50/year\n- Book up to 4 weeks in advance\n- Free shuttle machine access\n- Free professional racket for each member\n- Discounted court rates\n\n${SIGN}`
 },
 {
-  id:"court-prices",
-  cat:"Info",
-  icon:"ti-coin",
-  label:"Court prices",
+  id:"court-prices",cat:"Info",icon:"ti-coin",label:"Court prices",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
-  fields:[],
-  imageOnly:true,
+  fields:[],imageOnly:true,
   build:()=>`<div class="restring-card"><h2 style="margin-bottom:10px;font-size:15px;">🏸 Court Prices</h2><div class="price-notes"><strong>✅ Notes:</strong><ul><li><strong>Permanent</strong> is cheaper if paying by cash.</li><li>4–6 PM and 10–11 PM have the same (cheaper) rate.</li><li>6–10 PM is <strong>peak hour</strong> (higher rate).</li></ul></div><div class="section-title">📅 Weekday Pricing</div><div class="court-wrap" style="margin-bottom:20px;"><table class="court-table"><thead><tr><th style="width:38%">Time Slot</th><th>Type</th><th>Cash</th><th>Card</th><th>Notes</th></tr></thead><tbody><tr class="time-slot"><td colspan="5">⏰ 6:00 AM – 4:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr class="time-slot"><td colspan="5">⏰ 4:00 PM – 6:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$18</td><td class="price-cell">$18</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td><span class="note-badge note-same">Same as Member</span></td></tr><tr class="time-slot"><td colspan="5">🔴 6:00 PM – 10:00 PM &nbsp;<span class="note-badge note-peak">Peak</span></td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$29</td><td class="price-cell">$29</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$27</td><td class="price-cell">$27</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$25</td><td class="price-cell">$27</td><td><span class="note-badge note-cash">Cash cheaper</span></td></tr><tr class="time-slot"><td colspan="5">⏰ 10:00 PM – 11:00 PM</td></tr><tr><td></td><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$18</td><td class="price-cell">$18</td><td></td></tr><tr><td></td><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td></td></tr><tr><td></td><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$15</td><td class="price-cell">$15</td><td><span class="note-badge note-same">Same as Member</span></td></tr></tbody></table></div><div class="section-title">📅 Weekend Pricing <span style="font-weight:400;color:#6b7280;font-size:12px;">(Flat Rate)</span></div><div class="court-wrap"><table class="court-table"><thead><tr><th>Type</th><th>Cash</th><th>Card</th><th>Notes</th></tr></thead><tbody><tr><td><span class="type-chip chip-casual">Casual</span></td><td class="price-cell">$26</td><td class="price-cell">$26</td><td></td></tr><tr><td><span class="type-chip chip-member">Member</span></td><td class="price-cell">$25</td><td class="price-cell">$25</td><td></td></tr><tr><td><span class="type-chip chip-perm">Permanent</span></td><td class="price-cell">$24</td><td class="price-cell">$25</td><td><span class="note-badge note-cash">Cash cheaper</span></td></tr></tbody></table></div></div>`
 },
 {
-  id:"restring-options",
-  cat:"Info",
-  icon:"ti-list",
-  label:"Restringing options",
+  id:"restring-options",cat:"Info",icon:"ti-list",label:"Restringing options",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
-  fields:[],
-  imageOnly:true,
+  fields:[],imageOnly:true,
   build:()=>`<div class="restring-card"><h2 style="margin-bottom:18px;">🏸 Restringing Options & Colours</h2><div style="overflow-x:auto;"><table class="restring-table"><tr><th>Brand</th><th>String</th><th>Colours</th></tr><tr><td>Yonex</td><td>BG 65</td><td>White</td></tr><tr><td>Yonex</td><td>BG 65TI</td><td>White</td></tr><tr><td>Yonex</td><td>BG 80</td><td>Blue, Yellow</td></tr><tr><td>Yonex</td><td>BG 80 Power</td><td>White</td></tr><tr><td>Yonex</td><td>BG 66 Ultimax</td><td>Navy, Red</td></tr><tr><td>Yonex</td><td>Nano 95</td><td>Yellow, White</td></tr><tr><td>Yonex</td><td>Nano 98</td><td>Yellow</td></tr><tr><td>Yonex</td><td>Exbolt 63</td><td>Blue, Pink</td></tr><tr><td>Yonex</td><td>Exbolt 65</td><td>Yellow, Purple</td></tr><tr><td>Yonex</td><td>Exbolt 68</td><td>Yellow, Green</td></tr><tr><td>Yonex</td><td>Aerobite</td><td>Red</td></tr><tr><td>Li-Ning</td><td>No1</td><td>Yellow</td></tr></table></div>`
 },
 {
-  id:"restring",
-  cat:"Info",
-  icon:"ti-settings",
-  label:"Restringing price",
+  id:"restring",cat:"Info",icon:"ti-settings",label:"Restringing price",
   badge:{text:"Info",bg:"#E1F5EE",color:"#085041"},
   fields:[{id:"name",label:"Customer name",type:"text"}],
   build:(f)=>`Hi ${f.name||"there"},\n\nHere are our restringing prices:\n\nStandard strings: $30\nPremium strings: $35\nYour own strings: $25\n\nTurnaround: up to 3 days.\n\n${SIGN}`
 },
 {
-  id:"shuttlecock",
-  cat:"Info",
-  icon:"ti-shopping-bag",
-  label:"Shuttlecock prices",
+  id:"shuttlecock",cat:"Info",icon:"ti-shopping-bag",label:"Shuttlecock prices",
   badge:{text:"Shop",bg:"#E8F5E9",color:"#1B5E20"},
   fields:[{id:"name",label:"Customer name",type:"text",placeholder:"e.g. there"}],
   build:(f)=>`Hi ${f.name||"there"},\n\nYes, we do sell shuttlecocks 🏸\n\nAvailable options:\n\n• Chaopai Silver\n  - $3.50 each\n  - $38 per tube\n\n• Chaopai Pink\n  - $48 per tube\n\n• Aeroplane Black\n  - $70 per tube\n\n${SIGN}`
 },
 {
-  id:"coaching",
-  cat:"Coaching",
-  icon:"ti-user",
-  label:"Coach contacts",
+  id:"coaching",cat:"Coaching",icon:"ti-user",label:"Coach contacts",
   badge:{text:"Coaching",bg:"#EEEDFE",color:"#3C3489"},
   fields:[],
   build:()=>`Hi there,\n\nHere are our coaches' contact details:\n\nCoach Tonny: 0424 310 794\nCoach Owin: 0481 810 370\nCoach Zen: 0431 817 369\nCoach Zhipeng: 0406 380 738\nCoach Lucas: 0433 512 868\nCoach Danny: 0448 251 934\n\n${SIGN}`
 },
 {
-  id:"social",
-  cat:"Social",
-  icon:"ti-users",
-  label:"Social weekly schedule",
+  id:"social",cat:"Social",icon:"ti-users",label:"Social weekly schedule",
   badge:{text:"Social",bg:"#FFF4E5",color:"#9A5B00"},
   fields:[{id:"name",label:"Customer name",type:"text"}],
   build:(f)=>`Hi ${f.name||"there"}!\n\nWe have social groups running throughout the week. You can check out the schedule below:\n\n🏸 Sunshine Badminton – Social Weekly Schedule\n\nMonday\n• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235\n\nTuesday\n• 7:30 PM – 10:30 PM: Luong Ly Social (Mixed Levels) – 0433964199\n\nWednesday\n• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158\n• 7:30 PM – 10:00 PM: NP Social (Mixed Levels) – 0426 789 222\n\nThursday\n• 7:30 PM – 10:00 PM: Luong Ly Social (Mixed Levels) – 0433964199\n\nFriday\n• 7:30 PM – 10:00 PM: Lam Thi (Mixed Levels) – 0481 164 235\n• 7:30 PM – 10:30 PM: Anh Pham (Intermediate Levels) – 0420 485 712\n\nSaturday\n• 2:00 PM – 4:00 PM: Rowel Mira (Mixed Levels) – 0481 874 500\n• 4:00 PM – 7:00 PM: Patrick & Ngoc (Mixed Levels) – 0418 377 311\n\nSunday\n• 11:00 AM – 1:00 PM: NP Social (Mixed Levels) – 0481 810 370\n• 6:00 PM – 9:00 PM: Quoc Hung (Advanced) – 0466 128 158\n\n${SIGN}`
@@ -295,6 +365,7 @@ const templates = [
 
 let current = null;
 const fieldVals = {};
+let _currentEntryId = null;
 
 /* ── Smart paste helpers ── */
 function spInitials(n){
@@ -323,6 +394,7 @@ function spParse(){
   const raw=document.getElementById('sp-raw').value.trim();
   if(!raw){
     document.getElementById('sp-parsed').style.display='none';
+    _currentEntryId = null;
     return;
   }
   const courtMatch=raw.match(/Court\s*(\w+)/i);
@@ -331,7 +403,6 @@ function spParse(){
   const afterTime=raw.replace(/Court\s*\w+/i,'').replace(timeMatch?timeMatch[0]:'','');
   const nameMatch=afterTime.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
   const nameVal=nameMatch?nameMatch[1].trim():'';
-
   const courtVal=courtMatch?courtMatch[1]:'';
   const timeVal=timeMatch?spFormatTime(timeMatch[1]):'';
   const phoneVal=phoneMatch?phoneMatch[1].replace(/\s/g,''):'';
@@ -383,11 +454,31 @@ function spCopyPhone(){
   });
 }
 
-function spCopy(boxId, btnId){
+function spCopy(boxId, btnId, saveToHistory){
   const t=(document.getElementById(boxId)||{}).textContent||'';
   navigator.clipboard.writeText(t).then(()=>{
     const b=document.getElementById(btnId);
     if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
+    if(saveToHistory){
+      const name=(document.getElementById('sp-name')||{}).value||'';
+      const court=(document.getElementById('sp-court')||{}).value||'';
+      const time=(document.getElementById('sp-time')||{}).value||'';
+      const phone=(document.getElementById('sp-phone')||{}).value||'';
+      const fullName=(document.getElementById('sp-dispname')||{}).textContent||name;
+      const entry = { id: Date.now().toString(), name, fullName, court, time, phone, status:'pending', ts: Date.now() };
+      _currentEntryId = entry.id;
+      historySave(entry);
+      renderHistory();
+    }
+  });
+}
+
+function spCopyReply(boxId, btnId, status){
+  const t=(document.getElementById(boxId)||{}).textContent||'';
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById(btnId);
+    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
+    if(_currentEntryId) historyUpdateStatus(_currentEntryId, status);
   });
 }
 
@@ -401,6 +492,7 @@ function spClear(){
   ['sp-tc','sp-tt','sp-tn','sp-tp'].forEach(id=>{
     const e=document.getElementById(id);if(e) e.style.display='none';
   });
+  _currentEntryId = null;
 }
 
 function renderSmartPaste(){
@@ -457,7 +549,7 @@ function renderSmartPaste(){
       <div class="preview-label" style="margin-top:6px;">Message preview</div>
       <div class="preview-box" id="sp-preview"></div>
       <div class="action-row" style="margin-top:10px;">
-        <button id="sp-copy-btn" class="btn-copy" onclick="spCopy('sp-preview','sp-copy-btn')">Copy reminder</button>
+        <button id="sp-copy-btn" class="btn-copy" onclick="spCopy('sp-preview','sp-copy-btn',true)">Copy reminder</button>
         <button class="btn-reset" onclick="spClear()">Clear</button>
       </div>
     </div>
@@ -468,14 +560,28 @@ function renderSmartPaste(){
         <div class="reply-card y-card">
           <div class="reply-label y">They replied Y ✅</div>
           <div class="reply-box" id="sp-msg-y"></div>
-          <button id="sp-y-btn" class="reply-btn y" onclick="spCopy('sp-msg-y','sp-y-btn')">Copy reply</button>
+          <button id="sp-y-btn" class="reply-btn y" onclick="spCopyReply('sp-msg-y','sp-y-btn','Y')">Copy reply</button>
         </div>
         <div class="reply-card n-card">
           <div class="reply-label n">They replied N ❌</div>
           <div class="reply-box" id="sp-msg-n"></div>
-          <button id="sp-n-btn" class="reply-btn n" onclick="spCopy('sp-msg-n','sp-n-btn')">Copy reply</button>
+          <button id="sp-n-btn" class="reply-btn n" onclick="spCopyReply('sp-msg-n','sp-n-btn','N')">Copy reply</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="history-section">
+    <div class="history-header">
+      <div class="history-title">
+        <i class="ti ti-history" style="font-size:14px;"></i>
+        Reminder history
+        <span class="history-count" id="sp-history-count">0</span>
+      </div>
+      <button class="history-clear" onclick="historyClear()">Clear all</button>
+    </div>
+    <div class="history-list" id="sp-history-list">
+      <div class="history-empty">No reminders sent yet</div>
     </div>
   </div>
   `;
@@ -517,12 +623,11 @@ function selectTemplate(id){
 function renderContent(){
   if(!current) return;
   const c=document.getElementById("content");
-
   if(current.smartPaste){
     c.innerHTML=renderSmartPaste();
+    renderHistory();
     return;
   }
-
   const vals=fieldVals[current.id]||{};
   let html="";
   if(current.fields&&current.fields.length){
@@ -549,10 +654,7 @@ function onField(id,val){
   if(!current.imageOnly) document.querySelector(".char-count").textContent=`${msg.length} characters`;
 }
 
-function resetFields(){
-  fieldVals[current.id]={};
-  renderContent();
-}
+function resetFields(){fieldVals[current.id]={};renderContent();}
 
 async function copyMsg(){
   const msg=current.build(fieldVals[current.id]||{});
@@ -582,10 +684,7 @@ document.addEventListener("keydown",(e)=>{
 
 buildNav();
 const savedTheme=localStorage.getItem("theme");
-if(savedTheme==="dark"){
-  document.body.classList.add("dark");
-  document.getElementById("themeToggle").textContent="☀️";
-}
+if(savedTheme==="dark"){document.body.classList.add("dark");document.getElementById("themeToggle").textContent="☀️";}
 const savedTemplate=localStorage.getItem("lastTemplate");
 if(savedTemplate) selectTemplate(savedTemplate);
 </script>
