@@ -287,12 +287,74 @@ function renderSlots() {
   `).join('');
 }
 
+/* ── Sorting helpers ── */
+
+/**
+ * Parse a court value to a number for sorting.
+ * Handles numeric courts ("8", "10") and letter courts ("A", "B").
+ * Non-parseable values sort last.
+ */
+function courtSortKey(courtStr) {
+  const s = (courtStr || '').trim();
+  const n = parseInt(s, 10);
+  if (!isNaN(n)) return n;
+  // Single letter courts: A=1, B=2 etc.
+  if (/^[A-Za-z]$/.test(s)) return s.toUpperCase().charCodeAt(0) - 64;
+  return 9999;
+}
+
+/**
+ * Parse a time string like "6PM-9PM", "6.00PM-9.00PM", "18:00-21:00"
+ * and return a numeric minute-of-day for the START time, for sorting.
+ */
+function timeSortKey(timeStr) {
+  const s = (timeStr || '').trim();
+  // Try to grab the start portion (before dash/en-dash)
+  const startPart = s.split(/\s*[–—\-]\s*/)[0].trim();
+
+  // Match formats: 6PM, 6.30PM, 6:30PM, 18:00, 18.00
+  const m12 = startPart.match(/^(\d{1,2})(?:[.:](\d{2}))?\s*(am|pm)$/i);
+  if (m12) {
+    let h = parseInt(m12[1], 10);
+    const min = parseInt(m12[2] || '0', 10);
+    const ampm = m12[3].toLowerCase();
+    if (ampm === 'pm' && h !== 12) h += 12;
+    if (ampm === 'am' && h === 12) h = 0;
+    return h * 60 + min;
+  }
+  const m24 = startPart.match(/^(\d{1,2})[.:](\d{2})$/);
+  if (m24) {
+    return parseInt(m24[1], 10) * 60 + parseInt(m24[2], 10);
+  }
+  // Plain hour like "18"
+  const mHour = startPart.match(/^(\d{1,2})$/);
+  if (mHour) return parseInt(mHour[1], 10) * 60;
+  return 9999;
+}
+
+/**
+ * Return a sorted copy of the filled slots:
+ *   primary sort  → time ascending (earliest first)
+ *   secondary sort → court ascending (lowest number first)
+ */
+function sortedFilledSlots() {
+  return _slots
+    .filter(s => s.court || s.time)
+    .slice()
+    .sort((a, b) => {
+      const tDiff = timeSortKey(a.time) - timeSortKey(b.time);
+      if (tDiff !== 0) return tDiff;
+      return courtSortKey(a.court) - courtSortKey(b.court);
+    });
+}
+
 /* Build time block for message */
 function buildTimeBlock() {
-  const filled = _slots.filter(s => s.court || s.time);
+  const filled = sortedFilledSlots();
   if (!filled.length) return { court: '[court]', time: '[time]', multi: false };
 
   const byTime = {};
+  // Preserve insertion order (already sorted by time then court)
   filled.forEach(s => {
     const t = s.time || '[time]';
     if (!byTime[t]) byTime[t] = [];
@@ -303,6 +365,7 @@ function buildTimeBlock() {
   const allSameTime = times.length === 1;
 
   if (allSameTime) {
+    // Courts within the same time are already sorted (secondary sort above)
     const courts = byTime[times[0]];
     return {
       court: courts.join(', '),
@@ -409,7 +472,7 @@ function showMsgModal(id) {
   overlay.innerHTML = `
     <div class="msg-modal">
       <div class="msg-modal-name">${item.fullName||item.name||'—'}</div>
-      <div class="msg-modal-meta">Court ${item.court||'—'} &middot; ${item.time||'—'} &middot; ${item.day||''}${item.dateStr?' '+item.dateStr:''}</div>
+      <div class="msg-modal-meta">Court ${item.court||'—'} · ${item.time||'—'} · ${item.day||''}${item.dateStr?' '+item.dateStr:''}</div>
       <div class="msg-modal-body" id="msg-modal-text">${msg.replace(/</g,'&lt;')}</div>
       <div class="msg-modal-actions">
         <button class="btn-copy" id="msg-modal-copy-btn" onclick="copyMsgModal()">Copy message</button>
@@ -644,11 +707,13 @@ function spParse(){
   const sameByPhone = curPhone && parsedPhone && curPhone === parsedPhone;
   const sameByName = curName && curName !== '—' && parsedName &&
     curName.toLowerCase().split(' ')[0] === parsedName.toLowerCase().split(' ')[0];
+  // Block has no identity info at all — assume it belongs to whoever is already loaded
+  const anonymous = !parsedPhone && !parsedName;
 
   const alreadyHasData = document.getElementById('sp-parsed') &&
     document.getElementById('sp-parsed').style.display !== 'none';
 
-  if(alreadyHasData && (sameByPhone || sameByName) && parsed.slots.length){
+  if(alreadyHasData && parsed.slots.length && (sameByPhone || sameByName || anonymous)){
     _pendingMerge = parsed;
     showMergeBanner(parsed);
     return;
@@ -697,10 +762,12 @@ function showMergeBanner(parsed){
   let banner = document.getElementById('sp-merge-banner');
   if(!banner) return;
   const slotDesc = parsed.slots.map(s=>`Court ${s.court} ${s.time}`).join(', ');
+  const isAnon = !parsed.phone && !parsed.fullName;
+  const reason = isAnon ? 'No name/phone in block — adding to current person' : 'Same person detected';
   banner.style.display='flex';
   banner.innerHTML = `
     <div style="flex:1;">
-      <strong>Same person detected</strong> — add ${parsed.slots.length} more slot${parsed.slots.length>1?'s':''}?
+      <strong>${reason}</strong> — add ${parsed.slots.length} more slot${parsed.slots.length>1?'s':''}?
       <div style="font-size:11px;color:#065F46;margin-top:2px;">${slotDesc}</div>
     </div>
     <div style="display:flex;gap:6px;flex-shrink:0;">
@@ -736,7 +803,7 @@ function replacePerson(){
 
 function spGen(){
   const fn=(document.getElementById('sp-name')||{}).value||'there';
-  const tb = buildTimeBlock();
+  buildTimeBlock(); // trigger sort
   const msg = buildReminderMsg();
   const el=document.getElementById('sp-preview');
   if(el) el.textContent=msg;
