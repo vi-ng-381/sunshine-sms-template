@@ -53,27 +53,49 @@ button{cursor:pointer;}
 .step-label{font-size:11px;color:#888;margin-bottom:4px;}
 .avatar-circle{width:38px;height:38px;border-radius:50%;background:#DBEAFE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1E40AF;flex-shrink:0;}
 
-/* History */
+/* Multi-slot */
+.slot-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.slot-row{display:flex;gap:8px;align-items:center;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;}
+.slot-row input{padding:8px 10px;border:1px solid #ddd;border-radius:7px;font-size:13px;background:white;}
+.slot-row input.autofilled{background:#f0fdf4;border-color:#86efac;}
+.slot-num{font-size:11px;font-weight:700;color:#6b7280;min-width:18px;}
+.slot-del{border:none;background:none;color:#9ca3af;font-size:16px;padding:2px 4px;border-radius:5px;cursor:pointer;}
+.slot-del:hover{color:#ef4444;background:#fef2f2;}
+.btn-add-slot{padding:8px 14px;border:1px dashed #ccc;border-radius:8px;background:white;font-size:12px;color:#555;display:flex;align-items:center;gap:5px;}
+.btn-add-slot:hover{border-color:#111;color:#111;}
+
+/* History database */
 .history-section{border-top:1px solid #e5e7eb;padding-top:16px;margin-top:4px;}
-.history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.history-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
 .history-title{font-size:12px;font-weight:700;color:#374151;display:flex;align-items:center;gap:6px;}
 .history-count{font-size:10px;background:#e5e7eb;color:#6b7280;padding:2px 7px;border-radius:999px;font-weight:700;}
 .history-clear{font-size:11px;color:#ef4444;background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:5px;}
 .history-clear:hover{background:#fef2f2;}
 .history-empty{font-size:12px;color:#9ca3af;text-align:center;padding:16px 0;font-style:italic;}
-.history-list{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;}
-.history-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;font-size:12px;}
-.history-avatar{width:30px;height:30px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1e40af;flex-shrink:0;}
-.history-info{flex:1;min-width:0;}
-.history-name{font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.history-meta{color:#6b7280;font-size:11px;margin-top:1px;}
-.history-time-col{font-size:10px;color:#9ca3af;flex-shrink:0;text-align:right;}
-.history-status{display:flex;align-items:center;gap:4px;margin-top:3px;}
-.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
-.status-y{background:#10b981;}
-.status-n{background:#ef4444;}
-.status-pending{background:#d1d5db;}
-.status-label{font-size:10px;color:#6b7280;}
+.history-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
+.history-tab{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:700;border:1px solid #e5e7eb;background:white;cursor:pointer;color:#6b7280;}
+.history-tab:hover{background:#f3f4f6;}
+.history-tab.active{background:#111;color:white;border-color:#111;}
+.db-table-wrap{overflow-x:auto;border:1px solid #e5e7eb;border-radius:8px;}
+.db-table{width:100%;border-collapse:collapse;font-size:12px;min-width:520px;}
+.db-table th{padding:8px 10px;background:#f5f5f5;font-weight:700;text-align:left;border-bottom:1px solid #e5e7eb;font-size:11px;color:#374151;white-space:nowrap;}
+.db-table td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+.db-table tbody tr:last-child td{border-bottom:none;}
+.db-table tbody tr:hover{background:#f9fafb;}
+.status-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;}
+.sp-y{background:#D1FAE5;color:#065F46;}
+.sp-n{background:#FEE2E2;color:#991B1B;}
+.sp-pending{background:#F3F4F6;color:#6b7280;}
+.db-note-input{border:none;background:transparent;font-size:12px;color:#374151;width:100%;min-width:80px;outline:none;padding:2px 4px;border-radius:4px;}
+.db-note-input:focus{background:#f0fdf4;outline:1px solid #86efac;}
+.db-actions{display:flex;gap:4px;}
+.db-btn{border:none;background:none;padding:3px 5px;border-radius:5px;cursor:pointer;font-size:13px;color:#9ca3af;}
+.db-btn:hover{background:#f3f4f6;color:#374151;}
+.db-btn.del:hover{background:#fef2f2;color:#ef4444;}
+.status-select{border:none;background:transparent;font-size:11px;font-weight:700;cursor:pointer;border-radius:4px;padding:2px 4px;}
+.no-results{font-size:12px;color:#9ca3af;text-align:center;padding:20px 0;font-style:italic;}
+.history-search{padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;width:160px;}
+.db-header-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
 
 /* Dark mode */
 body.dark{background:#0f1115;color:#f5f5f5;}
@@ -106,12 +128,28 @@ body.dark .history-title{color:#c9d1dc;}
 body.dark .history-count{background:#2a2f3a;color:#8b9ab0;}
 body.dark .history-clear:hover{background:#7f1d1d;}
 body.dark .history-empty{color:#4b5563;}
-body.dark .history-item{background:#1a1f2a;border-color:#2a2f3a;}
-body.dark .history-avatar{background:#1e3a8a;color:#bfdbfe;}
-body.dark .history-name{color:#f5f5f5;}
-body.dark .history-meta{color:#8b9ab0;}
-body.dark .history-time-col{color:#6b7280;}
-body.dark .status-label{color:#6b7280;}
+body.dark .avatar-circle{background:#1e3a8a;color:#bfdbfe;}
+body.dark .slot-row{background:#1a1f2a;border-color:#2a2f3a;}
+body.dark .slot-row input{background:#1d2330;border-color:#30384a;color:white;}
+body.dark .slot-row input.autofilled{background:#064e3b;border-color:#059669;}
+body.dark .slot-num{color:#6b7280;}
+body.dark .btn-add-slot{background:#1d2330;border-color:#30384a;color:#c9d1dc;}
+body.dark .btn-add-slot:hover{border-color:#c9d1dc;color:white;}
+body.dark #sp-merge-banner{background:#064e3b;border-color:#059669;color:#d1fae5;}
+body.dark .db-table-wrap{border-color:#2a2f3a;}
+body.dark .db-table th{background:#1e2535;color:#c9d1dc;border-bottom-color:#2a2f3a;}
+body.dark .db-table td{color:#e2e8f0;border-bottom-color:#232c3d;}
+body.dark .db-table tbody tr:hover{background:#1a2030;}
+body.dark .history-tab{background:#1d2330;border-color:#2a2f3a;color:#8b9ab0;}
+body.dark .history-tab:hover{background:#222733;}
+body.dark .history-tab.active{background:#f5f5f5;color:#111;}
+body.dark .db-note-input{color:#c9d1dc;}
+body.dark .db-note-input:focus{background:#064e3b;outline-color:#059669;}
+body.dark .db-btn:hover{background:#222733;color:#c9d1dc;}
+body.dark .db-btn.del:hover{background:#7f1d1d;color:#fca5a5;}
+body.dark .history-search{background:#1d2330;border-color:#30384a;color:white;}
+body.dark .sp-pending{background:#2a2f3a;color:#8b9ab0;}
+body.dark .no-results{color:#4b5563;}
 
 .restring-card{background:#fafafa;border:1px solid #ddd;border-radius:12px;padding:20px;}
 .restring-table{width:100%;border-collapse:collapse;min-width:500px;}
@@ -156,13 +194,13 @@ body.dark .restring-table{color:#f5f5f5;}
 body.dark .restring-table th{background:#222733;color:white;}
 body.dark .restring-table td{color:#f5f5f5;}
 body.dark .restring-table th,body.dark .restring-table td{border-bottom:1px solid #3a4357;}
-body.dark .avatar-circle{background:#1e3a8a;color:#bfdbfe;}
 
 @media(max-width:768px){
   .app{grid-template-columns:1fr;}
   .sidebar{border-right:none;border-bottom:1px solid #ddd;}
   .field-row{grid-template-columns:1fr;}
   .reply-grid{grid-template-columns:1fr;}
+  .history-tabs{gap:3px;}
 }
 </style>
 </head>
@@ -197,41 +235,138 @@ body.dark .avatar-circle{background:#1e3a8a;color:#bfdbfe;}
 const SIGN = `Sunshine Badminton - https://sunshinebadminton.com.au
 Sugar Brush Cafe - https://instagram.com/sugarbrush.cafe`;
 
-/* ── Session History ── */
-const HISTORY_KEY = 'sp_reminder_history';
+/* ── Multi-slot state ── */
+let _slots = [{ court: '', time: '' }];
+let _currentEntryId = null;
 
-function historyLoad() {
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
-  catch(e) { return []; }
+function slotsAdd() {
+  _slots.push({ court: '', time: '' });
+  renderSlots();
+  spGen();
 }
+
+function slotsDel(i) {
+  if (_slots.length <= 1) return;
+  _slots.splice(i, 1);
+  renderSlots();
+  spGen();
+}
+
+function slotsSet(i, field, val) {
+  _slots[i][field] = val;
+  spGen();
+}
+
+function renderSlots() {
+  const wrap = document.getElementById('sp-slots');
+  if (!wrap) return;
+  wrap.innerHTML = _slots.map((s, i) => `
+    <div class="slot-row" id="slot-row-${i}">
+      <span class="slot-num">#${i + 1}</span>
+      <input type="text" placeholder="Court" value="${s.court}" style="width:80px;"
+        class="${s.court ? 'autofilled' : ''}"
+        oninput="slotsSet(${i},'court',this.value);this.className=this.value?'autofilled':''">
+      <input type="text" placeholder="Time e.g. 6PM-9PM" value="${s.time}" style="flex:1;"
+        class="${s.time ? 'autofilled' : ''}"
+        oninput="slotsSet(${i},'time',this.value);this.className=this.value?'autofilled':''">
+      <button class="slot-del" onclick="slotsDel(${i})" title="Remove slot">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+  `).join('');
+}
+
+/* Build time block for message */
+function buildTimeBlock() {
+  const filled = _slots.filter(s => s.court || s.time);
+  if (!filled.length) return { court: '[court]', time: '[time]', multi: false };
+
+  // group by time
+  const byTime = {};
+  filled.forEach(s => {
+    const t = s.time || '[time]';
+    if (!byTime[t]) byTime[t] = [];
+    byTime[t].push(s.court || '?');
+  });
+
+  const times = Object.keys(byTime);
+  const allSameTime = times.length === 1;
+
+  if (allSameTime) {
+    const courts = byTime[times[0]];
+    return {
+      court: courts.join(', '),
+      time: times[0],
+      multi: courts.length > 1
+    };
+  } else {
+    // multiple times — list all courts, then time breakdown
+    const allCourts = filled.map(s => s.court || '?').join(', ');
+    const timeLines = times.map(t => `${t} (Court ${byTime[t].join(', ')})`).join('\n');
+    return {
+      court: allCourts,
+      time: timeLines,
+      multiTime: true
+    };
+  }
+}
+
+/* ── Session History Database ── */
+const HISTORY_KEY = 'sp_reminder_history_v2';
+const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+/* In-memory store — source of truth. localStorage is a persistence backup only. */
+let _db = [];
+
+function dbPersist() {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(_db)); } catch(e) {}
+}
+
+function dbBootstrap() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    if (Array.isArray(saved) && saved.length) _db = saved;
+  } catch(e) {}
+}
+
+function historyLoad() { return _db; }
 
 function historySave(entry) {
-  const list = historyLoad();
-  list.unshift(entry);
-  if (list.length > 100) list.splice(100);
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(list));
+  _db.unshift(entry);
+  if (_db.length > 500) _db.splice(500);
+  dbPersist();
 }
 
-function historyUpdateStatus(id, status) {
-  const list = historyLoad();
-  const item = list.find(i => i.id === id);
+function historyUpdate(id, patch) {
+  const item = _db.find(i => i.id === id);
   if (item) {
-    item.status = status;
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(list));
+    Object.assign(item, patch);
+    dbPersist();
     renderHistory();
   }
+}
+
+function historyDelete(id) {
+  _db = _db.filter(i => i.id !== id);
+  dbPersist();
+  renderHistory();
 }
 
 function historyClear() {
-  if (confirm('Clear all reminder history?')) {
-    localStorage.removeItem(HISTORY_KEY);
-    renderHistory();
+  const msg = _dbActiveTab === 'all' ? 'Clear ALL reminder history?' : `Clear all records for ${_dbActiveTab}?`;
+  if (!confirm(msg)) return;
+  if (_dbActiveTab === 'all') {
+    _db = [];
+  } else {
+    _db = _db.filter(i => i.day !== _dbActiveTab);
   }
+  dbPersist();
+  renderHistory();
 }
 
 function historyInitials(name) {
-  const p = name.trim().split(/\s+/);
-  return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : name.slice(0,2).toUpperCase();
+  const p = (name||'').trim().split(/\s+/);
+  return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : (name||'??').slice(0,2).toUpperCase();
 }
 
 function historyFmtTime(ts) {
@@ -247,35 +382,494 @@ function historyFmtTime(ts) {
   return d.toLocaleDateString('en-AU', {day:'numeric',month:'short'});
 }
 
+function getTodayDay() {
+  return DAYS[new Date().getDay() === 0 ? 6 : new Date().getDay() - 1];
+}
+
+let _dbActiveTab = 'all';
+let _dbSearch = '';
+
 function renderHistory() {
   const el = document.getElementById('sp-history-list');
   const countEl = document.getElementById('sp-history-count');
   if (!el) return;
-  const list = historyLoad();
+  let list = historyLoad();
   if (countEl) countEl.textContent = list.length;
+
+  // Update tab counts
+  DAYS.forEach(day => {
+    const el2 = document.getElementById('dbtab-' + day);
+    if (el2) {
+      const c = list.filter(i => i.day === day).length;
+      el2.textContent = day.slice(0,3) + (c ? ` (${c})` : '');
+    }
+  });
+  const allTab = document.getElementById('dbtab-all');
+  if (allTab) allTab.textContent = `All (${list.length})`;
+
+  // Filter
+  if (_dbActiveTab !== 'all') list = list.filter(i => i.day === _dbActiveTab);
+  if (_dbSearch) {
+    const q = _dbSearch.toLowerCase();
+    list = list.filter(i =>
+      (i.fullName||'').toLowerCase().includes(q) ||
+      (i.phone||'').includes(q) ||
+      (i.court||'').toLowerCase().includes(q) ||
+      (i.note||'').toLowerCase().includes(q)
+    );
+  }
+
   if (!list.length) {
-    el.innerHTML = '<div class="history-empty">No reminders sent yet</div>';
+    el.innerHTML = `<div class="no-results">${_dbSearch ? 'No results for "' + _dbSearch + '"' : 'No records yet'}</div>`;
     return;
   }
-  el.innerHTML = list.map(item => {
-    const initials = item.fullName ? historyInitials(item.fullName) : (item.name ? item.name.slice(0,2).toUpperCase() : '?');
-    let dotClass = 'status-pending';
-    let statusText = 'Pending reply';
-    if (item.status === 'Y') { dotClass = 'status-y'; statusText = 'Confirmed'; }
-    if (item.status === 'N') { dotClass = 'status-n'; statusText = 'Cancelled'; }
-    return `<div class="history-item">
-      <div class="history-avatar">${initials}</div>
-      <div class="history-info">
-        <div class="history-name">${item.fullName || item.name || '—'}</div>
-        <div class="history-meta">Court ${item.court || '?'} &middot; ${item.time || '?'}${item.phone ? ' &middot; ' + item.phone : ''}</div>
-        <div class="history-status">
-          <span class="status-dot ${dotClass}"></span>
-          <span class="status-label">${statusText}</span>
+
+  el.innerHTML = `
+    <div class="db-table-wrap">
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Court</th>
+            <th>Time</th>
+            <th>Day</th>
+            <th>Status</th>
+            <th>Note</th>
+            <th>Sent</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${list.map(item => {
+            const statusOptions = ['pending','Y','N'].map(v =>
+              `<option value="${v}" ${item.status===v?'selected':''}>${v==='pending'?'Pending':v==='Y'?'Confirmed':'Cancelled'}</option>`
+            ).join('');
+            const pillClass = item.status === 'Y' ? 'sp-y' : item.status === 'N' ? 'sp-n' : 'sp-pending';
+            const pillText = item.status === 'Y' ? 'Confirmed' : item.status === 'N' ? 'Cancelled' : 'Pending';
+            return `<tr>
+              <td style="font-weight:700;white-space:nowrap;">${item.fullName||item.name||'—'}</td>
+              <td style="font-family:monospace;font-size:11px;">${item.phone||'—'}</td>
+              <td>${item.court||'—'}</td>
+              <td style="font-size:11px;max-width:120px;white-space:pre-wrap;">${item.time||'—'}</td>
+              <td><span style="font-size:11px;color:#6b7280;">${item.day||'—'}${item.dateStr?' '+item.dateStr:''}</span></td>
+              <td>
+                <select class="status-select ${pillClass}" onchange="historyUpdate('${item.id}',{status:this.value});this.className='status-select '+statusClass(this.value)">
+                  ${statusOptions}
+                </select>
+              </td>
+              <td>
+                <input class="db-note-input" type="text" value="${(item.note||'').replace(/"/g,'&quot;')}"
+                  placeholder="add note..."
+                  onchange="historyUpdate('${item.id}',{note:this.value})">
+              </td>
+              <td style="white-space:nowrap;font-size:11px;color:#9ca3af;">${historyFmtTime(item.ts)}</td>
+              <td>
+                <div class="db-actions">
+                  <button class="db-btn del" title="Delete" onclick="historyDelete('${item.id}')"><i class="ti ti-trash"></i></button>
+                </div>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function statusClass(v) {
+  return v === 'Y' ? 'sp-y' : v === 'N' ? 'sp-n' : 'sp-pending';
+}
+
+function setDbTab(day) {
+  _dbActiveTab = day;
+  document.querySelectorAll('.history-tab').forEach(el => el.classList.remove('active'));
+  const t = document.getElementById('dbtab-' + day);
+  if (t) t.classList.add('active');
+  renderHistory();
+}
+
+/* ── Smart paste helpers ── */
+function spInitials(n){
+  const p=(n||'').trim().split(/\s+/);
+  return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():(n||'??').slice(0,2).toUpperCase();
+}
+
+function spFormatTime(raw){
+  raw = raw.trim();
+  // Split on en-dash, em-dash, or hyphen
+  const m = raw.match(/^(.+?)\s*[–—\-]\s*(.+)$/);
+  if(!m) return raw;
+  function half(s){
+    s=s.trim();
+    const ap=s.match(/(am|pm)$/i);
+    const suffix=ap?ap[1].toUpperCase():'';
+    s=s.replace(/(am|pm)$/i,'').trim();
+    const dig=s.match(/^(\d{1,2})(?::(\d{2}))?$/);
+    if(!dig) return s+(suffix?suffix:'');
+    return dig[1]+'.'+(dig[2]||'00')+suffix;
+  }
+  return half(m[1])+'-'+half(m[2]);
+}
+
+/* Parse a full YepBooking block (multi-line) into { slots, name, phone, fullName, day, dateStr } */
+function parseYepBlock(raw){
+  const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  const slots = [];
+  let name='', phone='', fullName='', day='', dateStr='';
+
+  // Date line: "Wednesday 03/06/2026" or "Wednesday 03/06/2026\tBADMINTON"
+  const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  for(const line of lines){
+    const dm = line.match(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/i);
+    if(dm){
+      day = dm[1].charAt(0).toUpperCase() + dm[1].slice(1).toLowerCase();
+      const datePart = line.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+      if(datePart) dateStr = datePart[1];
+      break;
+    }
+  }
+
+  // Court lines: "Court 8\t6:00pm–9:00pm" or "Court 8   6:00pm–9:00pm"
+  const courtLineRe = /^Court\s+(\w+)\s+(.+)$/i;
+  // Also handle tab-separated: "Court 8\t6:00pm–9:00pm"
+  lines.forEach(line => {
+    // Tab or multiple spaces between court and time
+    const tLine = line.replace(/\t/g, '  ');
+    const cm = tLine.match(/^Court\s+(\w+)\s{2,}(.+)$/i) || tLine.match(/^Court\s+(\w+)\s+(\d{1,2}:\d{2}.+)$/i);
+    if(cm){
+      slots.push({ court: cm[1], time: spFormatTime(cm[2]) });
+      return;
+    }
+  });
+
+  // "Your details" section — name and phone are on lines after it
+  const detailsIdx = lines.findIndex(l => /your details/i.test(l));
+  const detailsLines = detailsIdx >= 0 ? lines.slice(detailsIdx+1) : lines;
+
+  // Phone: 10-digit Australian mobile
+  const phoneMatch = raw.match(/\b(04\d{8}|0[2-9]\d{7,8})\b/);
+  if(phoneMatch) phone = phoneMatch[1];
+
+  // Name: first line of "Your details" section that isn't an email or phone
+  for(const dl of detailsLines){
+    if(/^[\w.+-]+@[\w-]+/.test(dl)) continue; // email
+    if(/^\d[\d\s]{7,}$/.test(dl)) continue;   // phone only
+    if(/^0[24-9]\d/.test(dl.replace(/\s/,''))) continue; // mobile
+    // Could be "Name, phone" on same line
+    const commaM = dl.match(/^(.+?),\s*(0[24-9]\d+)/);
+    if(commaM){
+      fullName = commaM[1].trim();
+      if(!phone) phone = commaM[2];
+      break;
+    }
+    if(dl.length > 1 && dl.length < 60 && !/click here/i.test(dl) && !/total price/i.test(dl) && !/badminton/i.test(dl)){
+      fullName = dl;
+      break;
+    }
+  }
+  name = fullName.split(/\s+/)[0] || '';
+
+  return { slots, name, phone, fullName, day, dateStr };
+}
+
+/* _pendingMerge holds a parsed block waiting to be merged if same person detected */
+let _pendingMerge = null;
+let _parsedDay = '';
+let _parsedDateStr = '';
+
+function spParse(){
+  const raw = document.getElementById('sp-raw').value.trim();
+  if(!raw){
+    document.getElementById('sp-parsed').style.display='none';
+    _pendingMerge = null;
+    _currentEntryId = null;
+    hideMergeBanner();
+    return;
+  }
+
+  const parsed = parseYepBlock(raw);
+
+  // Check if same person as currently loaded (by phone match or name match)
+  const curPhone = (document.getElementById('sp-phone')||{}).value||'';
+  const curName = (document.getElementById('sp-dispname')||{}).textContent||'';
+  const parsedPhone = parsed.phone || '';
+  const parsedName = parsed.fullName || '';
+
+  const sameByPhone = curPhone && parsedPhone && curPhone === parsedPhone;
+  const sameByName = curName && curName !== '—' && parsedName &&
+    curName.toLowerCase().split(' ')[0] === parsedName.toLowerCase().split(' ')[0];
+
+  const alreadyHasData = document.getElementById('sp-parsed') &&
+    document.getElementById('sp-parsed').style.display !== 'none';
+
+  if(alreadyHasData && (sameByPhone || sameByName) && parsed.slots.length){
+    // Same person — show merge banner instead of replacing
+    _pendingMerge = parsed;
+    showMergeBanner(parsed);
+    return;
+  }
+
+  // Fresh load
+  _pendingMerge = null;
+  hideMergeBanner();
+  applyParsed(parsed);
+}
+
+function applyParsed(parsed){
+  if(parsed.slots.length){
+    _slots = parsed.slots.map(s=>({...s}));
+  } else if(!_slots.length){
+    _slots = [{court:'',time:''}];
+  }
+  _parsedDay = parsed.day || '';
+  _parsedDateStr = parsed.dateStr || '';
+  renderSlots();
+
+  function setF(id,val,tagId){
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.value=val;
+    el.className=val?'autofilled':'';
+    const t=document.getElementById(tagId);
+    if(t) t.style.display=val?'inline-block':'none';
+  }
+  const firstName = parsed.name || parsed.fullName.split(' ')[0] || '';
+  setF('sp-name', firstName, 'sp-tn');
+  setF('sp-phone', parsed.phone, 'sp-tp');
+
+  const av=document.getElementById('sp-avatar');
+  if(av) av.textContent=parsed.fullName?spInitials(parsed.fullName):'?';
+  const dn=document.getElementById('sp-dispname');
+  if(dn) dn.textContent=parsed.fullName||'—';
+  const dp=document.getElementById('sp-dispphone');
+  if(dp) dp.textContent=parsed.phone||'—';
+
+  document.getElementById('sp-parsed').style.display='block';
+  document.getElementById('sp-raw').value='';
+  spGen();
+}
+
+function showMergeBanner(parsed){
+  let banner = document.getElementById('sp-merge-banner');
+  if(!banner) return;
+  const slotDesc = parsed.slots.map(s=>`Court ${s.court} ${s.time}`).join(', ');
+  banner.style.display='flex';
+  banner.innerHTML = `
+    <div style="flex:1;">
+      <strong>Same person detected</strong> — add ${parsed.slots.length} more slot${parsed.slots.length>1?'s':''}?
+      <div style="font-size:11px;color:#065F46;margin-top:2px;">${slotDesc}</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-shrink:0;">
+      <button class="reply-btn y" style="padding:5px 12px;" onclick="acceptMerge()">Add slots</button>
+      <button class="reply-btn" style="padding:5px 12px;background:#6b7280;color:white;" onclick="replacePerson()">New person</button>
+      <button class="db-btn" style="color:#9ca3af;" onclick="hideMergeBanner()"><i class="ti ti-x"></i></button>
+    </div>
+  `;
+  document.getElementById('sp-raw').value='';
+}
+
+function hideMergeBanner(){
+  const b=document.getElementById('sp-merge-banner');
+  if(b) b.style.display='none';
+}
+
+function acceptMerge(){
+  if(!_pendingMerge) return;
+  _pendingMerge.slots.forEach(s => _slots.push({...s}));
+  _pendingMerge = null;
+  hideMergeBanner();
+  renderSlots();
+  spGen();
+}
+
+function replacePerson(){
+  if(!_pendingMerge) return;
+  const p = _pendingMerge;
+  _pendingMerge = null;
+  hideMergeBanner();
+  applyParsed(p);
+}
+
+function spGen(){
+  const fn=(document.getElementById('sp-name')||{}).value||'there';
+  const tb = buildTimeBlock();
+
+  let courtLine, timeLine;
+  if (tb.multiTime) {
+    courtLine = `Court: ${tb.court}`;
+    timeLine = `Time:\n${tb.time}`;
+  } else {
+    courtLine = `Court: ${tb.court}`;
+    timeLine = `Time: ${tb.time}`;
+  }
+
+  const msg=`Hi ${fn},\nJust a friendly reminder about your badminton session at Sunshine Badminton today.\n${courtLine}\n${timeLine}\nPlease respond 'Y' to confirm or 'N' if you are unable to attend your sessions. Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.\nThank you,\nSunshine Badminton x Sugar Brush`;
+  const el=document.getElementById('sp-preview');
+  if(el) el.textContent=msg;
+  const yn=document.getElementById('sp-msg-y');
+  if(yn) yn.textContent='Thanks for your confirmation, see you soon.';
+  const nn=document.getElementById('sp-msg-n');
+  if(nn) nn.textContent=`No worries ${fn}, we have removed your booking. Hope to see you next time!\nSunshine Badminton x Sugar Brush`;
+}
+
+function spCopyPhone(){
+  const p=(document.getElementById('sp-phone')||{}).value||'';
+  if(!p) return;
+  navigator.clipboard.writeText(p).then(()=>{
+    const b=document.getElementById('sp-pbtn');
+    if(b){b.innerHTML='✓ Copied';setTimeout(()=>b.innerHTML='<i class="ti ti-copy"></i> Copy phone',1500);}
+  });
+}
+
+function spCopy(boxId, btnId, saveToHistory){
+  const t=(document.getElementById(boxId)||{}).textContent||'';
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById(btnId);
+    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
+    if(saveToHistory){
+      const name=(document.getElementById('sp-name')||{}).value||'';
+      const phone=(document.getElementById('sp-phone')||{}).value||'';
+      const fullName=(document.getElementById('sp-dispname')||{}).textContent||name;
+      const tb = buildTimeBlock();
+      const courtStr = tb.court;
+      const timeStr = tb.time;
+      const day = _parsedDay || getTodayDay();
+      const dateStr = _parsedDateStr || '';
+      const entry = {
+        id: Date.now().toString(),
+        name, fullName, court: courtStr, time: timeStr,
+        phone, status:'pending', day, dateStr, ts: Date.now(), note: ''
+      };
+      _currentEntryId = entry.id;
+      historySave(entry);
+      renderHistory();
+    }
+  });
+}
+
+function spCopyReply(boxId, btnId, status){
+  const t=(document.getElementById(boxId)||{}).textContent||'';
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById(btnId);
+    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
+    if(_currentEntryId) historyUpdate(_currentEntryId, {status});
+  });
+}
+
+function spClear(){
+  const raw=document.getElementById('sp-raw');
+  if(raw) raw.value='';
+  const parsed=document.getElementById('sp-parsed');
+  if(parsed) parsed.style.display='none';
+  ['sp-name','sp-phone'].forEach(id=>{
+    const e=document.getElementById(id);if(e){e.value='';e.className='';}
+  });
+  ['sp-tn','sp-tp'].forEach(id=>{
+    const e=document.getElementById(id);if(e) e.style.display='none';
+  });
+  _slots = [{ court: '', time: '' }];
+  renderSlots();
+  _currentEntryId = null;
+  _pendingMerge = null;
+  _parsedDay = '';
+  _parsedDateStr = '';
+  hideMergeBanner();
+}
+
+function renderSmartPaste(){
+  return `
+  <div>
+    <div class="step-label">Step 1 — paste the full YepBooking block below (supports multiple courts)</div>
+    <textarea id="sp-raw" class="paste-area" rows="5"
+      placeholder="Wednesday 03/06/2026  BADMINTON&#10;Court 8  6:00pm–9:00pm&#10;Court 9  6:00pm–9:00pm&#10;...&#10;Your details&#10;Ha Quoc Hung Social, 0466128158"
+      oninput="spParse()"></textarea>
+    <div id="sp-merge-banner" style="display:none;align-items:center;gap:10px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;margin-top:8px;flex-wrap:wrap;"></div>
+  </div>
+
+  <div id="sp-parsed" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0 14px;">
+      <div class="avatar-circle" id="sp-avatar">?</div>
+      <div>
+        <div style="font-weight:700;font-size:14px;" id="sp-dispname">—</div>
+        <div style="font-size:12px;color:#888;" id="sp-dispphone">—</div>
+      </div>
+    </div>
+
+    <div class="field-row" style="grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="field">
+        <label>First name <span class="auto-tag" id="sp-tn" style="display:none;">auto</span></label>
+        <input id="sp-name" type="text" oninput="spGen()" />
+      </div>
+      <div class="field">
+        <label>Phone <span class="auto-tag" id="sp-tp" style="display:none;">auto</span></label>
+        <div style="display:flex;gap:6px;">
+          <input id="sp-phone" type="text" style="flex:1;" />
+          <button id="sp-pbtn" onclick="spCopyPhone()" class="btn-reset" style="display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:12px;">
+            <i class="ti ti-copy"></i> Copy phone
+          </button>
         </div>
       </div>
-      <div class="history-time-col">${historyFmtTime(item.ts)}</div>
-    </div>`;
-  }).join('');
+    </div>
+
+    <div style="margin-top:14px;">
+      <div class="step-label" style="margin-bottom:8px;">Booking slots — add as many courts/times as needed</div>
+      <div class="slot-list" id="sp-slots"></div>
+      <button class="btn-add-slot" style="margin-top:8px;" onclick="slotsAdd()">
+        <i class="ti ti-plus"></i> Add another court / time
+      </button>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="step-label">Step 2 — copy reminder and send in Zoom</div>
+      <div class="preview-label" style="margin-top:6px;">Message preview</div>
+      <div class="preview-box" id="sp-preview"></div>
+      <div class="action-row" style="margin-top:10px;">
+        <button id="sp-copy-btn" class="btn-copy" onclick="spCopy('sp-preview','sp-copy-btn',true)">Copy reminder</button>
+        <button class="btn-reset" onclick="spClear()">Clear</button>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;border-top:1px solid #eee;padding-top:16px;">
+      <div class="step-label">Step 3 — when they reply, copy the right response</div>
+      <div class="reply-grid" style="margin-top:8px;">
+        <div class="reply-card y-card">
+          <div class="reply-label y">They replied Y ✅</div>
+          <div class="reply-box" id="sp-msg-y"></div>
+          <button id="sp-y-btn" class="reply-btn y" onclick="spCopyReply('sp-msg-y','sp-y-btn','Y')">Copy reply</button>
+        </div>
+        <div class="reply-card n-card">
+          <div class="reply-label n">They replied N ❌</div>
+          <div class="reply-box" id="sp-msg-n"></div>
+          <button id="sp-n-btn" class="reply-btn n" onclick="spCopyReply('sp-msg-n','sp-n-btn','N')">Copy reply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-section">
+    <div class="history-header">
+      <div class="history-title">
+        <i class="ti ti-database" style="font-size:14px;"></i>
+        Reminder database
+        <span class="history-count" id="sp-history-count">0</span>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input class="history-search" type="text" placeholder="Search name, phone..."
+          oninput="_dbSearch=this.value;renderHistory()">
+        <button class="history-clear" onclick="historyClear()">Clear tab</button>
+      </div>
+    </div>
+    <div class="history-tabs">
+      <button class="history-tab active" id="dbtab-all" onclick="setDbTab('all')">All</button>
+      ${DAYS.map(d => `<button class="history-tab" id="dbtab-${d}" onclick="setDbTab('${d}')">${d.slice(0,3)}</button>`).join('')}
+    </div>
+    <input type="hidden" id="db-active-tab-unused" value="all">
+    <div id="sp-history-list">
+      <div class="no-results">No records yet</div>
+    </div>
+  </div>
+  `;
 }
 
 const templates = [
@@ -365,227 +959,6 @@ const templates = [
 
 let current = null;
 const fieldVals = {};
-let _currentEntryId = null;
-
-/* ── Smart paste helpers ── */
-function spInitials(n){
-  const p=n.trim().split(/\s+/);
-  return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():n.slice(0,2).toUpperCase();
-}
-
-function spFormatTime(raw){
-  const sep=raw.match(/[–\-]/);
-  if(!sep) return raw;
-  const parts=raw.split(/[–\-]/);
-  if(parts.length!==2) return raw;
-  function half(s){
-    s=s.trim();
-    const ap=s.match(/(am|pm)$/i);
-    const suffix=ap?ap[1].toUpperCase():'';
-    s=s.replace(/(am|pm)$/i,'').trim();
-    const m=s.match(/^(\d{1,2})(?::(\d{2}))?$/);
-    if(!m) return s+suffix;
-    return m[1]+'.'+(m[2]||'00')+suffix;
-  }
-  return half(parts[0])+'-'+half(parts[1]);
-}
-
-function spParse(){
-  const raw=document.getElementById('sp-raw').value.trim();
-  if(!raw){
-    document.getElementById('sp-parsed').style.display='none';
-    _currentEntryId = null;
-    return;
-  }
-  const courtMatch=raw.match(/Court\s*(\w+)/i);
-  const timeMatch=raw.match(/(\d{1,2}:\d{2}\s*[ap]m\s*[–\-]\s*\d{1,2}:\d{2}\s*[ap]m)/i);
-  const phoneMatch=raw.match(/(\d[\d\s]{7,14}\d)/);
-  const afterTime=raw.replace(/Court\s*\w+/i,'').replace(timeMatch?timeMatch[0]:'','');
-  const nameMatch=afterTime.match(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
-  const nameVal=nameMatch?nameMatch[1].trim():'';
-  const courtVal=courtMatch?courtMatch[1]:'';
-  const timeVal=timeMatch?spFormatTime(timeMatch[1]):'';
-  const phoneVal=phoneMatch?phoneMatch[1].replace(/\s/g,''):'';
-  const firstName=nameVal.split(' ')[0]||'';
-
-  function setF(id,val,tagId){
-    const el=document.getElementById(id);
-    if(!el) return;
-    el.value=val;
-    el.className=val?'autofilled':'';
-    const t=document.getElementById(tagId);
-    if(t) t.style.display=val?'inline-block':'none';
-  }
-  setF('sp-court',courtVal,'sp-tc');
-  setF('sp-time',timeVal,'sp-tt');
-  setF('sp-name',firstName,'sp-tn');
-  setF('sp-phone',phoneVal,'sp-tp');
-
-  const av=document.getElementById('sp-avatar');
-  if(av) av.textContent=nameVal?spInitials(nameVal):'?';
-  const dn=document.getElementById('sp-dispname');
-  if(dn) dn.textContent=nameVal||'—';
-  const dp=document.getElementById('sp-dispphone');
-  if(dp) dp.textContent=phoneVal||'—';
-
-  document.getElementById('sp-parsed').style.display='block';
-  spGen();
-}
-
-function spGen(){
-  const fn=(document.getElementById('sp-name')||{}).value||'there';
-  const court=(document.getElementById('sp-court')||{}).value||'[court]';
-  const time=(document.getElementById('sp-time')||{}).value||'[time]';
-  const msg=`Hi ${fn},\nJust a friendly reminder about your badminton session at Sunshine Badminton today.\nCourt: ${court}\nTime: ${time}\nPlease respond 'Y' to confirm or 'N' if you are unable to attend your sessions. Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.\nThank you,\nSunshine Badminton x Sugar Brush`;
-  const el=document.getElementById('sp-preview');
-  if(el) el.textContent=msg;
-  const yn=document.getElementById('sp-msg-y');
-  if(yn) yn.textContent='Thanks for your confirmation, see you soon.';
-  const nn=document.getElementById('sp-msg-n');
-  if(nn) nn.textContent=`No worries ${fn}, we have removed your booking. Hope to see you next time!\nSunshine Badminton x Sugar Brush`;
-}
-
-function spCopyPhone(){
-  const p=(document.getElementById('sp-phone')||{}).value||'';
-  if(!p) return;
-  navigator.clipboard.writeText(p).then(()=>{
-    const b=document.getElementById('sp-pbtn');
-    if(b){b.innerHTML='✓ Copied';setTimeout(()=>b.innerHTML='<i class="ti ti-copy"></i> Copy phone',1500);}
-  });
-}
-
-function spCopy(boxId, btnId, saveToHistory){
-  const t=(document.getElementById(boxId)||{}).textContent||'';
-  navigator.clipboard.writeText(t).then(()=>{
-    const b=document.getElementById(btnId);
-    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
-    if(saveToHistory){
-      const name=(document.getElementById('sp-name')||{}).value||'';
-      const court=(document.getElementById('sp-court')||{}).value||'';
-      const time=(document.getElementById('sp-time')||{}).value||'';
-      const phone=(document.getElementById('sp-phone')||{}).value||'';
-      const fullName=(document.getElementById('sp-dispname')||{}).textContent||name;
-      const entry = { id: Date.now().toString(), name, fullName, court, time, phone, status:'pending', ts: Date.now() };
-      _currentEntryId = entry.id;
-      historySave(entry);
-      renderHistory();
-    }
-  });
-}
-
-function spCopyReply(boxId, btnId, status){
-  const t=(document.getElementById(boxId)||{}).textContent||'';
-  navigator.clipboard.writeText(t).then(()=>{
-    const b=document.getElementById(btnId);
-    if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
-    if(_currentEntryId) historyUpdateStatus(_currentEntryId, status);
-  });
-}
-
-function spClear(){
-  const raw=document.getElementById('sp-raw');
-  if(raw) raw.value='';
-  document.getElementById('sp-parsed').style.display='none';
-  ['sp-court','sp-time','sp-name','sp-phone'].forEach(id=>{
-    const e=document.getElementById(id);if(e){e.value='';e.className='';}
-  });
-  ['sp-tc','sp-tt','sp-tn','sp-tp'].forEach(id=>{
-    const e=document.getElementById(id);if(e) e.style.display='none';
-  });
-  _currentEntryId = null;
-}
-
-function renderSmartPaste(){
-  return `
-  <div>
-    <div class="step-label">Step 1 — copy the line from YepBooking and paste below</div>
-    <textarea id="sp-raw" class="paste-area" rows="2"
-      placeholder="Court 2&#9;5:00pm–7:00pm  Danny Trang, 0448251934"
-      oninput="spParse()"></textarea>
-  </div>
-
-  <div id="sp-parsed" style="display:none;">
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0 14px;">
-      <div class="avatar-circle" id="sp-avatar">?</div>
-      <div>
-        <div style="font-weight:700;font-size:14px;" id="sp-dispname">—</div>
-        <div style="font-size:12px;color:#888;" id="sp-dispphone">—</div>
-      </div>
-    </div>
-
-    <div class="field-row" style="grid-template-columns:1fr 1fr 1fr;gap:10px;">
-      <div class="field">
-        <label>Court <span class="auto-tag" id="sp-tc" style="display:none;">auto</span></label>
-        <input id="sp-court" type="text" oninput="spGen()" />
-      </div>
-      <div class="field">
-        <label>Time <span class="auto-tag" id="sp-tt" style="display:none;">auto</span></label>
-        <input id="sp-time" type="text" oninput="spGen()" />
-      </div>
-      <div class="field">
-        <label>First name <span class="auto-tag" id="sp-tn" style="display:none;">auto</span></label>
-        <input id="sp-name" type="text" oninput="spGen()" />
-      </div>
-    </div>
-
-    <div class="field-row" style="margin-top:10px;">
-      <div class="field">
-        <label>Phone <span class="auto-tag" id="sp-tp" style="display:none;">auto</span></label>
-        <div style="display:flex;gap:6px;">
-          <input id="sp-phone" type="text" style="flex:1;" />
-          <button id="sp-pbtn" onclick="spCopyPhone()" class="btn-reset" style="display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:12px;">
-            <i class="ti ti-copy"></i> Copy phone
-          </button>
-        </div>
-      </div>
-      <div class="field">
-        <label>Date (optional)</label>
-        <input id="sp-date" type="text" placeholder="leave blank for today" />
-      </div>
-    </div>
-
-    <div style="margin-top:16px;">
-      <div class="step-label">Step 2 — copy reminder and send in Zoom</div>
-      <div class="preview-label" style="margin-top:6px;">Message preview</div>
-      <div class="preview-box" id="sp-preview"></div>
-      <div class="action-row" style="margin-top:10px;">
-        <button id="sp-copy-btn" class="btn-copy" onclick="spCopy('sp-preview','sp-copy-btn',true)">Copy reminder</button>
-        <button class="btn-reset" onclick="spClear()">Clear</button>
-      </div>
-    </div>
-
-    <div style="margin-top:20px;border-top:1px solid #eee;padding-top:16px;">
-      <div class="step-label">Step 3 — when they reply, copy the right response</div>
-      <div class="reply-grid" style="margin-top:8px;">
-        <div class="reply-card y-card">
-          <div class="reply-label y">They replied Y ✅</div>
-          <div class="reply-box" id="sp-msg-y"></div>
-          <button id="sp-y-btn" class="reply-btn y" onclick="spCopyReply('sp-msg-y','sp-y-btn','Y')">Copy reply</button>
-        </div>
-        <div class="reply-card n-card">
-          <div class="reply-label n">They replied N ❌</div>
-          <div class="reply-box" id="sp-msg-n"></div>
-          <button id="sp-n-btn" class="reply-btn n" onclick="spCopyReply('sp-msg-n','sp-n-btn','N')">Copy reply</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="history-section">
-    <div class="history-header">
-      <div class="history-title">
-        <i class="ti ti-history" style="font-size:14px;"></i>
-        Reminder history
-        <span class="history-count" id="sp-history-count">0</span>
-      </div>
-      <button class="history-clear" onclick="historyClear()">Clear all</button>
-    </div>
-    <div class="history-list" id="sp-history-list">
-      <div class="history-empty">No reminders sent yet</div>
-    </div>
-  </div>
-  `;
-}
 
 /* ── Nav ── */
 function buildNav(){
@@ -625,6 +998,8 @@ function renderContent(){
   const c=document.getElementById("content");
   if(current.smartPaste){
     c.innerHTML=renderSmartPaste();
+    _slots = [{ court: '', time: '' }];
+    renderSlots();
     renderHistory();
     return;
   }
@@ -683,6 +1058,7 @@ document.addEventListener("keydown",(e)=>{
 });
 
 buildNav();
+dbBootstrap();
 const savedTheme=localStorage.getItem("theme");
 if(savedTheme==="dark"){document.body.classList.add("dark");document.getElementById("themeToggle").textContent="☀️";}
 const savedTemplate=localStorage.getItem("lastTemplate");
