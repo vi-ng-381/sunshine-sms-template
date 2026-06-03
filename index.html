@@ -97,6 +97,17 @@ button{cursor:pointer;}
 .history-search{padding:7px 10px;border:1px solid #ddd;border-radius:7px;font-size:12px;width:160px;}
 .db-header-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
 
+/* Message modal */
+.msg-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.msg-modal{background:white;border-radius:12px;padding:20px;max-width:480px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.18);}
+.msg-modal-name{font-weight:700;font-size:14px;margin-bottom:4px;}
+.msg-modal-meta{font-size:11px;color:#6b7280;margin-bottom:12px;}
+.msg-modal-body{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;margin-bottom:12px;max-height:260px;overflow-y:auto;}
+.msg-modal-actions{display:flex;gap:8px;}
+body.dark .msg-modal{background:#1a1f2a;border:1px solid #2a2f3a;}
+body.dark .msg-modal-meta{color:#8b9ab0;}
+body.dark .msg-modal-body{background:#12151b;border-color:#2a2f3a;color:#f5f5f5;}
+
 /* Dark mode */
 body.dark{background:#0f1115;color:#f5f5f5;}
 body.dark .app{background:#171a21;border-color:#2a2f3a;}
@@ -281,7 +292,6 @@ function buildTimeBlock() {
   const filled = _slots.filter(s => s.court || s.time);
   if (!filled.length) return { court: '[court]', time: '[time]', multi: false };
 
-  // group by time
   const byTime = {};
   filled.forEach(s => {
     const t = s.time || '[time]';
@@ -300,7 +310,6 @@ function buildTimeBlock() {
       multi: courts.length > 1
     };
   } else {
-    // multiple times — list all courts, then time breakdown
     const allCourts = filled.map(s => s.court || '?').join(', ');
     const timeLines = times.map(t => `${t} (Court ${byTime[t].join(', ')})`).join('\n');
     return {
@@ -315,7 +324,6 @@ function buildTimeBlock() {
 const HISTORY_KEY = 'sp_reminder_history_v2';
 const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
-/* In-memory store — source of truth. localStorage is a persistence backup only. */
 let _db = [];
 
 function dbPersist() {
@@ -389,6 +397,44 @@ function getTodayDay() {
 let _dbActiveTab = 'all';
 let _dbSearch = '';
 
+function showMsgModal(id) {
+  const item = _db.find(i => i.id === id);
+  if (!item) return;
+  closeMsgModal();
+  const msg = item.msg || '(No message saved)';
+  const overlay = document.createElement('div');
+  overlay.className = 'msg-modal-overlay';
+  overlay.id = 'msg-modal-overlay';
+  overlay.onclick = e => { if(e.target === overlay) closeMsgModal(); };
+  overlay.innerHTML = `
+    <div class="msg-modal">
+      <div class="msg-modal-name">${item.fullName||item.name||'—'}</div>
+      <div class="msg-modal-meta">Court ${item.court||'—'} &middot; ${item.time||'—'} &middot; ${item.day||''}${item.dateStr?' '+item.dateStr:''}</div>
+      <div class="msg-modal-body" id="msg-modal-text">${msg.replace(/</g,'&lt;')}</div>
+      <div class="msg-modal-actions">
+        <button class="btn-copy" id="msg-modal-copy-btn" onclick="copyMsgModal()">Copy message</button>
+        <button class="btn-reset" onclick="closeMsgModal()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+
+function closeMsgModal() {
+  const el = document.getElementById('msg-modal-overlay');
+  if (el) el.remove();
+}
+
+function copyMsgModal() {
+  const el = document.getElementById('msg-modal-text');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.getElementById('msg-modal-copy-btn');
+    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = 'Copy message', 1500); }
+  });
+}
+
+/* ── FIX: renderHistory was missing its function declaration ── */
 function renderHistory() {
   const el = document.getElementById('sp-history-list');
   const countEl = document.getElementById('sp-history-count');
@@ -446,7 +492,6 @@ function renderHistory() {
               `<option value="${v}" ${item.status===v?'selected':''}>${v==='pending'?'Pending':v==='Y'?'Confirmed':'Cancelled'}</option>`
             ).join('');
             const pillClass = item.status === 'Y' ? 'sp-y' : item.status === 'N' ? 'sp-n' : 'sp-pending';
-            const pillText = item.status === 'Y' ? 'Confirmed' : item.status === 'N' ? 'Cancelled' : 'Pending';
             return `<tr>
               <td style="font-weight:700;white-space:nowrap;">${item.fullName||item.name||'—'}</td>
               <td style="font-family:monospace;font-size:11px;">${item.phone||'—'}</td>
@@ -466,6 +511,7 @@ function renderHistory() {
               <td style="white-space:nowrap;font-size:11px;color:#9ca3af;">${historyFmtTime(item.ts)}</td>
               <td>
                 <div class="db-actions">
+                  ${item.msg ? `<button class="db-btn" title="View message" onclick="showMsgModal('${item.id}')"><i class="ti ti-message"></i></button>` : ''}
                   <button class="db-btn del" title="Delete" onclick="historyDelete('${item.id}')"><i class="ti ti-trash"></i></button>
                 </div>
               </td>
@@ -497,7 +543,6 @@ function spInitials(n){
 
 function spFormatTime(raw){
   raw = raw.trim();
-  // Split on en-dash, em-dash, or hyphen
   const m = raw.match(/^(.+?)\s*[–—\-]\s*(.+)$/);
   if(!m) return raw;
   function half(s){
@@ -512,14 +557,11 @@ function spFormatTime(raw){
   return half(m[1])+'-'+half(m[2]);
 }
 
-/* Parse a full YepBooking block (multi-line) into { slots, name, phone, fullName, day, dateStr } */
 function parseYepBlock(raw){
   const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
   const slots = [];
   let name='', phone='', fullName='', day='', dateStr='';
 
-  // Date line: "Wednesday 03/06/2026" or "Wednesday 03/06/2026\tBADMINTON"
-  const DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
   for(const line of lines){
     const dm = line.match(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/i);
     if(dm){
@@ -530,33 +572,24 @@ function parseYepBlock(raw){
     }
   }
 
-  // Court lines: "Court 8\t6:00pm–9:00pm" or "Court 8   6:00pm–9:00pm"
-  const courtLineRe = /^Court\s+(\w+)\s+(.+)$/i;
-  // Also handle tab-separated: "Court 8\t6:00pm–9:00pm"
   lines.forEach(line => {
-    // Tab or multiple spaces between court and time
     const tLine = line.replace(/\t/g, '  ');
     const cm = tLine.match(/^Court\s+(\w+)\s{2,}(.+)$/i) || tLine.match(/^Court\s+(\w+)\s+(\d{1,2}:\d{2}.+)$/i);
     if(cm){
       slots.push({ court: cm[1], time: spFormatTime(cm[2]) });
-      return;
     }
   });
 
-  // "Your details" section — name and phone are on lines after it
   const detailsIdx = lines.findIndex(l => /your details/i.test(l));
   const detailsLines = detailsIdx >= 0 ? lines.slice(detailsIdx+1) : lines;
 
-  // Phone: 10-digit Australian mobile
   const phoneMatch = raw.match(/\b(04\d{8}|0[2-9]\d{7,8})\b/);
   if(phoneMatch) phone = phoneMatch[1];
 
-  // Name: first line of "Your details" section that isn't an email or phone
   for(const dl of detailsLines){
-    if(/^[\w.+-]+@[\w-]+/.test(dl)) continue; // email
-    if(/^\d[\d\s]{7,}$/.test(dl)) continue;   // phone only
-    if(/^0[24-9]\d/.test(dl.replace(/\s/,''))) continue; // mobile
-    // Could be "Name, phone" on same line
+    if(/^[\w.+-]+@[\w-]+/.test(dl)) continue;
+    if(/^\d[\d\s]{7,}$/.test(dl)) continue;
+    if(/^0[24-9]\d/.test(dl.replace(/\s/,''))) continue;
     const commaM = dl.match(/^(.+?),\s*(0[24-9]\d+)/);
     if(commaM){
       fullName = commaM[1].trim();
@@ -573,7 +606,6 @@ function parseYepBlock(raw){
   return { slots, name, phone, fullName, day, dateStr };
 }
 
-/* _pendingMerge holds a parsed block waiting to be merged if same person detected */
 let _pendingMerge = null;
 let _parsedDay = '';
 let _parsedDateStr = '';
@@ -590,7 +622,6 @@ function spParse(){
 
   const parsed = parseYepBlock(raw);
 
-  // Check if same person as currently loaded (by phone match or name match)
   const curPhone = (document.getElementById('sp-phone')||{}).value||'';
   const curName = (document.getElementById('sp-dispname')||{}).textContent||'';
   const parsedPhone = parsed.phone || '';
@@ -604,13 +635,11 @@ function spParse(){
     document.getElementById('sp-parsed').style.display !== 'none';
 
   if(alreadyHasData && (sameByPhone || sameByName) && parsed.slots.length){
-    // Same person — show merge banner instead of replacing
     _pendingMerge = parsed;
     showMergeBanner(parsed);
     return;
   }
 
-  // Fresh load
   _pendingMerge = null;
   hideMergeBanner();
   applyParsed(parsed);
@@ -739,7 +768,8 @@ function spCopy(boxId, btnId, saveToHistory){
       const entry = {
         id: Date.now().toString(),
         name, fullName, court: courtStr, time: timeStr,
-        phone, status:'pending', day, dateStr, ts: Date.now(), note: ''
+        phone, status:'pending', day, dateStr, ts: Date.now(), note: '',
+        msg: t
       };
       _currentEntryId = entry.id;
       historySave(entry);
@@ -864,7 +894,6 @@ function renderSmartPaste(){
       <button class="history-tab active" id="dbtab-all" onclick="setDbTab('all')">All</button>
       ${DAYS.map(d => `<button class="history-tab" id="dbtab-${d}" onclick="setDbTab('${d}')">${d.slice(0,3)}</button>`).join('')}
     </div>
-    <input type="hidden" id="db-active-tab-unused" value="all">
     <div id="sp-history-list">
       <div class="no-results">No records yet</div>
     </div>
@@ -960,7 +989,6 @@ const templates = [
 let current = null;
 const fieldVals = {};
 
-/* ── Nav ── */
 function buildNav(){
   const cats=[...new Set(templates.map(t=>t.cat))];
   const nav=document.getElementById("nav");
