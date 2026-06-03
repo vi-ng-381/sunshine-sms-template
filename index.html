@@ -434,7 +434,21 @@ function copyMsgModal() {
   });
 }
 
-/* ── FIX: renderHistory was missing its function declaration ── */
+function dbCopyMsg(id) {
+  const item = _db.find(i => i.id === id);
+  if (!item || !item.msg) return;
+  navigator.clipboard.writeText(item.msg).then(() => {
+    const btn = document.getElementById('dbcopy-' + id);
+    if (btn) {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓';
+      btn.style.color = '#065F46';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 1500);
+    }
+  });
+}
+
+/* ── renderHistory ── */
 function renderHistory() {
   const el = document.getElementById('sp-history-list');
   const countEl = document.getElementById('sp-history-count');
@@ -511,7 +525,7 @@ function renderHistory() {
               <td style="white-space:nowrap;font-size:11px;color:#9ca3af;">${historyFmtTime(item.ts)}</td>
               <td>
                 <div class="db-actions">
-                  ${item.msg ? `<button class="db-btn" title="View message" onclick="showMsgModal('${item.id}')"><i class="ti ti-message"></i></button>` : ''}
+                  ${item.msg ? `<button class="db-btn" title="View message" onclick="showMsgModal('${item.id}')"><i class="ti ti-message"></i></button><button class="db-btn" title="Copy message" id="dbcopy-${item.id}" onclick="dbCopyMsg('${item.id}')"><i class="ti ti-copy"></i></button>` : ''}
                   <button class="db-btn del" title="Delete" onclick="historyDelete('${item.id}')"><i class="ti ti-trash"></i></button>
                 </div>
               </td>
@@ -723,17 +737,7 @@ function replacePerson(){
 function spGen(){
   const fn=(document.getElementById('sp-name')||{}).value||'there';
   const tb = buildTimeBlock();
-
-  let courtLine, timeLine;
-  if (tb.multiTime) {
-    courtLine = `Court: ${tb.court}`;
-    timeLine = `Time:\n${tb.time}`;
-  } else {
-    courtLine = `Court: ${tb.court}`;
-    timeLine = `Time: ${tb.time}`;
-  }
-
-  const msg=`Hi ${fn},\nJust a friendly reminder about your badminton session at Sunshine Badminton today.\n${courtLine}\n${timeLine}\nPlease respond 'Y' to confirm or 'N' if you are unable to attend your sessions. Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.\nThank you,\nSunshine Badminton x Sugar Brush`;
+  const msg = buildReminderMsg();
   const el=document.getElementById('sp-preview');
   if(el) el.textContent=msg;
   const yn=document.getElementById('sp-msg-y');
@@ -751,8 +755,22 @@ function spCopyPhone(){
   });
 }
 
+function buildReminderMsg() {
+  const fn=(document.getElementById('sp-name')||{}).value||'there';
+  const tb = buildTimeBlock();
+  let courtLine, timeLine;
+  if (tb.multiTime) {
+    courtLine = `Court: ${tb.court}`;
+    timeLine = `Time:\n${tb.time}`;
+  } else {
+    courtLine = `Court: ${tb.court}`;
+    timeLine = `Time: ${tb.time}`;
+  }
+  return `Hi ${fn},\nJust a friendly reminder about your badminton session at Sunshine Badminton today.\n${courtLine}\n${timeLine}\nPlease respond 'Y' to confirm or 'N' if you are unable to attend your sessions. Confirmation is required at least 6 hours prior to booking time otherwise your booking will be removed.\nThank you,\nSunshine Badminton x Sugar Brush`;
+}
+
 function spCopy(boxId, btnId, saveToHistory){
-  const t=(document.getElementById(boxId)||{}).textContent||'';
+  const t = buildReminderMsg();
   navigator.clipboard.writeText(t).then(()=>{
     const b=document.getElementById(btnId);
     if(b){const orig=b.textContent;b.textContent='✓ Copied!';setTimeout(()=>b.textContent=orig,1500);}
@@ -761,13 +779,11 @@ function spCopy(boxId, btnId, saveToHistory){
       const phone=(document.getElementById('sp-phone')||{}).value||'';
       const fullName=(document.getElementById('sp-dispname')||{}).textContent||name;
       const tb = buildTimeBlock();
-      const courtStr = tb.court;
-      const timeStr = tb.time;
       const day = _parsedDay || getTodayDay();
       const dateStr = _parsedDateStr || '';
       const entry = {
         id: Date.now().toString(),
-        name, fullName, court: courtStr, time: timeStr,
+        name, fullName, court: tb.court, time: tb.time,
         phone, status:'pending', day, dateStr, ts: Date.now(), note: '',
         msg: t
       };
