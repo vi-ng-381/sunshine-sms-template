@@ -770,7 +770,6 @@ function applyParsed(parsed){
   if(dp) dp.textContent=parsed.phone||'—';
 
   document.getElementById('sp-parsed').style.display='block';
-  document.getElementById('sp-raw').value='';
   spGen();
 }
 
@@ -792,7 +791,6 @@ function showMergeBanner(parsed){
       <button class="db-btn" style="color:#9ca3af;" onclick="hideMergeBanner()"><i class="ti ti-x"></i></button>
     </div>
   `;
-  document.getElementById('sp-raw').value='';
 }
 
 function hideMergeBanner(){
@@ -913,6 +911,9 @@ function renderSmartPaste(){
     <textarea id="sp-raw" class="paste-area" rows="5"
       placeholder="Wednesday 03/06/2026  BADMINTON&#10;Court 8  6:00pm–9:00pm&#10;Court 9  6:00pm–9:00pm&#10;...&#10;Your details&#10;Ha Quoc Hung Social, 0466128158"
       oninput="spParse()"></textarea>
+    <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+      <button class="btn-reset" style="font-size:12px;padding:6px 12px;" onclick="document.getElementById('sp-raw').value=''">Clear box</button>
+    </div>
     <div id="sp-merge-banner" style="display:none;align-items:center;gap:10px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 14px;margin-top:8px;flex-wrap:wrap;"></div>
   </div>
 
