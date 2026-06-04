@@ -658,15 +658,27 @@ function parseYepBlock(raw){
   });
 
   const detailsIdx = lines.findIndex(l => /your details/i.test(l));
-  const detailsLines = detailsIdx >= 0 ? lines.slice(detailsIdx+1) : lines;
+  let detailsLines;
+  if(detailsIdx >= 0){
+    detailsLines = lines.slice(detailsIdx + 1);
+  } else {
+    // No "Your details" section — only look after the last Court line to avoid
+    // picking up the day/date/BADMINTON header as a name
+    const lastCourtIdx = lines.reduce((acc, l, i) =>
+      /^Court\s+\w+/i.test(l.replace(/\t/g,'  ')) ? i : acc, -1);
+    detailsLines = lastCourtIdx >= 0 ? lines.slice(lastCourtIdx + 1) : [];
+  }
 
   const phoneMatch = raw.match(/\b(04\d{8}|0[2-9]\d{7,8})\b/);
   if(phoneMatch) phone = phoneMatch[1];
 
   for(const dl of detailsLines){
-    if(/^[\w.+-]+@[\w-]+/.test(dl)) continue;
-    if(/^\d[\d\s]{7,}$/.test(dl)) continue;
-    if(/^0[24-9]\d/.test(dl.replace(/\s/,''))) continue;
+    if(/^[\w.+-]+@[\w-]+/.test(dl)) continue;               // email
+    if(/^\d[\d\s]{7,}$/.test(dl)) continue;                  // number-only
+    if(/^0[24-9]\d/.test(dl.replace(/\s/,''))) continue;      // phone
+    if(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i.test(dl)) continue; // day line
+    if(/\d{1,2}\/\d{1,2}\/\d{4}/.test(dl)) continue;       // date line
+    if(/^(total price|badminton|click here|booking cancellation|if you wish)/i.test(dl)) continue;
     const commaM = dl.match(/^(.+?),\s*(0[24-9]\d+)/);
     if(commaM){
       fullName = commaM[1].trim();
