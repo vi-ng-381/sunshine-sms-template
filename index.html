@@ -699,6 +699,16 @@ let _pendingMerge = null;
 let _parsedDay = '';
 let _parsedDateStr = '';
 
+let _parseTimer = null;
+function spParseDebounced(){
+  clearTimeout(_parseTimer);
+  _parseTimer = setTimeout(spParse, 350);
+}
+
+function slotAlreadyExists(court, time){
+  return _slots.some(s => s.court.trim() === court.trim() && s.time.trim() === time.trim());
+}
+
 function spParse(){
   const raw = document.getElementById('sp-raw').value.trim();
   if(!raw){
@@ -800,7 +810,7 @@ function hideMergeBanner(){
 
 function acceptMerge(){
   if(!_pendingMerge) return;
-  _pendingMerge.slots.forEach(s => _slots.push({...s}));
+  _pendingMerge.slots.forEach(s => { if(!slotAlreadyExists(s.court, s.time)) _slots.push({...s}); });
   _pendingMerge = null;
   hideMergeBanner();
   renderSlots();
@@ -910,7 +920,7 @@ function renderSmartPaste(){
     <div class="step-label">Step 1 — paste the full YepBooking block below (supports multiple courts)</div>
     <textarea id="sp-raw" class="paste-area" rows="5"
       placeholder="Wednesday 03/06/2026  BADMINTON&#10;Court 8  6:00pm–9:00pm&#10;Court 9  6:00pm–9:00pm&#10;...&#10;Your details&#10;Ha Quoc Hung Social, 0466128158"
-      oninput="spParse()"></textarea>
+      oninput="spParseDebounced()"></textarea>
     <div style="display:flex;justify-content:flex-end;margin-top:6px;">
       <button class="btn-reset" style="font-size:12px;padding:6px 12px;" onclick="document.getElementById('sp-raw').value=''">Clear box</button>
     </div>
