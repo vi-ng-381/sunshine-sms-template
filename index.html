@@ -690,10 +690,14 @@ let _parsedDateStr = '';
 function spParse(){
   const raw = document.getElementById('sp-raw').value.trim();
   if(!raw){
-    document.getElementById('sp-parsed').style.display='none';
-    _pendingMerge = null;
-    _currentEntryId = null;
-    hideMergeBanner();
+    // Only fully reset if no person is loaded yet — don't wipe an active session
+    const alreadyLoaded = document.getElementById('sp-parsed') &&
+      document.getElementById('sp-parsed').style.display !== 'none';
+    if(!alreadyLoaded){
+      _pendingMerge = null;
+      _currentEntryId = null;
+      hideMergeBanner();
+    }
     return;
   }
 
