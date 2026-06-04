@@ -740,8 +740,14 @@ function spParse(){
     document.getElementById('sp-parsed').style.display !== 'none';
 
   if(alreadyHasData && parsed.slots.length && (sameByPhone || sameByName || anonymous)){
-    _pendingMerge = parsed;
-    showMergeBanner(parsed);
+    // Only show banner for genuinely new slots
+    const newSlots = parsed.slots.filter(s => !slotAlreadyExists(s.court, s.time));
+    if(newSlots.length === 0){
+      // All slots already exist — silently do nothing
+      return;
+    }
+    _pendingMerge = { ...parsed, slots: newSlots };
+    showMergeBanner(_pendingMerge);
     return;
   }
 
@@ -788,11 +794,11 @@ function showMergeBanner(parsed){
   if(!banner) return;
   const slotDesc = parsed.slots.map(s=>`Court ${s.court} ${s.time}`).join(', ');
   const isAnon = !parsed.phone && !parsed.fullName;
-  const reason = isAnon ? 'No name/phone in block — adding to current person' : 'Same person detected';
+  const reason = isAnon ? 'Same person' : 'Same person detected';
   banner.style.display='flex';
   banner.innerHTML = `
     <div style="flex:1;">
-      <strong>${reason}</strong> — add ${parsed.slots.length} more slot${parsed.slots.length>1?'s':''}?
+      <strong>${reason}</strong> — add ${parsed.slots.length} new slot${parsed.slots.length>1?'s':''}?
       <div style="font-size:11px;color:#065F46;margin-top:2px;">${slotDesc}</div>
     </div>
     <div style="display:flex;gap:6px;flex-shrink:0;">
