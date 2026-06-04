@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Sugar Brush — Phone Order Dashboard</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -20,18 +20,17 @@
     --text-tertiary: #8DA094;
     --brand-primary: #2C5E3B;
     --brand-secondary: #DDF0DF;
-    --brand-dark: #1E4429;
     --accent: #D4AF37;
     --accent-bg: #FCF8E3;
     --border: #E2DDD5;
     --border-hover: #C5BCAD;
-    --shadow: 0 4px 20px rgba(44, 94, 59, 0.05);
-    --shadow-md: 0 10px 30px rgba(44, 94, 59, 0.08);
+    --shadow: 0 4px 20px rgba(44,94,59,0.05);
     --danger: #D32F2F;
     --danger-bg: #FFEBEE;
-    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    --bottom-bar: 64px;
+    --header-h: 56px;
   }
-
   body.dark {
     --bg-primary: #111512;
     --bg-secondary: #191E1A;
@@ -41,42 +40,173 @@
     --text-tertiary: #6E7D72;
     --brand-primary: #418554;
     --brand-secondary: #253328;
-    --brand-dark: #A4D4B1;
     --accent: #E5C158;
     --accent-bg: #38311B;
     --border: #2F3B32;
     --border-hover: #46594B;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.45);
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
     --danger: #FF6B6B;
     --danger-bg: #3D1C1C;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     font-size: 15px;
     line-height: 1.5;
-    transition: background-color 0.3s var(--transition), color 0.3s var(--transition);
-    overflow: hidden;
-    height: 100vh;
   }
-
-  input, select, textarea, button {
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-  }
-
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  input, select, textarea, button { font-family: inherit; font-size: 14px; outline: none; }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
-
   .zoom-container { cursor: grab; }
   .zoom-container:active { cursor: grabbing; }
+
+  /* ── Layout shells ── */
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  /* ── Top header ── */
+  .top-header {
+    flex-shrink: 0;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--bg-card);
+    gap: 10px;
+  }
+
+  /* ── Desktop: 3-col grid ── */
+  .desk-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1.1fr 1.3fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    padding: 14px 16px;
+  }
+
+  /* ── Mobile bottom tab bar ── */
+  .mob-tab-bar {
+    display: none;
+  }
+
+  /* ── Mobile panel container ── */
+  .mob-panels {
+    display: none;
+  }
+
+  /* ── Shared col card ── */
+  .col-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .col-head {
+    padding: 12px 14px;
+    border-bottom: 1.5px solid var(--border);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .col-body {
+    padding: 14px;
+    overflow-y: auto;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Responsive: mobile ≤ 767px ── */
+  @media (max-width: 767px) {
+    body { overflow: hidden; }
+
+    .desk-grid { display: none; }
+
+    .mob-tab-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: var(--bottom-bar);
+      background: var(--bg-card);
+      border-top: 1.5px solid var(--border);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .mob-tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      font-size: 11px;
+      font-weight: 600;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .mob-tab-btn.active { color: var(--brand-primary); }
+    .mob-tab-btn .tab-icon { font-size: 20px; }
+    .mob-tab-btn .tab-badge {
+      position: absolute;
+      top: 6px; right: calc(50% - 18px);
+      background: var(--brand-primary);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+    }
+
+    .mob-panels {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      padding-bottom: var(--bottom-bar);
+    }
+    .mob-panel {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .mob-panel.active { display: flex; }
+
+    .col-card {
+      border-radius: 0;
+      border: none;
+      border-bottom: 1.5px solid var(--border);
+      flex: 1;
+    }
+
+    /* header tweaks for mobile */
+    .top-header { padding: 0 12px; height: 50px; }
+    .header-date { display: none; }
+    .header-logo span.logo-sub { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -85,173 +215,564 @@
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
-// ─── Melbourne Timezone Helpers ────────────────────────────────────────────
+/* ── Melbourne TZ helpers ─────────────────────────────────────── */
 const MELB_TZ = "Australia/Melbourne";
-
-function nowMelbourne() {
-  // Returns the current moment as a Date (UTC internally),
-  // but all formatting will use MELB_TZ locale options.
-  return new Date();
-}
-
 function getMelbourneDay() {
-  // Returns 0=Sun … 6=Sat for Melbourne's current local day
-  const dayStr = new Date().toLocaleDateString("en-AU", {
-    timeZone: MELB_TZ,
-    weekday: "short"
-  });
-  const map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-  return map[dayStr] ?? new Date().getDay();
+  const s = new Date().toLocaleDateString("en-AU", { timeZone: MELB_TZ, weekday: "short" });
+  return { Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6 }[s] ?? new Date().getDay();
 }
-
 const DAY = getMelbourneDay();
-const IS_FRI_SUN = [0, 5, 6].includes(DAY);
+const IS_FRI_SUN = [0,5,6].includes(DAY);
 
 function fmtDate(d) {
-  return d.toLocaleDateString("en-AU", {
-    timeZone: MELB_TZ,
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-    year: "numeric"
-  });
+  return d.toLocaleDateString("en-AU", { timeZone: MELB_TZ, weekday:"short", day:"2-digit", month:"short", year:"numeric" });
 }
-
 function fmtTime(d) {
-  return d.toLocaleTimeString("en-AU", {
-    timeZone: MELB_TZ,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true
-  });
+  return d.toLocaleTimeString("en-AU", { timeZone: MELB_TZ, hour:"2-digit", minute:"2-digit", hour12:true });
 }
-
 function addMins(mins) {
   const d = new Date(Date.now() + mins * 60000);
-  // Get Melbourne local HH:MM
-  const timeStr = d.toLocaleTimeString("en-AU", {
-    timeZone: MELB_TZ,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  });
-  // Normalize "24:xx" edge case to "00:xx"
-  return timeStr.replace(/^24:/, "00:");
+  return d.toLocaleTimeString("en-AU", { timeZone: MELB_TZ, hour:"2-digit", minute:"2-digit", hour12:false }).replace(/^24:/,"00:");
 }
-
 function fmt12h(t24) {
   if (!t24) return "";
-  const [h, m] = t24.split(":").map(Number);
-  const ampm = h >= 12 ? "PM" : "AM";
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2,"0")} ${ampm}`;
+  const [h,m] = t24.split(":").map(Number);
+  return `${h%12||12}:${String(m).padStart(2,"0")} ${h>=12?"PM":"AM"}`;
 }
 
-// ─── Menu Database ──────────────────────────────────────────────────────────
+/* ── Menu data ────────────────────────────────────────────────── */
 const MENU = {
-  riceBowls: {
-    label: "Rice bowls", icon: "🍚", askSize: true, askSauce: true, askSeasoning: true,
-    desc: "Served with sushi rice, seasonal salad, furikake, ichimi and pickled radish.",
-    items: [
-      { id: "beef_bowl",        name: "Beef bowl",         prices: { S: 14.5, L: 16.5 }, desc: "Tender beef slices with house-made tare or soy & mirin dressing." },
-      { id: "lamb_bowl",        name: "Lamb bowl",         prices: { S: 14.5, L: 16.5 }, desc: "Savory grilled lamb slices on seasoned rice." },
-      { id: "chicken_wing_bowl",name: "Chicken wing bowl", prices: { S: 15.9, L: 17.9 }, desc: "Crispy chicken wings over rice." },
-      { id: "squid_bowl",       name: "Squid bowl",        prices: { L: 19.5 }, noSmall: true, friSunOnly: true, desc: "Grilled squid glazed with sauce (Fri-Sun only)." },
-    ],
-  },
-  sides: {
-    label: "On the side", icon: "➕",
-    desc: "Extra house sauces and accompaniments.",
-    items: [
-      { id: "tare_sauce",    name: "House-made tare sauce", prices: { one: 2 }, desc: "Signature rich house-made sweet-savory tare sauce." },
-      { id: "spicy_mayo",    name: "Spicy mayo",            prices: { one: 2 }, desc: "Creamy, spicy Japanese mayonnaise." },
-      { id: "pickled_radish",name: "Pickled radish",        prices: { one: 2 }, desc: "Sweet-sour crunchy yellow daikon radish slices." },
-      { id: "extra_spices",  name: "Extra spices",          prices: { one: 2 }, desc: "Sichuan spice or signature seasoning blend." },
-    ],
-  },
-  melts: {
-    label: "Melts", icon: "🥪", note: "served with potato chips",
-    desc: "Premium toasted sandwiches served crunchy with potato chips.",
-    items: [
-      { id: "pastrami_melt",    name: "Pastrami melt",     prices: { one: 14 }, desc: "Sauerkraut, sourdough bread, house-made sauce, pickles, cheese, pastrami." },
-      { id: "cheesy_tuna_melt", name: "Cheesy tuna melt",  prices: { one: 14 }, desc: "House-made tuna mix, melted cheese, premium sourdough bread." },
-      { id: "smokey_pesto_melt",name: "Smokey pesto melt", prices: { one: 14 }, desc: "Pesto, salami, spanish onion, rocket, smokey mayo, bocconcini cheese." },
-      { id: "ham_cheese_melt",  name: "Ham cheese melt",   prices: { one: 8  }, desc: "Classic toasted ham, cheese, and sourdough bread." },
-    ],
-  },
-  bites: {
-    label: "Bites & sides", icon: "🍗", askSpice: true,
-    desc: "Hot bites and appetizers. Spiced with Cumin or Sichuan (Lvl 0, 1, 2).",
-    items: [
-      { id: "beef_bites",         name: "Beef bites",           prices: { one: 8.5  }, desc: "Tender beef cubes coated in your chosen spices." },
-      { id: "lamb_bites",         name: "Lamb bites",           prices: { one: 8.5  }, desc: "Juicy lamb cubes coated in your chosen spices." },
-      { id: "chicken_wings",      name: "Chicken wings (6x)",   prices: { one: 9.9  }, desc: "6x golden crispy chicken wings coated in spices." },
-      { id: "fried_squid",        name: "Fried squid",          prices: { one: 12.9 }, friSunOnly: true, desc: "Crispy fried squid served with dressed salad and choice of sauce (Fri-Sun only)." },
-      { id: "spring_rolls",       name: "Spring rolls (6x)",    prices: { one: 12   }, desc: "6x crispy prawn spring rolls served with lettuce and fish dipping sauce." },
-      { id: "plum_fries",         name: "Plum fries",           prices: { one: 5    }, desc: "Coated potato fries tossed in house-made plum seasoning." },
-      { id: "sweet_potato_fries", name: "Sweet potato fries",   prices: { one: 7    }, desc: "Sweet potato fries coated with sweet plum or savory maggi seasoning." },
-      { id: "nem_nuong",          name: "Nem nuong",            prices: { one: 6    }, desc: "2x classic Vietnamese pork fried skewers." },
-      { id: "bo_la_lot",          name: "Bo la lot",            prices: { one: 6    }, desc: "Aromatic marinated beef wrapped in betel leaves." },
-    ],
-  },
-  combo: {
-    label: "Combo deal", icon: "🏷️",
-    desc: "Meal combo pricing.",
-    items: [{ id: "combo", name: "Fries + Any small refreshment", prices: { one: 8 }, desc: "Combine sweet potato or plum fries with any small refreshment for a discount." }],
-  },
-  matcha: {
-    label: "Kohiki matcha", icon: "🍵", askSize: true,
-    desc: "Premium Kohiki matcha drinks made with Japanese matcha green tea. Oat milk default.",
-    items: [
-      { id: "iced_matcha",           name: "Iced matcha",             prices: { S: 7.5, L: 9.5  }, desc: "Traditional iced matcha green tea combined with creamy oat milk." },
-      { id: "iced_strawberry_matcha",name: "Iced strawberry matcha",  prices: { S: 8.5, L: 10.5 }, desc: "Layered drink with sweet strawberry puree, oat milk, and premium matcha." },
-      { id: "iced_jasmine_matcha",   name: "Iced jasmine matcha",     prices: { S: 8.5, L: 10.5 }, desc: "Fragrant cold-brewed jasmine tea base, oat milk, and matcha." },
-      { id: "iced_coconut_matcha",   name: "Iced coconut matcha",     prices: { S: 8.5, L: 10.5 }, desc: "Exotic rich coconut milk base topped with matcha." },
-    ],
-  },
-  refreshments: {
-    label: "Refreshments", icon: "🥤", askSize: true,
-    desc: "Refreshing homemade cold teas and sodas.",
-    items: [
-      { id: "mint_lemonade",        name: "Mint lemonade",               prices: { S: 4.5, L: 5.7 }, desc: "Housemade sweet-tart fresh lemonade with crushed mint leaves." },
-      { id: "mint_straw_lemonade",  name: "Mint strawberry lemonade",    prices: { S: 5.5, L: 6.7 }, desc: "Mint lemonade infused with fresh strawberry pieces." },
-      { id: "iced_lychee",          name: "Iced lychee",                 prices: { S: 6,   L: 7.2 }, desc: "Sweet, cooling lychee fruit infused tea beverage." },
-      { id: "iced_jasmine_tea",     name: "Iced jasmine tea",            prices: { S: 6,   L: 7.2 }, desc: "Cold-brewed lightly sweetened aromatic jasmine green tea." },
-      { id: "iced_straw_jasmine",   name: "Iced strawberry jasmine tea", prices: { S: 6,   L: 7.2 }, desc: "Signature jasmine green tea layered with fresh strawberries." },
-      { id: "viet_iced_coffee",     name: "Vietnamese iced coffee",      prices: { S: 6,   L: 8   }, desc: "Traditional strong drip coffee sweetened with condensed milk over ice." },
-    ],
-  },
-  toppings: {
-    label: "Toppings", icon: "🌿",
-    desc: "Add-ons for matcha and refreshments ($0.80 each).",
-    items: [
-      { id: "aloe_vera",             name: "Aloe vera",             prices: { one: 0.8 }, desc: "Cooling sweet gel aloe vera chunks." },
-      { id: "lychee_popping_pearls", name: "Lychee popping pearls", prices: { one: 0.8 }, desc: "Fun popping bubbles filled with sweet lychee juice." },
-      { id: "rainbow_jelly",         name: "Rainbow jelly",         prices: { one: 0.8 }, desc: "Firm, multi-colored fruit jelly pieces." },
-      { id: "herbal_jelly",          name: "Herbal jelly",          prices: { one: 0.8 }, desc: "Traditional soothing grass jelly cubes." },
-    ],
-  },
+  riceBowls:{ label:"Rice bowls", icon:"🍚", askSize:true, askSauce:true, askSeasoning:true,
+    desc:"Served with sushi rice, seasonal salad, furikake, ichimi and pickled radish.",
+    items:[
+      {id:"beef_bowl",        name:"Beef bowl",         prices:{S:14.5,L:16.5}, desc:"Tender beef slices with house-made tare or soy & mirin dressing."},
+      {id:"lamb_bowl",        name:"Lamb bowl",         prices:{S:14.5,L:16.5}, desc:"Savory grilled lamb slices on seasoned rice."},
+      {id:"chicken_wing_bowl",name:"Chicken wing bowl", prices:{S:15.9,L:17.9}, desc:"Crispy chicken wings over rice."},
+      {id:"squid_bowl",       name:"Squid bowl",        prices:{L:19.5}, noSmall:true, friSunOnly:true, desc:"Grilled squid glazed with sauce (Fri-Sun only)."},
+    ]},
+  sides:{ label:"On the side", icon:"➕",
+    desc:"Extra house sauces and accompaniments.",
+    items:[
+      {id:"tare_sauce",    name:"House-made tare sauce", prices:{one:2}, desc:"Signature rich house-made sweet-savory tare sauce."},
+      {id:"spicy_mayo",    name:"Spicy mayo",            prices:{one:2}, desc:"Creamy, spicy Japanese mayonnaise."},
+      {id:"pickled_radish",name:"Pickled radish",        prices:{one:2}, desc:"Sweet-sour crunchy yellow daikon radish slices."},
+      {id:"extra_spices",  name:"Extra spices",          prices:{one:2}, desc:"Sichuan spice or signature seasoning blend."},
+    ]},
+  melts:{ label:"Melts", icon:"🥪", note:"served with potato chips",
+    desc:"Premium toasted sandwiches served crunchy with potato chips.",
+    items:[
+      {id:"pastrami_melt",    name:"Pastrami melt",     prices:{one:14}, desc:"Sauerkraut, sourdough bread, house-made sauce, pickles, cheese, pastrami."},
+      {id:"cheesy_tuna_melt", name:"Cheesy tuna melt",  prices:{one:14}, desc:"House-made tuna mix, melted cheese, premium sourdough bread."},
+      {id:"smokey_pesto_melt",name:"Smokey pesto melt", prices:{one:14}, desc:"Pesto, salami, spanish onion, rocket, smokey mayo, bocconcini cheese."},
+      {id:"ham_cheese_melt",  name:"Ham cheese melt",   prices:{one:8 }, desc:"Classic toasted ham, cheese, and sourdough bread."},
+    ]},
+  bites:{ label:"Bites & sides", icon:"🍗", askSpice:true,
+    desc:"Hot bites and appetizers. Spiced with Cumin or Sichuan (Lvl 0, 1, 2).",
+    items:[
+      {id:"beef_bites",        name:"Beef bites",          prices:{one:8.5 }, desc:"Tender beef cubes coated in your chosen spices."},
+      {id:"lamb_bites",        name:"Lamb bites",          prices:{one:8.5 }, desc:"Juicy lamb cubes coated in your chosen spices."},
+      {id:"chicken_wings",     name:"Chicken wings (6x)",  prices:{one:9.9 }, desc:"6x golden crispy chicken wings coated in spices."},
+      {id:"fried_squid",       name:"Fried squid",         prices:{one:12.9}, friSunOnly:true, desc:"Crispy fried squid served with dressed salad and choice of sauce (Fri-Sun only)."},
+      {id:"spring_rolls",      name:"Spring rolls (6x)",   prices:{one:12  }, desc:"6x crispy prawn spring rolls served with lettuce and fish dipping sauce."},
+      {id:"plum_fries",        name:"Plum fries",          prices:{one:5   }, desc:"Coated potato fries tossed in house-made plum seasoning."},
+      {id:"sweet_potato_fries",name:"Sweet potato fries",  prices:{one:7   }, desc:"Sweet potato fries coated with sweet plum or savory maggi seasoning."},
+      {id:"nem_nuong",         name:"Nem nuong",           prices:{one:6   }, desc:"2x classic Vietnamese pork fried skewers."},
+      {id:"bo_la_lot",         name:"Bo la lot",           prices:{one:6   }, desc:"Aromatic marinated beef wrapped in betel leaves."},
+    ]},
+  combo:{ label:"Combo deal", icon:"🏷️",
+    desc:"Meal combo pricing.",
+    items:[{id:"combo", name:"Fries + Any small refreshment", prices:{one:8}, desc:"Combine sweet potato or plum fries with any small refreshment for a discount."}]},
+  matcha:{ label:"Kohiki matcha", icon:"🍵", askSize:true,
+    desc:"Premium Kohiki matcha drinks. Oat milk default.",
+    items:[
+      {id:"iced_matcha",           name:"Iced matcha",            prices:{S:7.5,L:9.5 }, desc:"Traditional iced matcha green tea combined with creamy oat milk."},
+      {id:"iced_strawberry_matcha",name:"Iced strawberry matcha", prices:{S:8.5,L:10.5}, desc:"Layered drink with sweet strawberry puree, oat milk, and premium matcha."},
+      {id:"iced_jasmine_matcha",   name:"Iced jasmine matcha",   prices:{S:8.5,L:10.5}, desc:"Fragrant cold-brewed jasmine tea base, oat milk, and matcha."},
+      {id:"iced_coconut_matcha",   name:"Iced coconut matcha",   prices:{S:8.5,L:10.5}, desc:"Exotic rich coconut milk base topped with matcha."},
+    ]},
+  refreshments:{ label:"Refreshments", icon:"🥤", askSize:true,
+    desc:"Refreshing homemade cold teas and sodas.",
+    items:[
+      {id:"mint_lemonade",       name:"Mint lemonade",              prices:{S:4.5,L:5.7}, desc:"Housemade sweet-tart fresh lemonade with crushed mint leaves."},
+      {id:"mint_straw_lemonade", name:"Mint strawberry lemonade",   prices:{S:5.5,L:6.7}, desc:"Mint lemonade infused with fresh strawberry pieces."},
+      {id:"iced_lychee",         name:"Iced lychee",                prices:{S:6,  L:7.2}, desc:"Sweet, cooling lychee fruit infused tea beverage."},
+      {id:"iced_jasmine_tea",    name:"Iced jasmine tea",           prices:{S:6,  L:7.2}, desc:"Cold-brewed lightly sweetened aromatic jasmine green tea."},
+      {id:"iced_straw_jasmine",  name:"Iced strawberry jasmine tea",prices:{S:6,  L:7.2}, desc:"Signature jasmine green tea layered with fresh strawberries."},
+      {id:"viet_iced_coffee",    name:"Vietnamese iced coffee",     prices:{S:6,  L:8  }, desc:"Traditional strong drip coffee sweetened with condensed milk over ice."},
+    ]},
+  toppings:{ label:"Toppings", icon:"🌿",
+    desc:"Add-ons for matcha and refreshments ($0.80 each).",
+    items:[
+      {id:"aloe_vera",            name:"Aloe vera",            prices:{one:0.8}, desc:"Cooling sweet gel aloe vera chunks."},
+      {id:"lychee_popping_pearls",name:"Lychee popping pearls",prices:{one:0.8}, desc:"Fun popping bubbles filled with sweet lychee juice."},
+      {id:"rainbow_jelly",        name:"Rainbow jelly",        prices:{one:0.8}, desc:"Firm, multi-colored fruit jelly pieces."},
+      {id:"herbal_jelly",         name:"Herbal jelly",         prices:{one:0.8}, desc:"Traditional soothing grass jelly cubes."},
+    ]},
 };
 
-const FRIES_OPTIONS = [
-  { id: "plum_fries",        name: "Plum fries" },
-  { id: "sweet_potato_fries",name: "Sweet potato fries" },
-];
-const REFRESHMENT_OPTIONS = [
-  { id: "mint_lemonade",       name: "Mint lemonade" },
-  { id: "mint_straw_lemonade", name: "Mint strawberry lemonade" },
-  { id: "iced_lychee",         name: "Iced lychee" },
-  { id: "iced_jasmine_tea",    name: "Iced jasmine tea" },
-  { id: "iced_straw_jasmine",  name: "Iced strawberry jasmine tea" },
-  { id: "viet_iced_coffee",    name: "Vietnamese iced coffee" },
+const FRIES_OPTS = [{id:"plum_fries",name:"Plum fries"},{id:"sweet_potato_fries",name:"Sweet potato fries"}];
+const DRINK_OPTS = [
+  {id:"mint_lemonade",name:"Mint lemonade"},{id:"mint_straw_lemonade",name:"Mint strawberry lemonade"},
+  {id:"iced_lychee",name:"Iced lychee"},{id:"iced_jasmine_tea",name:"Iced jasmine tea"},
+  {id:"iced_straw_jasmine",name:"Iced strawberry jasmine tea"},{id:"viet_iced_coffee",name:"Vietnamese iced coffee"},
 ];
 
 function getPrice(item, size) {
-  if (item.prices.one !== undefined) return item.prices.one;
-  return item.prices[size] || 0;
+  return item.prices.one !== undefined ? item.prices.one : (item.prices[size] || 0);
 }
 
-// ─── App Component ──────────────────────────────────────────────────────────
+/* ── Shared style helpers ─────────────────────────────────────── */
+const btn  = { padding:"6px 12px", borderRadius:"8px", border:"none", fontWeight:"600", cursor:"pointer" };
+const fBtn = { ...btn, background:"var(--brand-primary)", color:"#fff" };
+const sBtn = { ...btn, background:"var(--bg-secondary)", color:"var(--text-primary)", border:"1.5px solid var(--border)" };
+const inp  = { width:"100%", padding:"9px 12px", borderRadius:"8px", border:"1.5px solid var(--border)", background:"var(--bg-primary)", color:"var(--text-primary)", fontSize:"14px" };
+
+/* ── MenuPanel ────────────────────────────────────────────────── */
+function MenuPanel({ addItem, searchQuery, setSearchQuery, customerName, setCustomerName,
+  customerPhone, setCustomerPhone, orderType, setOrderType,
+  pickupTime, setPickupTime, pickupAsap, setPickupAsap }) {
+
+  const [comboPickDrink, setComboPickDrink] = useState(DRINK_OPTS[0].id);
+  const [comboPickFries, setComboPickFries] = useState("plum_fries");
+  const [comboExpanded, setComboExpanded]   = useState(false);
+
+  return (
+    <div className="col-card">
+      <div className="col-head" style={{ gap:"8px", flexWrap:"wrap" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"6px", flex:1 }}>
+          <span style={{ fontSize:"17px" }}>📝</span>
+          <h2 style={{ fontSize:"14px", fontWeight:"700" }}>Menu Ordering</h2>
+        </div>
+        <input type="text" placeholder="🔍 Search…" value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          style={{ ...inp, width:"150px", padding:"5px 10px", fontSize:"12px", borderRadius:"20px" }} />
+      </div>
+
+      <div className="col-body">
+        {/* Customer */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"10px", marginBottom:"12px" }}>
+          <div>
+            <label style={{ fontSize:"10px", fontWeight:"700", textTransform:"uppercase", color:"var(--text-tertiary)" }}>Name</label>
+            <input type="text" placeholder="John Doe" value={customerName}
+              onChange={e => setCustomerName(e.target.value)} style={{ ...inp, marginTop:"3px" }} />
+          </div>
+          <div>
+            <label style={{ fontSize:"10px", fontWeight:"700", textTransform:"uppercase", color:"var(--text-tertiary)" }}>Phone</label>
+            <input type="tel" placeholder="0400 000 000" value={customerPhone}
+              onChange={e => setCustomerPhone(e.target.value)} style={{ ...inp, marginTop:"3px" }} />
+          </div>
+        </div>
+
+        {/* Order type */}
+        <div style={{ display:"flex", gap:"8px", marginBottom:"12px" }}>
+          {["pickup","dinein"].map(t => (
+            <button key={t} onClick={() => setOrderType(t)} style={{ flex:1, padding:"8px", borderRadius:"8px",
+              cursor:"pointer", fontWeight:"700", border:"1.5px solid var(--border)",
+              background: orderType===t ? "var(--brand-secondary)" : "var(--bg-card)",
+              color: orderType===t ? "var(--brand-primary)" : "var(--text-secondary)",
+              borderColor: orderType===t ? "var(--brand-primary)" : "var(--border)" }}>
+              {t==="pickup" ? "🛍️ Pick up" : "🪑 Dine in"}
+            </button>
+          ))}
+        </div>
+
+        {/* Pickup time */}
+        <div style={{ background:"var(--bg-secondary)", padding:"10px 12px", borderRadius:"10px",
+          border:"1.5px solid var(--border)", marginBottom:"14px" }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"8px" }}>
+            <span style={{ fontSize:"11px", fontWeight:"700", textTransform:"uppercase", color:"var(--text-secondary)" }}>⏰ Pickup (Melbourne)</span>
+            {(pickupAsap||pickupTime) && (
+              <span style={{ fontSize:"11px", fontWeight:"800", background:"var(--accent-bg)", color:"var(--accent)",
+                border:"1px solid var(--accent)", padding:"2px 8px", borderRadius:"20px" }}>
+                {pickupAsap ? "⚡ ASAP" : `🕒 ${fmt12h(pickupTime)}`}
+              </span>
+            )}
+          </div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"6px" }}>
+            <button onClick={() => { setPickupAsap(true); setPickupTime(""); }}
+              style={{ ...sBtn, padding:"4px 8px", fontSize:"11px",
+                background: pickupAsap ? "var(--brand-primary)" : "var(--bg-card)",
+                color: pickupAsap ? "#fff" : "var(--text-primary)" }}>ASAP</button>
+            {[15,20,30,45].map(m => {
+              const val = addMins(m);
+              const isA = !pickupAsap && pickupTime===val;
+              return <button key={m} onClick={() => { setPickupAsap(false); setPickupTime(val); }}
+                style={{ ...sBtn, padding:"4px 8px", fontSize:"11px",
+                  background: isA ? "var(--brand-primary)" : "var(--bg-card)",
+                  color: isA ? "#fff" : "var(--text-primary)" }}>+{m} min</button>;
+            })}
+            <input type="time" disabled={pickupAsap} value={pickupTime}
+              onChange={e => { setPickupAsap(false); setPickupTime(e.target.value); }}
+              style={{ padding:"2px 6px", borderRadius:"6px", border:"1.5px solid var(--border)",
+                fontSize:"12px", background:"var(--bg-card)", color:"var(--text-primary)", marginLeft:"auto" }} />
+          </div>
+        </div>
+
+        {/* Menu sections */}
+        {Object.entries(MENU).map(([key,cat]) => {
+          const filtered = cat.items.filter(item =>
+            item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (item.desc && item.desc.toLowerCase().includes(searchQuery.toLowerCase()))
+          );
+          if (!filtered.length) return null;
+          return (
+            <div key={key} style={{ border:"1.5px solid var(--border)", borderRadius:"10px",
+              padding:"10px 12px", marginBottom:"10px", background:"var(--bg-card)" }}>
+              <p style={{ fontSize:"12px", fontWeight:"800", color:"var(--brand-primary)", display:"flex",
+                alignItems:"center", gap:"6px", marginBottom:"8px", textTransform:"uppercase",
+                letterSpacing:"0.05em", borderBottom:"1px solid var(--border)", paddingBottom:"6px" }}>
+                <span>{cat.icon}</span>{cat.label}
+                {cat.note && <span style={{ fontSize:"10px", fontWeight:"400", textTransform:"none",
+                  color:"var(--text-tertiary)" }}>({cat.note})</span>}
+              </p>
+              {cat.items.map(item => {
+                if (!filtered.includes(item)) return null;
+                const isCombo    = item.id === "combo";
+                const isFriSun   = !!item.friSunOnly;
+                const unavail    = isFriSun && !IS_FRI_SUN;
+                const priceStr   = item.prices.one !== undefined ? `$${item.prices.one}`
+                  : item.noSmall ? `L $${item.prices.L}`
+                  : `S $${item.prices.S} / L $${item.prices.L}`;
+
+                if (isCombo) return (
+                  <div key={item.id} style={{ padding:"6px 0" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                      <div style={{ paddingRight:"8px" }}>
+                        <p style={{ fontWeight:"600", fontSize:"13px" }}>{item.name}</p>
+                        <p style={{ fontSize:"11px", color:"var(--text-tertiary)" }}>{item.desc}</p>
+                      </div>
+                      <div style={{ display:"flex", alignItems:"center", gap:"8px", flexShrink:0 }}>
+                        <span style={{ fontSize:"13px", fontWeight:"700", color:"var(--text-secondary)" }}>$8</span>
+                        <button onClick={() => setComboExpanded(!comboExpanded)}
+                          style={{ ...fBtn, fontSize:"12px", padding:"4px 10px",
+                            background: comboExpanded ? "var(--text-tertiary)" : "var(--brand-primary)" }}>
+                          {comboExpanded ? "▲ Close" : "+ Combo"}
+                        </button>
+                      </div>
+                    </div>
+                    {comboExpanded && (
+                      <div style={{ marginTop:"8px", background:"var(--bg-secondary)", border:"1.5px solid var(--border)",
+                        borderRadius:"8px", padding:"10px", display:"flex", flexDirection:"column", gap:"8px" }}>
+                        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"8px" }}>
+                          <div>
+                            <label style={{ fontSize:"10px", fontWeight:"700", color:"var(--text-tertiary)" }}>Fries</label>
+                            <select value={comboPickFries} onChange={e => setComboPickFries(e.target.value)}
+                              style={{ ...inp, padding:"4px 8px", background:"var(--bg-card)", fontSize:"12px", marginTop:"2px" }}>
+                              {FRIES_OPTS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
+                            </select>
+                          </div>
+                          <div>
+                            <label style={{ fontSize:"10px", fontWeight:"700", color:"var(--text-tertiary)" }}>Small Drink</label>
+                            <select value={comboPickDrink} onChange={e => setComboPickDrink(e.target.value)}
+                              style={{ ...inp, padding:"4px 8px", background:"var(--bg-card)", fontSize:"12px", marginTop:"2px" }}>
+                              {DRINK_OPTS.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
+                            </select>
+                          </div>
+                        </div>
+                        <button onClick={() => {
+                          const fn = FRIES_OPTS.find(f=>f.id===comboPickFries)?.name;
+                          const dn = DRINK_OPTS.find(r=>r.id===comboPickDrink)?.name;
+                          addItem({...item, name:`Combo: ${fn} + ${dn} (S)`}, cat);
+                          setComboExpanded(false);
+                        }} style={{ ...fBtn, width:"100%", padding:"7px", fontSize:"13px", background:"var(--accent)" }}>
+                          ✓ Add Combo — $8
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+
+                return (
+                  <div key={item.id} style={{ display:"flex", justifyContent:"space-between",
+                    alignItems:"center", padding:"8px 0", borderBottom:"1px solid var(--border)",
+                    opacity: unavail ? 0.45 : 1 }}>
+                    <div style={{ paddingRight:"8px", flex:1, minWidth:0 }}>
+                      <div style={{ display:"flex", alignItems:"center", gap:"6px", flexWrap:"wrap" }}>
+                        <p style={{ fontWeight:"600", fontSize:"13px" }}>{item.name}</p>
+                        {isFriSun && (
+                          <span style={{ fontSize:"9px", fontWeight:"800", padding:"1px 5px", borderRadius:"10px",
+                            background: unavail ? "var(--danger-bg)" : "var(--brand-secondary)",
+                            color: unavail ? "var(--danger)" : "var(--brand-primary)",
+                            border:`1px solid ${unavail ? "var(--danger)" : "var(--brand-primary)"}` }}>
+                            {unavail ? "Weekdays locked" : "Fri–Sun"}
+                          </span>
+                        )}
+                      </div>
+                      <p style={{ fontSize:"11px", color:"var(--text-tertiary)", marginTop:"1px" }}>{item.desc}</p>
+                    </div>
+                    <div style={{ display:"flex", alignItems:"center", gap:"8px", flexShrink:0 }}>
+                      <span style={{ fontSize:"12px", fontWeight:"700", color:"var(--text-secondary)", whiteSpace:"nowrap" }}>{priceStr}</span>
+                      <button disabled={unavail} onClick={() => addItem(item,cat)}
+                        style={{ ...fBtn, fontSize:"12px", padding:"4px 10px",
+                          cursor: unavail ? "not-allowed" : "pointer",
+                          background: unavail ? "var(--bg-secondary)" : "var(--brand-primary)",
+                          color: unavail ? "var(--text-tertiary)" : "#fff",
+                          border: unavail ? "1.5px solid var(--border)" : "none" }}>
+                        + Add
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── CartPanel ────────────────────────────────────────────────── */
+function CartPanel({ orderItems, updateItem, removeItem, total, notes, setNotes,
+  showSummary, setShowSummary, copySummary, buildSummary, resetOrder }) {
+  return (
+    <div className="col-card">
+      <div className="col-head">
+        <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+          <span style={{ fontSize:"17px" }}>🛒</span>
+          <h2 style={{ fontSize:"14px", fontWeight:"700" }}>Active Cart</h2>
+          {orderItems.length > 0 && (
+            <span style={{ background:"var(--brand-primary)", color:"#fff", fontSize:"11px",
+              fontWeight:"800", padding:"2px 8px", borderRadius:"20px" }}>{orderItems.length}</span>
+          )}
+        </div>
+        {orderItems.length > 0 && (
+          <button onClick={resetOrder} style={{ ...btn, background:"var(--danger-bg)",
+            color:"var(--danger)", padding:"4px 8px", fontSize:"12px" }}>Clear</button>
+        )}
+      </div>
+
+      <div className="col-body">
+        {orderItems.length === 0 ? (
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"center",
+            justifyContent:"center", height:"100%", color:"var(--text-tertiary)", padding:"32px 0" }}>
+            <span style={{ fontSize:"40px", marginBottom:"10px" }}>📥</span>
+            <p style={{ fontSize:"14px", fontWeight:"600" }}>Cart is empty</p>
+            <p style={{ fontSize:"12px", textAlign:"center", marginTop:"6px", maxWidth:"220px" }}>
+              Add items from the menu to begin building the order.
+            </p>
+          </div>
+        ) : (
+          <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+            {orderItems.map(oi => {
+              const price = getPrice(oi.baseItem, oi.size);
+              return (
+                <div key={oi.id} style={{ border:"1.5px solid var(--border)", borderRadius:"10px",
+                  padding:"10px 12px", background:"var(--bg-primary)" }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:"7px" }}>
+                    <div style={{ flex:1, minWidth:0, paddingRight:"8px" }}>
+                      <p style={{ fontWeight:"700", fontSize:"13px" }}>{oi.name}</p>
+                      <p style={{ fontSize:"11px", color:"var(--text-tertiary)" }}>{oi.category}</p>
+                    </div>
+                    <div style={{ display:"flex", alignItems:"center", gap:"8px", flexShrink:0 }}>
+                      <span style={{ fontWeight:"800", fontSize:"14px" }}>${(price*oi.qty).toFixed(2)}</span>
+                      <button onClick={() => removeItem(oi.id)}
+                        style={{ background:"none", border:"none", color:"var(--danger)", cursor:"pointer", fontSize:"16px" }}>🗑️</button>
+                    </div>
+                  </div>
+                  <div style={{ display:"flex", flexWrap:"wrap", gap:"6px", alignItems:"center" }}>
+                    {/* Qty */}
+                    <div style={{ display:"flex", alignItems:"center", gap:"4px", background:"var(--bg-card)",
+                      padding:"2px 8px", borderRadius:"6px", border:"1px solid var(--border)" }}>
+                      <button onClick={() => oi.qty>1 && updateItem(oi.id,"qty",oi.qty-1)}
+                        style={{ border:"none", background:"none", cursor:"pointer", fontWeight:"700", fontSize:"14px", lineHeight:1 }}>−</button>
+                      <span style={{ fontSize:"13px", fontWeight:"700", minWidth:"18px", textAlign:"center" }}>{oi.qty}</span>
+                      <button onClick={() => updateItem(oi.id,"qty",oi.qty+1)}
+                        style={{ border:"none", background:"none", cursor:"pointer", fontWeight:"700", fontSize:"14px", lineHeight:1 }}>+</button>
+                    </div>
+                    {oi.hasSize && !oi.baseItem.noSmall && (
+                      <select value={oi.size} onChange={e => updateItem(oi.id,"size",e.target.value)}
+                        style={{ ...inp, width:"auto", padding:"3px 6px", fontSize:"12px", background:"var(--bg-card)" }}>
+                        <option value="S">Small</option>
+                        <option value="L">Large</option>
+                      </select>
+                    )}
+                    {oi.hasSauce && (
+                      <select value={oi.sauce} onChange={e => updateItem(oi.id,"sauce",e.target.value)}
+                        style={{ ...inp, width:"auto", padding:"3px 6px", fontSize:"12px", background:"var(--bg-card)" }}>
+                        <option>Tare</option>
+                        <option>Soy &amp; Mirin</option>
+                      </select>
+                    )}
+                    {oi.hasSeasoning && (
+                      <select value={oi.seasoning} onChange={e => updateItem(oi.id,"seasoning",e.target.value)}
+                        style={{ ...inp, width:"auto", padding:"3px 6px", fontSize:"12px", background:"var(--bg-card)" }}>
+                        <option>Cumin</option>
+                        <option>Sichuan</option>
+                      </select>
+                    )}
+                    {oi.hasSpice && (
+                      <select value={oi.spice} onChange={e => updateItem(oi.id,"spice",e.target.value)}
+                        style={{ ...inp, width:"auto", padding:"3px 6px", fontSize:"12px", background:"var(--bg-card)" }}>
+                        <option>Cumin</option>
+                        <option>Sichuan 0</option>
+                        <option>Sichuan 1</option>
+                        <option>Sichuan 2</option>
+                      </select>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Footer */}
+            <div style={{ borderTop:"1.5px solid var(--border)", paddingTop:"12px", marginTop:"4px" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"10px" }}>
+                <span style={{ fontSize:"14px", fontWeight:"700" }}>Grand Total</span>
+                <span style={{ fontSize:"22px", fontWeight:"900", color:"var(--brand-primary)" }}>${total.toFixed(2)}</span>
+              </div>
+              <div style={{ marginBottom:"10px" }}>
+                <label style={{ fontSize:"10px", fontWeight:"800", textTransform:"uppercase", color:"var(--text-tertiary)" }}>Kitchen Notes</label>
+                <textarea value={notes} onChange={e => setNotes(e.target.value)}
+                  placeholder="e.g. Allergies, extra sauce separate…" rows="2"
+                  style={{ ...inp, resize:"none", marginTop:"4px", fontSize:"12px" }} />
+              </div>
+              <div style={{ display:"flex", gap:"8px" }}>
+                <button onClick={() => setShowSummary(!showSummary)}
+                  style={{ ...sBtn, flex:1, fontSize:"13px", padding:"9px", display:"flex",
+                    alignItems:"center", justifyContent:"center", gap:"5px" }}>
+                  {showSummary ? "👁️ Hide" : "👁️ View"}
+                </button>
+                <button onClick={copySummary}
+                  style={{ ...fBtn, flex:2, fontSize:"13px", padding:"9px", display:"flex",
+                    alignItems:"center", justifyContent:"center", gap:"5px" }}>
+                  📋 Copy summary
+                </button>
+              </div>
+              {showSummary && (
+                <div style={{ marginTop:"10px", background:"var(--bg-secondary)", border:"1.5px solid var(--border)",
+                  borderRadius:"8px", padding:"10px", overflowX:"auto" }}>
+                  <pre style={{ fontFamily:"monospace", fontSize:"11px", lineHeight:"1.4",
+                    color:"var(--text-primary)", whiteSpace:"pre-wrap" }}>{buildSummary()}</pre>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── ReferencePanel ───────────────────────────────────────────── */
+function ReferencePanel() {
+  const [activeTab, setActiveTab]       = useState("menu");
+  const [detailsSearch, setDetailsSearch] = useState("");
+  const [zoomScale, setZoomScale]       = useState(1);
+  const [panOffset, setPanOffset]       = useState({ x:0, y:0 });
+  const [isPanning, setIsPanning]       = useState(false);
+  const dragStart = useRef({ x:0, y:0 });
+
+  const handleZoom = dir => setZoomScale(p => Math.min(4, Math.max(0.5, p + (dir==="in"?0.25:-0.25))));
+  const resetZoom  = () => { setZoomScale(1); setPanOffset({x:0,y:0}); };
+  const onDown  = e => { if(zoomScale<=1) return; setIsPanning(true); dragStart.current={x:e.clientX-panOffset.x,y:e.clientY-panOffset.y}; };
+  const onMove  = e => { if(!isPanning||zoomScale<=1) return; setPanOffset({x:e.clientX-dragStart.current.x,y:e.clientY-dragStart.current.y}); };
+  const onUp    = () => setIsPanning(false);
+
+  const copyText = txt => navigator.clipboard.writeText(txt);
+
+  return (
+    <div className="col-card">
+      {/* Tab header */}
+      <div style={{ display:"flex", height:"46px", borderBottom:"1.5px solid var(--border)",
+        background:"var(--bg-secondary)", flexShrink:0 }}>
+        {[["menu","📋 Physical Menu"],["details","🔍 Ingredients & FAQ"]].map(([id,label]) => (
+          <button key={id} onClick={() => setActiveTab(id)} style={{
+            flex:1, background:"none", border:"none",
+            borderBottom: activeTab===id ? "3px solid var(--brand-primary)" : "3px solid transparent",
+            color: activeTab===id ? "var(--brand-primary)" : "var(--text-secondary)",
+            fontWeight: activeTab===id ? "700" : "500",
+            cursor:"pointer", fontSize:"12px", transition:"all 0.2s" }}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ flex:1, minHeight:0, display:"flex", flexDirection:"column",
+        padding: activeTab==="menu" ? "0" : "14px", overflow:"hidden" }}>
+        {activeTab === "menu" && (
+          <div style={{ display:"flex", flexDirection:"column", flex:1, minHeight:0 }}>
+            <div style={{ background:"var(--bg-secondary)", padding:"6px 12px",
+              borderBottom:"1.5px solid var(--border)", display:"flex",
+              alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
+              <div style={{ display:"flex", gap:"6px", alignItems:"center" }}>
+                <button onClick={() => handleZoom("out")} style={{ ...sBtn, padding:"2px 8px", fontSize:"11px" }}>➖</button>
+                <span style={{ fontWeight:"700", fontSize:"12px" }}>{Math.round(zoomScale*100)}%</span>
+                <button onClick={() => handleZoom("in")}  style={{ ...sBtn, padding:"2px 8px", fontSize:"11px" }}>➕</button>
+              </div>
+              <button onClick={resetZoom} style={{ ...sBtn, padding:"2px 8px", fontSize:"11px" }}>🔄 Reset</button>
+            </div>
+            <div onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
+              style={{ flex:1, overflow:"hidden", background:"#000", display:"flex",
+                alignItems:"center", justifyContent:"center", position:"relative" }}
+              className="zoom-container">
+              <img src="menu.jpg" alt="Sugar Brush Physical Menu" draggable="false" style={{
+                transform:`translate(${panOffset.x}px,${panOffset.y}px) scale(${zoomScale})`,
+                transformOrigin:"center center", maxHeight:"100%", maxWidth:"100%",
+                objectFit:"contain", transition: isPanning ? "none" : "transform 0.15s ease-out",
+                userSelect:"none" }} />
+              {zoomScale > 1 && (
+                <div style={{ position:"absolute", bottom:"10px", right:"10px",
+                  background:"rgba(0,0,0,0.6)", color:"#fff", padding:"2px 8px",
+                  borderRadius:"10px", fontSize:"10px" }}>🖱️ Drag to pan</div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === "details" && (
+          <div style={{ display:"flex", flexDirection:"column", gap:"10px", flex:1, minHeight:0 }}>
+            <input type="text" placeholder="🔍 Search ingredients…" value={detailsSearch}
+              onChange={e => setDetailsSearch(e.target.value)} style={inp} />
+            <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:"10px" }}>
+              {Object.entries(MENU).map(([key,cat]) => {
+                const matches = cat.items.filter(item =>
+                  item.name.toLowerCase().includes(detailsSearch.toLowerCase()) ||
+                  item.desc.toLowerCase().includes(detailsSearch.toLowerCase()) ||
+                  cat.label.toLowerCase().includes(detailsSearch.toLowerCase())
+                );
+                if (!matches.length) return null;
+                return (
+                  <div key={key} style={{ border:"1.5px solid var(--border)", borderRadius:"10px",
+                    padding:"10px 12px", background:"var(--bg-primary)" }}>
+                    <p style={{ fontSize:"11px", fontWeight:"800", textTransform:"uppercase",
+                      color:"var(--brand-primary)", marginBottom:"6px",
+                      borderBottom:"1px dashed var(--border)", paddingBottom:"3px" }}>{cat.label}</p>
+                    {cat.desc && !detailsSearch && (
+                      <div style={{ fontSize:"11px", fontStyle:"italic", color:"var(--text-secondary)",
+                        marginBottom:"8px", display:"flex", justifyContent:"space-between",
+                        alignItems:"flex-start", gap:"8px" }}>
+                        <span>{cat.desc}</span>
+                        <button onClick={() => { copyText(cat.desc); alert("Copied!"); }}
+                          style={{ background:"none", border:"none", cursor:"pointer", fontSize:"11px" }}>📋</button>
+                      </div>
+                    )}
+                    <div style={{ display:"flex", flexDirection:"column", gap:"7px" }}>
+                      {matches.map(item => (
+                        <div key={item.id} style={{ background:"var(--bg-card)", padding:"8px 10px",
+                          borderRadius:"6px", border:"1px solid var(--border)" }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"2px" }}>
+                            <span style={{ fontWeight:"700", fontSize:"12px" }}>{item.name}</span>
+                            <button onClick={() => { copyText(`${item.name}: ${item.desc}`); alert("Copied!"); }}
+                              style={{ background:"none", border:"none", cursor:"pointer", fontSize:"11px",
+                                color:"var(--text-tertiary)" }}>📋 Copy</button>
+                          </div>
+                          <span style={{ fontSize:"11px", color:"var(--text-secondary)" }}>{item.desc}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── App ──────────────────────────────────────────────────────── */
 function App() {
   const [customerName,  setCustomerName]  = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
@@ -263,70 +784,46 @@ function App() {
   const [showSummary,   setShowSummary]   = useState(false);
   const [dark,          setDark]          = useState(true);
   const [searchQuery,   setSearchQuery]   = useState("");
+  const [mobTab,        setMobTab]        = useState("menu"); // "menu" | "cart" | "ref"
+  const [clockStr,      setClockStr]      = useState(fmtTime(new Date()));
 
-  const [comboPickDrink,setComboPickDrink]= useState(REFRESHMENT_OPTIONS[0].id);
-  const [comboPickFries,setComboPickFries]= useState("plum_fries");
-  const [comboExpanded, setComboExpanded] = useState(false);
-
-  const [clockStr, setClockStr] = useState(fmtTime(new Date()));
   useEffect(() => {
     const id = setInterval(() => setClockStr(fmtTime(new Date())), 10000);
     return () => clearInterval(id);
   }, []);
-
-  const [activeTab, setActiveTab] = useState("menu");
-  const [detailsSearch, setDetailsSearch] = useState("");
-
-  const [zoomScale, setZoomScale] = useState(1);
-  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
-  const [isPanning, setIsPanning] = useState(false);
-  const dragStart = useRef({ x: 0, y: 0 });
-  const imageContainerRef = useRef(null);
-
-  useEffect(() => {
-    document.body.className = dark ? "dark" : "";
-  }, [dark]);
+  useEffect(() => { document.body.className = dark ? "dark" : ""; }, [dark]);
 
   const addItem = (item, cat) => {
     const hasSize = !!cat.askSize;
-    const defaultSize = item.noSmall ? "L" : hasSize ? "S" : null;
+    const defSize = item.noSmall ? "L" : hasSize ? "S" : null;
     setOrderItems(prev => [...prev, {
-      id: Date.now() + Math.random(),
-      itemId: item.id, name: item.name, category: cat.label,
-      size: defaultSize,
-      sauce:      cat.askSauce      ? "Tare"  : null,
-      seasoning:  cat.askSeasoning  ? "Cumin" : null,
-      spice:      cat.askSpice      ? "Cumin" : null,
-      qty: 1, baseItem: item,
-      hasSize, hasSauce: !!cat.askSauce,
-      hasSeasoning: !!cat.askSeasoning, hasSpice: !!cat.askSpice,
+      id: Date.now()+Math.random(), itemId:item.id, name:item.name, category:cat.label,
+      size:defSize, sauce:cat.askSauce?"Tare":null, seasoning:cat.askSeasoning?"Cumin":null,
+      spice:cat.askSpice?"Cumin":null, qty:1, baseItem:item,
+      hasSize, hasSauce:!!cat.askSauce, hasSeasoning:!!cat.askSeasoning, hasSpice:!!cat.askSpice,
     }]);
   };
-  const removeItem = id => setOrderItems(prev => prev.filter(i => i.id !== id));
-  const updateItem = (id, field, value) =>
-    setOrderItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
-  const total = orderItems.reduce((sum, i) => sum + getPrice(i.baseItem, i.size) * i.qty, 0);
-
-  const copyText = (txt) => navigator.clipboard.writeText(txt);
+  const removeItem = id => setOrderItems(p => p.filter(i => i.id !== id));
+  const updateItem = (id, f, v) => setOrderItems(p => p.map(i => i.id===id ? {...i,[f]:v} : i));
+  const total = orderItems.reduce((s,i) => s + getPrice(i.baseItem,i.size)*i.qty, 0);
 
   const buildSummary = () => {
     const now = new Date();
-    const ts  = `${fmtDate(now)} — ${fmtTime(now)}`;
-    const ptxt = pickupAsap ? "ASAP" : pickupTime ? fmt12h(pickupTime) : "—";
+    const ts = `${fmtDate(now)} — ${fmtTime(now)} (Melbourne)`;
+    const pt = pickupAsap ? "ASAP" : pickupTime ? fmt12h(pickupTime) : "—";
     const lines = [
-      `ORDER SUMMARY — ${ts} (Melbourne)`,
-      `Customer: ${customerName || "—"}  |  Phone: ${customerPhone || "—"}`,
-      `Order type: ${orderType === "pickup" ? "Pick up" : "Dine in"}  |  Pickup time: ${ptxt}`,
+      `ORDER SUMMARY — ${ts}`,
+      `Customer: ${customerName||"—"}  |  Phone: ${customerPhone||"—"}`,
+      `Order type: ${orderType==="pickup"?"Pick up":"Dine in"}  |  Pickup: ${pt}`,
       "─".repeat(44),
     ];
     orderItems.forEach(i => {
-      const extras = [];
-      if (i.size)      extras.push(i.size === "S" ? "Small" : "Large");
-      if (i.sauce)     extras.push(`Sauce: ${i.sauce}`);
-      if (i.seasoning) extras.push(`Seasoning: ${i.seasoning}`);
-      if (i.spice)     extras.push(`Spice: ${i.spice}`);
-      const detail = i.name + (extras.length ? ` (${extras.join(", ")})` : "");
-      lines.push(`x${i.qty}  ${detail}  —  $${(getPrice(i.baseItem, i.size) * i.qty).toFixed(2)}`);
+      const ex = [];
+      if (i.size)      ex.push(i.size==="S"?"Small":"Large");
+      if (i.sauce)     ex.push(`Sauce: ${i.sauce}`);
+      if (i.seasoning) ex.push(`Seasoning: ${i.seasoning}`);
+      if (i.spice)     ex.push(`Spice: ${i.spice}`);
+      lines.push(`x${i.qty}  ${i.name}${ex.length?` (${ex.join(", ")})`:""} — $${(getPrice(i.baseItem,i.size)*i.qty).toFixed(2)}`);
     });
     lines.push("─".repeat(44));
     lines.push(`TOTAL: $${total.toFixed(2)}`);
@@ -347,393 +844,82 @@ function App() {
   const resetOrder = () => {
     setOrderItems([]); setCustomerName(""); setCustomerPhone("");
     setNotes(""); setShowSummary(false); setPickupTime(""); setPickupAsap(false);
-    setComboPickDrink(REFRESHMENT_OPTIONS[0].id);
-    setComboPickFries("plum_fries"); setComboExpanded(false);
   };
 
-  const handleZoom = (direction) => {
-    setZoomScale(prev => {
-      let next = direction === "in" ? prev + 0.25 : prev - 0.25;
-      if (next < 0.5) next = 0.5;
-      if (next > 4) next = 4;
-      return next;
-    });
+  const cartSharedProps = {
+    orderItems, updateItem, removeItem, total, notes, setNotes,
+    showSummary, setShowSummary, copySummary, buildSummary, resetOrder,
   };
-  const handleResetZoom = () => { setZoomScale(1); setPanOffset({ x: 0, y: 0 }); };
-  const handleMouseDown = (e) => {
-    if (zoomScale <= 1) return;
-    setIsPanning(true);
-    dragStart.current = { x: e.clientX - panOffset.x, y: e.clientY - panOffset.y };
+  const menuSharedProps = {
+    addItem, searchQuery, setSearchQuery, customerName, setCustomerName,
+    customerPhone, setCustomerPhone, orderType, setOrderType,
+    pickupTime, setPickupTime, pickupAsap, setPickupAsap,
   };
-  const handleMouseMove = (e) => {
-    if (!isPanning || zoomScale <= 1) return;
-    setPanOffset({ x: e.clientX - dragStart.current.x, y: e.clientY - dragStart.current.y });
-  };
-  const handleMouseUpOrLeave = () => setIsPanning(false);
-
-  const containerStyle = { display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg-primary)", color: "var(--text-primary)", padding: "16px 20px" };
-  const headerStyle = { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", paddingBottom: "12px", borderBottom: "1.5px solid var(--border)" };
-  const dashGridStyle = { display: "grid", gridTemplateColumns: "1.3fr 1.1fr 1.3fr", gap: "18px", height: "calc(100vh - 90px)", minHeight: "0" };
-  const colCardStyle = { background: "var(--bg-card)", border: "1.5px solid var(--border)", borderRadius: "14px", boxShadow: "var(--shadow)", display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" };
-  const colHeaderStyle = { padding: "14px 16px", borderBottom: "1.5px solid var(--border)", background: "var(--bg-secondary)", display: "flex", justifyContent: "space-between", alignItems: "center" };
-  const colBodyStyle = { padding: "16px", overflowY: "auto", flex: "1" };
-  const buttonStyle = { padding: "6px 12px", borderRadius: "8px", border: "none", fontWeight: "600", cursor: "pointer", transition: "var(--transition)" };
-  const forestBtn = { ...buttonStyle, background: "var(--brand-primary)", color: "#FFFFFF" };
-  const secondaryBtn = { ...buttonStyle, background: "var(--bg-secondary)", color: "var(--text-primary)", border: "1.5px solid var(--border)" };
-  const inputStyle = { width: "100%", padding: "9px 12px", borderRadius: "8px", border: "1.5px solid var(--border)", background: "var(--bg-primary)", color: "var(--text-primary)", transition: "var(--transition)", fontSize: "14px" };
 
   return (
-    <div style={containerStyle}>
-      <header style={headerStyle}>
+    <div id="app">
+      {/* ── Header ── */}
+      <header className="top-header">
         <div>
-          <h1 style={{ fontSize: "20px", fontWeight: "800", color: "var(--brand-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
-            <span>🍵</span> Sugar Brush Dashboard
-          </h1>
-          <p style={{ fontSize: "12px", color: "var(--text-secondary)", marginTop: "2px" }}>
-            📅 {fmtDate(new Date())} &nbsp;·&nbsp; 🕐 {clockStr} &nbsp;·&nbsp; <span style={{ fontSize: "11px", opacity: 0.7 }}>🇦🇺 Melbourne</span>
+          <div style={{ display:"flex", alignItems:"center", gap:"7px" }}>
+            <span style={{ fontSize:"18px" }}>🍵</span>
+            <span style={{ fontSize:"16px", fontWeight:"800", color:"var(--brand-primary)" }}>Sugar Brush</span>
+          </div>
+          <p className="header-date" style={{ fontSize:"11px", color:"var(--text-secondary)", marginTop:"1px" }}>
+            📅 {fmtDate(new Date())} · 🕐 {clockStr} · 🇦🇺 Melbourne
           </p>
         </div>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <div style={{ display:"flex", gap:"8px", alignItems:"center" }}>
           {!IS_FRI_SUN && (
-            <div style={{ background: "var(--accent-bg)", color: "var(--accent)", border: "1.5px solid var(--accent)", padding: "4px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: "700" }}>
-              ⚠️ Squid bowls &amp; squid bites unavailable today
+            <div style={{ background:"var(--accent-bg)", color:"var(--accent)", border:"1.5px solid var(--accent)",
+              padding:"3px 8px", borderRadius:"20px", fontSize:"11px", fontWeight:"700", whiteSpace:"nowrap" }}>
+              ⚠️ No squid today
             </div>
           )}
-          <button
-            onClick={() => setDark(!dark)}
-            style={{ ...secondaryBtn, fontSize: "13px", padding: "5px 12px", borderRadius: "20px", display: "flex", alignItems: "center", gap: "5px" }}
-          >
-            {dark ? "☀️ Light" : "🌙 Dark"}
+          <button onClick={() => setDark(!dark)}
+            style={{ ...sBtn, fontSize:"12px", padding:"4px 10px", borderRadius:"20px" }}>
+            {dark ? "☀️" : "🌙"}
           </button>
         </div>
       </header>
 
-      <div style={dashGridStyle}>
-
-        {/* ── COLUMN 1: MENU ORDERING ─────────────────────────────────── */}
-        <div style={colCardStyle}>
-          <div style={colHeaderStyle}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", width: "100%" }}>
-              <span style={{ fontSize: "18px" }}>📝</span>
-              <div style={{ flex: 1 }}>
-                <h2 style={{ fontSize: "15px", fontWeight: "700" }}>Menu Ordering</h2>
-              </div>
-              <input
-                type="text"
-                placeholder="🔍 Search items..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                style={{ ...inputStyle, width: "160px", padding: "5px 10px", fontSize: "12px", borderRadius: "20px" }}
-              />
-            </div>
-          </div>
-
-          <div style={colBodyStyle}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "14px" }}>
-              <div>
-                <label style={{ fontSize: "11px", fontWeight: "700", textTransform: "uppercase", color: "var(--text-tertiary)" }}>Customer Name</label>
-                <input type="text" placeholder="John Doe" value={customerName} onChange={e => setCustomerName(e.target.value)} style={{ ...inputStyle, marginTop: "4px" }} />
-              </div>
-              <div>
-                <label style={{ fontSize: "11px", fontWeight: "700", textTransform: "uppercase", color: "var(--text-tertiary)" }}>Phone Number</label>
-                <input type="tel" placeholder="0400 000 000" value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} style={{ ...inputStyle, marginTop: "4px" }} />
-              </div>
-            </div>
-
-            <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
-              {["pickup", "dinein"].map(type => (
-                <button key={type} onClick={() => setOrderType(type)} style={{ flex: 1, padding: "8px", borderRadius: "8px", cursor: "pointer", fontWeight: "700", border: "1.5px solid var(--border)", transition: "var(--transition)", background: orderType === type ? "var(--brand-secondary)" : "var(--bg-card)", color: orderType === type ? "var(--brand-primary)" : "var(--text-secondary)", borderColor: orderType === type ? "var(--brand-primary)" : "var(--border)" }}>
-                  {type === "pickup" ? "🛍️ Pick up" : "🪑 Dine in"}
-                </button>
-              ))}
-            </div>
-
-            <div style={{ background: "var(--bg-secondary)", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid var(--border)", marginBottom: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "12px", fontWeight: "700", textTransform: "uppercase", color: "var(--text-secondary)" }}>⏰ Pickup time (Melbourne)</span>
-                {(pickupAsap || pickupTime) && (
-                  <span style={{ fontSize: "11px", fontWeight: "800", background: "var(--accent-bg)", color: "var(--accent)", border: "1px solid var(--accent)", padding: "2px 8px", borderRadius: "20px" }}>
-                    {pickupAsap ? "⚡ ASAP" : `🕒 ${fmt12h(pickupTime)}`}
-                  </span>
-                )}
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                <button onClick={() => { setPickupAsap(true); setPickupTime(""); }} style={{ ...secondaryBtn, padding: "4px 8px", fontSize: "11px", background: pickupAsap ? "var(--brand-primary)" : "var(--bg-card)", color: pickupAsap ? "#fff" : "var(--text-primary)" }}>ASAP</button>
-                {[15, 20, 30, 45].map(m => {
-                  const val = addMins(m);
-                  const isActive = !pickupAsap && pickupTime === val;
-                  return (
-                    <button key={m} onClick={() => { setPickupAsap(false); setPickupTime(val); }} style={{ ...secondaryBtn, padding: "4px 8px", fontSize: "11px", background: isActive ? "var(--brand-primary)" : "var(--bg-card)", color: isActive ? "#fff" : "var(--text-primary)" }}>
-                      +{m} min
-                    </button>
-                  );
-                })}
-                <input type="time" disabled={pickupAsap} value={pickupTime} onChange={e => { setPickupAsap(false); setPickupTime(e.target.value); }} style={{ padding: "2px 6px", borderRadius: "6px", border: "1.5px solid var(--border)", fontSize: "12px", background: "var(--bg-card)", color: "var(--text-primary)", marginLeft: "auto" }} />
-              </div>
-            </div>
-
-            {Object.entries(MENU).map(([key, cat]) => {
-              const filteredItems = cat.items.filter(item =>
-                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (item.desc && item.desc.toLowerCase().includes(searchQuery.toLowerCase()))
-              );
-              if (filteredItems.length === 0) return null;
-              return (
-                <div key={key} style={{ border: "1.5px solid var(--border)", borderRadius: "10px", padding: "12px 14px", marginBottom: "12px", background: "var(--bg-card)" }}>
-                  <p style={{ fontSize: "13px", fontWeight: "800", color: "var(--brand-primary)", display: "flex", alignItems: "center", gap: "6px", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: "1px solid var(--border)", paddingBottom: "6px" }}>
-                    <span>{cat.icon}</span> {cat.label}
-                    {cat.note && <span style={{ fontSize: "11px", fontWeight: "400", textTransform: "none", color: "var(--text-tertiary)", marginLeft: "4px" }}>({cat.note})</span>}
-                  </p>
-                  {cat.items.map(item => {
-                    const isFiltered = filteredItems.includes(item);
-                    if (!isFiltered) return null;
-                    const isCombo = item.id === "combo";
-                    const isFriSunItem = !!item.friSunOnly;
-                    const isUnavailable = isFriSunItem && !IS_FRI_SUN;
-                    const priceStr = item.prices.one !== undefined ? `$${item.prices.one}` : item.noSmall ? `L $${item.prices.L}` : `S $${item.prices.S} / L $${item.prices.L}`;
-                    if (isCombo) {
-                      return (
-                        <div key={item.id} style={{ padding: "6px 0" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <div>
-                              <p style={{ fontWeight: "600", fontSize: "13px" }}>{item.name}</p>
-                              <p style={{ fontSize: "11px", color: "var(--text-tertiary)" }}>{item.desc}</p>
-                            </div>
-                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
-                              <span style={{ fontSize: "13px", fontWeight: "700", color: "var(--text-secondary)" }}>$8</span>
-                              <button onClick={() => setComboExpanded(!comboExpanded)} style={{ ...forestBtn, fontSize: "12px", padding: "4px 10px", background: comboExpanded ? "var(--text-tertiary)" : "var(--brand-primary)" }}>
-                                {comboExpanded ? "▲ Close" : "+ Combo"}
-                              </button>
-                            </div>
-                          </div>
-                          {comboExpanded && (
-                            <div style={{ marginTop: "8px", background: "var(--bg-secondary)", border: "1.5px solid var(--border)", borderRadius: "8px", padding: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                                <div>
-                                  <label style={{ fontSize: "10px", fontWeight: "700", color: "var(--text-tertiary)" }}>Select Fries</label>
-                                  <select value={comboPickFries} onChange={e => setComboPickFries(e.target.value)} style={{ ...inputStyle, padding: "4px 8px", background: "var(--bg-card)", fontSize: "12px", marginTop: "2px" }}>
-                                    {FRIES_OPTIONS.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
-                                  </select>
-                                </div>
-                                <div>
-                                  <label style={{ fontSize: "10px", fontWeight: "700", color: "var(--text-tertiary)" }}>Select Small Drink</label>
-                                  <select value={comboPickDrink} onChange={e => setComboPickDrink(e.target.value)} style={{ ...inputStyle, padding: "4px 8px", background: "var(--bg-card)", fontSize: "12px", marginTop: "2px" }}>
-                                    {REFRESHMENT_OPTIONS.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-                                  </select>
-                                </div>
-                              </div>
-                              <button onClick={() => { const friesName = FRIES_OPTIONS.find(f => f.id === comboPickFries)?.name; const drinkName = REFRESHMENT_OPTIONS.find(r => r.id === comboPickDrink)?.name; addItem({ ...item, name: `Combo: ${friesName} + ${drinkName} (S)` }, cat); setComboExpanded(false); }} style={{ ...forestBtn, width: "100%", padding: "6px", fontSize: "12px", background: "var(--accent)" }}>
-                                ✓ Add Combo deal — $8
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    }
-                    return (
-                      <div key={item.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: "1px solid var(--border)", opacity: isUnavailable ? 0.45 : 1 }}>
-                        <div style={{ paddingRight: "8px" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-                            <p style={{ fontWeight: "600", fontSize: "13px", color: "var(--text-primary)" }}>{item.name}</p>
-                            {isFriSunItem && (
-                              <span style={{ fontSize: "9px", fontWeight: "800", padding: "1px 6px", borderRadius: "10px", background: isUnavailable ? "var(--danger-bg)" : "var(--brand-secondary)", color: isUnavailable ? "var(--danger)" : "var(--brand-primary)", border: `1px solid ${isUnavailable ? "var(--danger)" : "var(--brand-primary)"}` }}>
-                                {isUnavailable ? "Locked Weekdays" : "Fri–Sun"}
-                              </span>
-                            )}
-                          </div>
-                          <p style={{ fontSize: "11px", color: "var(--text-tertiary)", marginTop: "2px" }}>{item.desc}</p>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-                          <span style={{ fontSize: "13px", fontWeight: "700", color: "var(--text-secondary)" }}>{priceStr}</span>
-                          <button disabled={isUnavailable} onClick={() => addItem(item, cat)} style={{ ...forestBtn, fontSize: "12px", padding: "4px 10px", cursor: isUnavailable ? "not-allowed" : "pointer", background: isUnavailable ? "var(--bg-secondary)" : "var(--brand-primary)", color: isUnavailable ? "var(--text-tertiary)" : "#fff", border: isUnavailable ? "1.5px solid var(--border)" : "none" }}>
-                            + Add
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ── COLUMN 2: ACTIVE CART ─────────────────────────────────────── */}
-        <div style={colCardStyle}>
-          <div style={colHeaderStyle}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ fontSize: "18px" }}>🛒</span>
-              <h2 style={{ fontSize: "15px", fontWeight: "700" }}>Active Cart</h2>
-              {orderItems.length > 0 && <span style={{ background: "var(--brand-primary)", color: "#FFFFFF", fontSize: "11px", fontWeight: "800", padding: "2px 8px", borderRadius: "20px" }}>{orderItems.length}</span>}
-            </div>
-            {orderItems.length > 0 && <button onClick={resetOrder} style={{ ...buttonStyle, background: "var(--danger-bg)", color: "var(--danger)", padding: "4px 8px", fontSize: "12px" }}>Clear Cart</button>}
-          </div>
-
-          <div style={colBodyStyle}>
-            {orderItems.length === 0 ? (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", color: "var(--text-tertiary)" }}>
-                <span style={{ fontSize: "40px", marginBottom: "10px" }}>📥</span>
-                <p style={{ fontSize: "14px", fontWeight: "600" }}>Cart is empty</p>
-                <p style={{ fontSize: "11px", textAlign: "center", marginTop: "4px", padding: "0 20px" }}>Add items from the menu page to begin building the customer's phone order.</p>
-              </div>
-            ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%" }}>
-                <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {orderItems.map(oi => {
-                    const itemPrice = getPrice(oi.baseItem, oi.size);
-                    return (
-                      <div key={oi.id} style={{ border: "1.5px solid var(--border)", borderRadius: "10px", padding: "10px 12px", background: "var(--bg-primary)", position: "relative" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                          <div>
-                            <p style={{ fontWeight: "700", fontSize: "13px" }}>{oi.name}</p>
-                            <p style={{ fontSize: "11px", color: "var(--text-tertiary)" }}>{oi.category}</p>
-                          </div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span style={{ fontWeight: "800", fontSize: "14px" }}>${(itemPrice * oi.qty).toFixed(2)}</span>
-                            <button onClick={() => removeItem(oi.id)} style={{ background: "none", border: "none", color: "var(--danger)", cursor: "pointer", fontSize: "16px", padding: "0 2px" }}>🗑️</button>
-                          </div>
-                        </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "4px", background: "var(--bg-card)", padding: "2px 6px", borderRadius: "6px", border: "1px solid var(--border)" }}>
-                            <button onClick={() => oi.qty > 1 && updateItem(oi.id, "qty", oi.qty - 1)} style={{ border: "none", background: "none", cursor: "pointer", fontWeight: "700", fontSize: "12px", width: "16px" }}>−</button>
-                            <span style={{ fontSize: "12px", fontWeight: "700", minWidth: "16px", textAlign: "center" }}>{oi.qty}</span>
-                            <button onClick={() => updateItem(oi.id, "qty", oi.qty + 1)} style={{ border: "none", background: "none", cursor: "pointer", fontWeight: "700", fontSize: "12px", width: "16px" }}>+</button>
-                          </div>
-                          {oi.hasSize && !oi.baseItem.noSmall && (
-                            <select value={oi.size} onChange={e => updateItem(oi.id, "size", e.target.value)} style={{ ...inputStyle, width: "auto", padding: "2px 6px", fontSize: "11px", background: "var(--bg-card)" }}>
-                              <option value="S">Small</option>
-                              <option value="L">Large</option>
-                            </select>
-                          )}
-                          {oi.hasSauce && (
-                            <select value={oi.sauce} onChange={e => updateItem(oi.id, "sauce", e.target.value)} style={{ ...inputStyle, width: "auto", padding: "2px 6px", fontSize: "11px", background: "var(--bg-card)" }}>
-                              <option>Tare</option>
-                              <option>Soy &amp; Mirin</option>
-                            </select>
-                          )}
-                          {oi.hasSeasoning && (
-                            <select value={oi.seasoning} onChange={e => updateItem(oi.id, "seasoning", e.target.value)} style={{ ...inputStyle, width: "auto", padding: "2px 6px", fontSize: "11px", background: "var(--bg-card)" }}>
-                              <option>Cumin</option>
-                              <option>Sichuan</option>
-                            </select>
-                          )}
-                          {oi.hasSpice && (
-                            <select value={oi.spice} onChange={e => updateItem(oi.id, "spice", e.target.value)} style={{ ...inputStyle, width: "auto", padding: "2px 6px", fontSize: "11px", background: "var(--bg-card)" }}>
-                              <option>Cumin</option>
-                              <option>Sichuan 0</option>
-                              <option>Sichuan 1</option>
-                              <option>Sichuan 2</option>
-                            </select>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div style={{ borderTop: "1.5px solid var(--border)", paddingTop: "12px", marginTop: "auto" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                    <span style={{ fontSize: "14px", fontWeight: "700" }}>Grand Total</span>
-                    <span style={{ fontSize: "20px", fontWeight: "900", color: "var(--brand-primary)" }}>${total.toFixed(2)}</span>
-                  </div>
-                  <div style={{ marginBottom: "10px" }}>
-                    <label style={{ fontSize: "10px", fontWeight: "800", textTransform: "uppercase", color: "var(--text-tertiary)" }}>Kitchen Notes</label>
-                    <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="e.g. Allergies, extra sauce packed separate..." rows="2" style={{ ...inputStyle, resize: "none", marginTop: "4px", fontSize: "12px" }} />
-                  </div>
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <button onClick={() => setShowSummary(!showSummary)} style={{ ...secondaryBtn, flex: 1, fontSize: "13px", padding: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-                      {showSummary ? "👁️ Hide text" : "👁️ View text"}
-                    </button>
-                    <button onClick={copySummary} style={{ ...forestBtn, flex: 1.5, fontSize: "13px", padding: "8px", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-                      📋 Copy summary
-                    </button>
-                  </div>
-                  {showSummary && (
-                    <div style={{ marginTop: "10px", background: "var(--bg-secondary)", border: "1.5px solid var(--border)", borderRadius: "8px", padding: "10px", overflowX: "auto" }}>
-                      <pre style={{ fontFamily: "monospace", fontSize: "11px", lineHeight: "1.4", color: "var(--text-primary)", whiteSpace: "pre-wrap" }}>{buildSummary()}</pre>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ── COLUMN 3: RIGHT PANEL ─────────────────────────────────────── */}
-        <div style={colCardStyle}>
-          <div style={{ ...colHeaderStyle, padding: "0 10px", height: "48px" }}>
-            <div style={{ display: "flex", width: "100%", height: "100%" }}>
-              <button onClick={() => setActiveTab("menu")} style={{ flex: 1, background: "none", border: "none", borderBottom: activeTab === "menu" ? "3px solid var(--brand-primary)" : "none", color: activeTab === "menu" ? "var(--brand-primary)" : "var(--text-secondary)", fontWeight: activeTab === "menu" ? "700" : "500", cursor: "pointer", fontSize: "13px" }}>
-                📋 Physical Menu
-              </button>
-              <button onClick={() => setActiveTab("details")} style={{ flex: 1, background: "none", border: "none", borderBottom: activeTab === "details" ? "3px solid var(--brand-primary)" : "none", color: activeTab === "details" ? "var(--brand-primary)" : "var(--text-secondary)", fontWeight: activeTab === "details" ? "700" : "500", cursor: "pointer", fontSize: "13px" }}>
-                🔍 Ingredients &amp; FAQ
-              </button>
-            </div>
-          </div>
-
-          <div style={{ ...colBodyStyle, padding: activeTab === "menu" ? "0" : "16px" }}>
-            {activeTab === "menu" && (
-              <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <div style={{ background: "var(--bg-secondary)", padding: "6px 12px", borderBottom: "1.5px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "12px" }}>
-                  <div style={{ display: "flex", gap: "6px" }}>
-                    <button onClick={() => handleZoom("out")} style={{ ...secondaryBtn, padding: "2px 8px", fontSize: "11px" }}>➖</button>
-                    <span style={{ fontWeight: "700", alignSelf: "center" }}>{Math.round(zoomScale * 100)}%</span>
-                    <button onClick={() => handleZoom("in")} style={{ ...secondaryBtn, padding: "2px 8px", fontSize: "11px" }}>➕</button>
-                  </div>
-                  <button onClick={handleResetZoom} style={{ ...secondaryBtn, padding: "2px 8px", fontSize: "11px" }}>🔄 Reset</button>
-                </div>
-                <div ref={imageContainerRef} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUpOrLeave} onMouseLeave={handleMouseUpOrLeave} style={{ flex: 1, overflow: "hidden", position: "relative", background: "#000", display: "flex", alignItems: "center", justifyContent: "center" }} className="zoom-container">
-                  <img src="menu.jpg" alt="Sugar Brush Physical Menu" draggable="false" style={{ transform: `translate(${panOffset.x}px, ${panOffset.y}px) scale(${zoomScale})`, transformOrigin: "center center", maxHeight: "100%", maxWidth: "100%", objectFit: "contain", transition: isPanning ? "none" : "transform 0.15s ease-out", userSelect: "none" }} />
-                  {zoomScale > 1 && (
-                    <div style={{ position: "absolute", bottom: "10px", right: "10px", background: "rgba(0,0,0,0.6)", color: "#fff", padding: "2px 8px", borderRadius: "10px", fontSize: "10px" }}>
-                      🖱️ Click &amp; drag to pan
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {activeTab === "details" && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
-                <input type="text" placeholder="🔍 Search ingredients or details..." value={detailsSearch} onChange={e => setDetailsSearch(e.target.value)} style={inputStyle} />
-                <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
-                  {Object.entries(MENU).map(([key, cat]) => {
-                    const matchingItems = cat.items.filter(item =>
-                      item.name.toLowerCase().includes(detailsSearch.toLowerCase()) ||
-                      item.desc.toLowerCase().includes(detailsSearch.toLowerCase()) ||
-                      cat.label.toLowerCase().includes(detailsSearch.toLowerCase())
-                    );
-                    if (matchingItems.length === 0) return null;
-                    return (
-                      <div key={key} style={{ border: "1.5px solid var(--border)", borderRadius: "10px", padding: "10px 12px", background: "var(--bg-primary)" }}>
-                        <p style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", color: "var(--brand-primary)", marginBottom: "6px", borderBottom: "1px dashed var(--border)", paddingBottom: "3px" }}>{cat.label}</p>
-                        {cat.desc && !detailsSearch && (
-                          <div style={{ fontSize: "11px", fontStyle: "italic", color: "var(--text-secondary)", marginBottom: "8px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
-                            <span>{cat.desc}</span>
-                            <button onClick={() => { copyText(cat.desc); alert("Category info copied!"); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "11px", padding: "0 2px" }} title="Copy category description">📋</button>
-                          </div>
-                        )}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                          {matchingItems.map(item => (
-                            <div key={item.id} style={{ background: "var(--bg-card)", padding: "8px 10px", borderRadius: "6px", border: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: "2px" }}>
-                              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                <span style={{ fontWeight: "700", fontSize: "12px" }}>{item.name}</span>
-                                <button onClick={() => { copyText(`${item.name}: ${item.desc}`); alert("Item details copied!"); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "11px" }} title="Copy details">📋 Copy</button>
-                              </div>
-                              <span style={{ fontSize: "11px", color: "var(--text-secondary)" }}>{item.desc}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
+      {/* ── Desktop 3-col ── */}
+      <div className="desk-grid">
+        <MenuPanel {...menuSharedProps} />
+        <CartPanel {...cartSharedProps} />
+        <ReferencePanel />
       </div>
+
+      {/* ── Mobile panels ── */}
+      <div className="mob-panels">
+        <div className={`mob-panel${mobTab==="menu" ? " active" : ""}`}>
+          <MenuPanel {...menuSharedProps} />
+        </div>
+        <div className={`mob-panel${mobTab==="cart" ? " active" : ""}`}>
+          <CartPanel {...cartSharedProps} />
+        </div>
+        <div className={`mob-panel${mobTab==="ref" ? " active" : ""}`}>
+          <ReferencePanel />
+        </div>
+      </div>
+
+      {/* ── Mobile bottom tab bar ── */}
+      <nav className="mob-tab-bar">
+        {[
+          { id:"menu", icon:"📝", label:"Menu" },
+          { id:"cart", icon:"🛒", label:"Cart" },
+          { id:"ref",  icon:"📋", label:"Reference" },
+        ].map(t => (
+          <button key={t.id} className={`mob-tab-btn${mobTab===t.id?" active":""}`}
+            onClick={() => setMobTab(t.id)}>
+            <span className="tab-icon">{t.icon}</span>
+            {t.id==="cart" && orderItems.length > 0 && (
+              <span className="tab-badge">{orderItems.length}</span>
+            )}
+            <span>{t.label}</span>
+          </button>
+        ))}
+      </nav>
     </div>
   );
 }
